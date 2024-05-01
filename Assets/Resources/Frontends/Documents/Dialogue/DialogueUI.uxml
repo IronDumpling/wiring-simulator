@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/Frontends/Styles/DialogueStyle.uss?fileID=7433441132597879392&amp;guid=665bfc0963e4fdb4488d7897e33da9ab&amp;type=3#DialogueStyle" />
+    <ui:VisualElement name="Panel" style="flex-grow: 1; flex-direction: row; background-color: rgba(0, 0, 0, 0.78); width: 30%;">
+        <ui:VisualElement name="SideBar" style="flex-grow: 1; width: 15%;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExpandButton" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" style="flex-grow: 1; width: 80%;">
+            <ui:Label tabindex="-1" text="Title" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" style="height: 10%; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+            <ui:ScrollView name="Content" style="height: 90%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

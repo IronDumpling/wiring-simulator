@@ -8,8 +8,7 @@ using UnityEngine.EventSystems;
 using Ink.Runtime;
 using DG.Tweening;
 
-public class DialogueUI : MonoBehaviour
-{
+public class DialogueUI : MonoSingleton<DialogueUI>{
     [Header("Params")]
     [SerializeField] private float TYPE_SPEED = 0.04f;
     [SerializeField] private float SCROLL_SPEED_AMPLIFIER = 50f;
@@ -36,8 +35,6 @@ public class DialogueUI : MonoBehaviour
     private ScrollView content;
     private Scroller scroller;
     private Button expand;
-    private Button pause;
-    private Button system;
     private VisualElement spacer;
     private VisualTreeAsset realChoice;
     private VisualTreeAsset fakeChoice;
@@ -47,7 +44,6 @@ public class DialogueUI : MonoBehaviour
     private float SCROLL_SPEED;
     
     private bool isPanelExpanded = true;
-    private bool isPaused = false;
     private bool tutIsPlaying = false;
     private bool canGoToNextLine = false;
     private Story currStory;
@@ -63,18 +59,17 @@ public class DialogueUI : MonoBehaviour
     {
         root = doc.rootVisualElement;
 
-        expPanel = root.Q<VisualElement>(name: "ExpandPanel");
+        expPanel = root.Q<VisualElement>(name: "Panel");
         expBody = root.Q<VisualElement>(name: "Body");
 
         expand = root.Q<Button>(name: "ExpandButton");
-        pause = root.Q<Button>(name: "PauseButton");
-        system = root.Q<Button>(name: "SystemButton");
-        title = root.Q<Label>(name: "title");
+        title = root.Q<Label>(name: "Title");
         setScrollView();
-        realChoice = Resources.Load<VisualTreeAsset>("Art/Frontend/Documents/DialoguePanel/RealChoice");
-        fakeChoice = Resources.Load<VisualTreeAsset>("Art/Frontend/Documents/DialoguePanel/FakeChoice");
-        textArea = Resources.Load<VisualTreeAsset>("Art/Frontend/Documents/DialoguePanel/TextArea");
-        imgArea = Resources.Load<VisualTreeAsset>("Art/Frontend/Documents/DialoguePanel/ImgArea");
+
+        realChoice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/RealChoice");
+        fakeChoice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
+        textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
+        imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
         dialogueVars = new DialogueVar(globalJSON);
     }
     
@@ -83,7 +78,7 @@ public class DialogueUI : MonoBehaviour
         OpenExpandPanel();
         PreRegisterCallback();
         BeginDialogue(defaultInkJSON);
-         // Assuming you have already obtained a reference to your specific VisualElement
+        // Assuming you have already obtained a reference to your specific VisualElement
         expBody.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
         expBody.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
     }
@@ -120,9 +115,6 @@ public class DialogueUI : MonoBehaviour
         expand.clicked += () => {
             if(isPanelExpanded) CloseExpandPanel();
             else OpenExpandPanel();
-        };
-        system.clicked += () => {
-            this.BeginDialogue(defaultInkJSON);
         };
     }
     #endregion
@@ -167,7 +159,7 @@ public class DialogueUI : MonoBehaviour
         CloseExpandPanel();
     }
     
-    public void OnApplicationQuit() {
+    public void OnApplicationQuit(){
         dialogueVars.SaveVariables();
     }
     
@@ -284,7 +276,7 @@ public class DialogueUI : MonoBehaviour
     }
     
     private void setScrollView(){
-        content = root.Q<ScrollView>(name: "content");
+        content = root.Q<ScrollView>(name: "Content");
         content.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
         scroller = content.verticalScroller;
         scroller.valueChanged += ChangeSpeed;
@@ -345,13 +337,11 @@ public class DialogueUI : MonoBehaviour
         return varValue;
     }
     
-    private void MouseEntered(MouseEnterEvent evt)
-    {
+    private void MouseEntered(MouseEnterEvent evt){
         isMouseOverElement = true;
     }
     
-    private void MouseLeft(MouseLeaveEvent evt)
-    {
+    private void MouseLeft(MouseLeaveEvent evt){
         isMouseOverElement = false;
     }
 
