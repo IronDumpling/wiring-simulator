@@ -346,8 +346,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
 
     private bool IsUserInput(){
-        // return DialogueController.Instance.isInput && isMouseOverElement;
-        return true;
+        return MouseClick.Instance.isInput && isMouseOverElement;
     }
     
     #endregion
