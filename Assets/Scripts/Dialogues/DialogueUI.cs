@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.EventSystems;
 
 using Ink.Runtime;
 using DG.Tweening;
@@ -196,6 +195,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             content.Add(choice);
             return;
         }
+
         // 2. Real Choice
         List<VisualElement> realChoices = new List<VisualElement>();
         foreach(Choice choice in currChoices) {   
@@ -203,6 +203,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             realChoices.Add(choiceElement);
             content.Add(choiceElement);
         }
+        
         int index = 0;
         foreach(Choice choice in currChoices){
             Button button = realChoices[index].Q<Button>();
