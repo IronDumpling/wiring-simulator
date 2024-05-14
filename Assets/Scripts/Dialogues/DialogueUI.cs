@@ -51,6 +51,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private const string TITLE_TAG = "title";
     private const string PORTRAIT_TAG = "portrait";
     private const string IMG_TAG = "image";
+    private const string CONTINUE_TAG = "continue";
+    private const string LEAVE_TAG = "leave";
     private string displaySpeakerName = "";
     private DialogueVar dialogueVars;
     
@@ -214,6 +216,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             index++;
         }
     }
+
+    private void DisplayContinue(){
+
+    }
+
+    private void DisplayLeave(){
+
+    }
     
     private void DisplayImage(string imgVal){
         VisualElement imgContainer = imgArea.Instantiate();
@@ -320,6 +330,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                     break;
                 case IMG_TAG:
                     DisplayImage(tagValue);
+                    break;
+                case CONTINUE_TAG:
+                    DisplayContinue();
+                    break;
+                case LEAVE_TAG:
+                    DisplayLeave();
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
