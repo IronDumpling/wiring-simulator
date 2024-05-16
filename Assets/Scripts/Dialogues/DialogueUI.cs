@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -53,6 +54,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private const string IMG_TAG = "image";
     private const string CONTINUE_TAG = "continue";
     private const string LEAVE_TAG = "leave";
+    private const string CHARACTER_TAG = "character";
     private string displaySpeakerName = "";
     private DialogueVar dialogueVars;
     
@@ -186,19 +188,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private void DisplayChoices(){
         List<Choice> currChoices = currStory.currentChoices;
 
-        // 1. Fake Choice
-        if(currChoices.Count == 1){
-            VisualElement choice = fakeChoice.Instantiate();
-            Button button = choice.Q<Button>();
-            button.text = currChoices[0].text + " " + '\u25B6';
-            button.clicked += () => {
-                MakeChoice(currChoices[0], choice);
-            };
-            content.Add(choice);
-            return;
-        }
-
-        // 2. Real Choice
         List<VisualElement> realChoices = new List<VisualElement>();
         foreach(Choice choice in currChoices) {   
             VisualElement choiceElement = realChoice.Instantiate();
@@ -217,14 +206,17 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
     }
 
-    private void DisplayContinue(){
-
+    private void DisplayFakeChoice(String value){
+        VisualElement choice = fakeChoice.Instantiate();
+        Button button = choice.Q<Button>();
+        button.text = value + " " + '\u25B6';
+        button.clicked += () => {
+            // ContinueStory();
+        };
+        content.Add(choice);
+        return;
     }
 
-    private void DisplayLeave(){
-
-    }
-    
     private void DisplayImage(string imgVal){
         VisualElement imgContainer = imgArea.Instantiate();
         VisualElement img = imgContainer.Q<VisualElement>(name:"Image");
@@ -262,7 +254,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             content.Remove(choiceEl);
         }
         VisualElement textLine = textArea.Instantiate();
-        textLine.Q<Label>().text = "You-\"" + choice.text + "\"";
+        textLine.Q<Label>().text = "你-\"" + choice.text + "\"";
         content.Add(textLine);
         currStory.ChooseChoiceIndex(choice.index);
         ContinueStory();
@@ -332,10 +324,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                     DisplayImage(tagValue);
                     break;
                 case CONTINUE_TAG:
-                    DisplayContinue();
+                    DisplayFakeChoice("CONTINUE");
                     break;
                 case LEAVE_TAG:
-                    DisplayLeave();
+                    DisplayFakeChoice("LEAVE");
+                    break;
+                case CHARACTER_TAG:
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);

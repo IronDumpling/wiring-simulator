@@ -4,8 +4,8 @@ INCLUDE 0-global.ink
 
 === beginning ===
 
--随一阵颠簸，你周遭的声音忽然大了。你听见橡胶与石头摩擦的声音，前方传来一阵惊呼…… 
-- 你在哪？你感受着自己的身体……它瘫软着，倚在某个摇摇晃晃的事物上。在你旁边，某种黏腻的液体正反复碰撞，发出“啵”样的声响。
+-随一阵颠簸，你周遭的声音忽然大了。你听见橡胶与石头摩擦的声音，前方传来一阵惊呼…… #speaker:爬虫脑
+你在哪？你感受着自己的身体……它瘫软着，倚在某个摇摇晃晃的事物上。在你旁边，某种黏腻的液体正反复碰撞，发出“啵”样的声响。#continue:
 
 // select_1
 
@@ -48,7 +48,7 @@ VAR know_about_NPC1comeform = false
 
 =dialogue_1
 
--{NPC1}- {怎么了？|还有问题吗？}
+-{怎么了？|还有问题吗？} #speaker:偷渡客
 ~temp question = 0
 {know_about_OceanSleepTime:
 ~question ++
@@ -63,11 +63,11 @@ VAR know_about_NPC1comeform = false
 
 -question != 2: 
 
- *我睡了多久？
+ *我睡了多久？ #speaker:
  ~know_about_OceanSleepTime = true
  ->select_2_1
  
- *你是从哪来的？
+ *你是从哪来的？ #speaker:
  ~know_about_NPC1comeform = true
  ->select_2_2
  
@@ -132,8 +132,8 @@ VAR know_about_NPC1comeform = false
  
  
  =selector_2_2
- {NPC1}- {怎么，想和老乡聊聊天了？|接着问吧。}
- 他大方地笑起来，似乎是来了兴致。
+ {NPC1}- {怎么，想和老乡聊聊天了？|接着问吧。|还想问什么吗？}
+ {他大方地笑起来，似乎是来了兴致。|他说着，一边打量着你。|}
  VAR know_about_NPC1way = false
  VAR know_about_NPC1name = false
  
@@ -141,7 +141,7 @@ VAR know_about_NPC1comeform = false
  
 //select_2_2
 *你叫什么名字？
-{NPC1}- 我姓莘，草字头，底下一个辛苦的辛。
+{NPC1}- 我姓莘，草字头，底下一个辛苦的辛。#speaker:莘先生
 ~ NPC1 = "莘先生"
 ~know_about_NPC1name = true
 
@@ -159,7 +159,7 @@ VAR know_about_NPC1comeform = false
 
 *你为什么会走线呢？
 男人轻哼了一口气。
-{NPC1}- 受不了体制呗。经济和政策烂成一团，稍微说两句都不行，笑死人了。更何况……
+{NPC1}- 受不了体制呗。从上到下烂成一团，连大气都没法出一口。更何况……
 他忽然噤声了。似乎是意识到自己戾气太重，他咳嗽两声，又恢复到先前的姿势，敛了些笑。
 {NPC1}- 大概是这样。听说不少走线的和我一样，但更多是生活所迫。
 {NPC1}- 那你呢？
@@ -218,8 +218,8 @@ VAR know_about_NPC1comeform = false
 浅滩并不热闹，你只能远远望见零散的人影朝岸上走去。或许是海路过于凶险，鲜有人优先选择这条线路。
 但更前边——当地的居民已经准备好了。
 
-{NPC1}- 我先去充会儿电，你可以再来找我，就当搭个伴。
-{NPC1}- 对了，建议你找个翻译，行动方便得多。蛇头那边应该就有不少。
+{NPC1}- 我先打听下消息，七点去休息站充会儿电。你可以再来找我，就当搭个伴。
+{NPC1}- 建议你找个翻译，行动方便得多。蛇头那边应该就有不少。
 {NPC1}- 就这样——祝你顺利。
 
  *也祝你顺利。
