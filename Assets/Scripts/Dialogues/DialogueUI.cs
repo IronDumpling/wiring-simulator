@@ -382,7 +382,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
 
     private void DiceCheck(string value){
-        // (components)>(level)
+        // format: (components)>(level)
         string[] tokens = value.Split('>');
         if (tokens.Length != 2) {
             Debug.LogError("'dice' tag could not be appropriately parsed");
@@ -392,8 +392,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         string[] components = tokens[0].Split('+');
         string level = tokens[1];
 
-        // TODO: call check function
-        // DiceCheck(components, level);
+        CheckManager.Instance.MakeCheck(components, level);
     }
 
     private void HPModification(string value){
