@@ -54,9 +54,11 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private const string IMG_TAG = "image";
     private const string DICE_TAG = "dice";
     private const string HP_TAG = "HP";
+    private const string TIME_TAG = "time";
     private string displaySpeakerName = "";
     private DialogueVar dialogueVars;
     
+    #region Life Cycles
     private void Awake()
     {
         root = doc.rootVisualElement;
@@ -92,8 +94,13 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             ContinueStory();
         }
     }
+
+    public void OnApplicationQuit(){
+        dialogueVars.SaveVariables();
+    }
+    #endregion
     
-    #region Panel
+    #region Panels
     public void CloseExpandPanel(){
         expPanel.style.width = PANEL_WIDTH;
         Length width = new Length(HIDE_POSITION, LengthUnit.Percent);
@@ -121,12 +128,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     #endregion
     
-    #region Dialogue
+    #region Dialogues
     public void BeginDialogue(TextAsset inkJSON){
         currStory = new Story(inkJSON.text);
 
         dialogueVars.StartListening(currStory);
-        // TODO: Load variables
+        dialogueVars.LoadVariables();
 
         tutIsPlaying = true;
         title.text = "???";
@@ -161,12 +168,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         displaySpeakerName = "";
         CloseExpandPanel();
     }
-    
-    public void OnApplicationQuit(){
-        dialogueVars.SaveVariables();
-    }
-    
-    #region Render
+    #endregion
+
+    #region Renders
     private IEnumerator DisplayLine(string line){
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
@@ -253,7 +257,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     #endregion
     
-    #region Logic
+    #region Logics
     private void MakeChoice(Choice choice, List<VisualElement> choices){
         if (!canGoToNextLine) return;
         foreach(VisualElement choiceEl in choices){
@@ -305,41 +309,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         SCROLL_SPEED -= SCROLL_SPEED * SCROLL_DAMP;
         scroller.valueChanged += ChangeSpeed;
     }
-    
-    private void HandleTags(List<string> tags){
-        foreach (string tag in tags) {
-            string[] splitTag = tag.Split(':');
-            if (splitTag.Length != 2) {
-                Debug.LogError("Tag could not be appropriately parsed: " + tag);
-                return;
-            }
-            string tagKey = splitTag[0].Trim();
-            string tagValue = splitTag[1].Trim();
-
-            switch (tagKey) {
-                case SPEAKER_TAG:
-                    displaySpeakerName = tagValue;
-                    break;
-                case TITLE_TAG:
-                    title.text = tagValue;
-                    break;
-                case PORTRAIT_TAG:
-                    break;
-                case IMG_TAG:
-                    DisplayImage(tagValue);
-                    break;
-                case DICE_TAG:
-                    break;
-                case HP_TAG:
-                    break;
-                default:
-                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
-                    break;
-            }
-        }
-    }
     #endregion
     
+    #region Variables
     public Ink.Runtime.Object GetVariableState(string varName){
         Ink.Runtime.Object varValue = null;
         dialogueVars.variables.TryGetValue(varName, out varValue);
@@ -348,8 +320,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         return varValue;
     }
+    #endregion
     
-    #region Input
+    #region Inputs
     private void MouseEntered(MouseEnterEvent evt){
         isMouseOverElement = true;
     }
@@ -362,6 +335,63 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         return MouseClick.Instance.isInput && isMouseOverElement;
     }    
     #endregion
+
+    #region Tags
+    private void HandleTags(List<string> tags){
+        foreach (string tag in tags) {
+            string[] splitTag = tag.Split(':');
+            if (splitTag.Length != 2) {
+                Debug.LogError("Tag could not be appropriately parsed: " + tag);
+                return;
+            }
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+            switch (tagKey) {
+                // 1. dialogue tags
+                case SPEAKER_TAG:
+                    displaySpeakerName = tagValue;
+                    break;
+                case TITLE_TAG:
+                    title.text = tagValue;
+                    break;
+                case PORTRAIT_TAG:
+                    // TODO
+                    break;
+                case IMG_TAG:
+                    DisplayImage(tagValue);
+                    break;
+                // 2. check tags
+                case DICE_TAG:
+                    DiceCheck(tagValue);
+                    break;
+                // 3. character tags
+                case HP_TAG:
+                    HPModification(tagValue);
+                    break;
+                // 4. world tags
+                case TIME_TAG:
+                    TimeModification(tagValue);
+                    break;
+                default:
+                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    break;
+            }
+        }
+    }
+
+    private void DiceCheck(String value){
+
+    }
+
+    private void HPModification(String value){
+
+    }
+
+    private void TimeModification(String value){
+        
+    }
+
+    private 
 
     #endregion
 }
