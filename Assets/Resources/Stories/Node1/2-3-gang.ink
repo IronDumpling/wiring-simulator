@@ -1,4 +1,4 @@
-INCLUDE 0-global.ink
+INCLUDE ../0-global.ink
 
 ->position_smuggler_1
 

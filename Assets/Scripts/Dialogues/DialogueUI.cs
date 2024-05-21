@@ -36,8 +36,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private Scroller scroller;
     private Button expand;
     private VisualElement spacer;
-    private VisualTreeAsset realChoice;
-    private VisualTreeAsset fakeChoice;
+    private VisualTreeAsset choice;
+    private VisualTreeAsset sectionButton;
     private VisualTreeAsset textArea;
     private VisualTreeAsset imgArea;
 
@@ -52,9 +52,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private const string TITLE_TAG = "title";
     private const string PORTRAIT_TAG = "portrait";
     private const string IMG_TAG = "image";
-    private const string CONTINUE_TAG = "continue";
-    private const string LEAVE_TAG = "leave";
-    private const string CHARACTER_TAG = "character";
+    private const string DICE_TAG = "dice";
+    private const string HP_TAG = "HP";
     private string displaySpeakerName = "";
     private DialogueVar dialogueVars;
     
@@ -67,10 +66,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         expand = root.Q<Button>(name: "ExpandButton");
         title = root.Q<Label>(name: "Title");
-        setScrollView();
+        SetScrollView();
 
-        realChoice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/RealChoice");
-        fakeChoice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
+        choice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/RealChoice");
+        sectionButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
         textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
         imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
         dialogueVars = new DialogueVar(globalJSON);
@@ -144,9 +143,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         if(displayLine != null) StopCoroutine(displayLine); 
+        
+        HandleTags(currStory.currentTags);
         displayLine = StartCoroutine(DisplayLine(currStory.Continue()));
 
-        HandleTags(currStory.currentTags);
         MoveSpacerToEnd();
         ScrollToBottom();
     }
@@ -188,33 +188,39 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private void DisplayChoices(){
         List<Choice> currChoices = currStory.currentChoices;
 
-        List<VisualElement> realChoices = new List<VisualElement>();
-        foreach(Choice choice in currChoices) {   
-            VisualElement choiceElement = realChoice.Instantiate();
-            realChoices.Add(choiceElement);
+        if(currChoices.Count == 1 && 
+        (currChoices[0].text == "继续" || 
+        currChoices[0].text == "离开")){
+            DisplaySectionButton(currChoices[0]);
+            return;
+        }
+        
+        List<VisualElement> choices = new List<VisualElement>();
+        foreach(Choice chc in currChoices) {   
+            VisualElement choiceElement = choice.Instantiate();
+            choices.Add(choiceElement);
             content.Add(choiceElement);
         }
         
         int index = 0;
-        foreach(Choice choice in currChoices){
-            Button button = realChoices[index].Q<Button>();
-            button.text = index + ".-" + choice.text;
+        foreach(Choice chc in currChoices){
+            Button button = choices[index].Q<Button>();
+            button.text = index + ".-" + chc.text;
             button.clicked += () => {
-                MakeChoice(choice, realChoices);
+                MakeChoice(chc, choices);
             };
             index++;
         }
     }
 
-    private void DisplayFakeChoice(String value){
-        VisualElement choice = fakeChoice.Instantiate();
-        Button button = choice.Q<Button>();
-        button.text = value + " " + '\u25B6';
+    private void DisplaySectionButton(Choice chc){
+        VisualElement choiceEl = sectionButton.Instantiate();
+        Button button = choiceEl.Q<Button>();
+        button.text = chc.text + " " + '\u25B6';
         button.clicked += () => {
-            // ContinueStory();
+            ClickSectionButton(chc, choiceEl);
         };
-        content.Add(choice);
-        return;
+        content.Add(choiceEl);
     }
 
     private void DisplayImage(string imgVal){
@@ -260,7 +266,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         ContinueStory();
     }
     
-    private void MakeChoice(Choice choice, VisualElement choiceEl){
+    private void ClickSectionButton(Choice choice, VisualElement choiceEl){
         if (!canGoToNextLine) return;
         content.Remove(choiceEl);
         currStory.ChooseChoiceIndex(choice.index);
@@ -278,7 +284,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         DOTween.To(()=>scroller.value, x=> scroller.value = x, targetValue, EXIT_LAG_TIME);
     }
     
-    private void setScrollView(){
+    private void SetScrollView(){
         content = root.Q<ScrollView>(name: "Content");
         content.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
         scroller = content.verticalScroller;
@@ -302,15 +308,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     
     private void HandleTags(List<string> tags){
         foreach (string tag in tags) {
-            // parse the tag
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2) {
                 Debug.LogError("Tag could not be appropriately parsed: " + tag);
+                return;
             }
             string tagKey = splitTag[0].Trim();
             string tagValue = splitTag[1].Trim();
 
-            // handle the tag
             switch (tagKey) {
                 case SPEAKER_TAG:
                     displaySpeakerName = tagValue;
@@ -323,13 +328,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                 case IMG_TAG:
                     DisplayImage(tagValue);
                     break;
-                case CONTINUE_TAG:
-                    DisplayFakeChoice("CONTINUE");
+                case DICE_TAG:
                     break;
-                case LEAVE_TAG:
-                    DisplayFakeChoice("LEAVE");
-                    break;
-                case CHARACTER_TAG:
+                case HP_TAG:
                     break;
                 default:
                     Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
@@ -348,6 +349,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         return varValue;
     }
     
+    #region Input
     private void MouseEntered(MouseEnterEvent evt){
         isMouseOverElement = true;
     }
@@ -358,7 +360,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     private bool IsUserInput(){
         return MouseClick.Instance.isInput && isMouseOverElement;
-    }
-    
+    }    
+    #endregion
+
     #endregion
 }
