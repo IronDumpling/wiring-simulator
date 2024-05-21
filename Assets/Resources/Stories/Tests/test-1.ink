@@ -103,10 +103,10 @@ VAR correction_test = false
 
 =normal_test
     NPC说话 #speaker:NPC #title:NPC #portrait:
-    你说话 #speaker:你 #title:你 #portrait
+    你说话 #speaker:你 #title:你 #portrait:
     
     +继续
-        这是一张图 #image:
+        这是一张图 #image:Tests/Placeholder
         ++离开
             ->test
     

@@ -227,7 +227,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         VisualElement imgContainer = imgArea.Instantiate();
         VisualElement img = imgContainer.Q<VisualElement>(name:"Image");
 
-        Sprite sp = Resources.Load<Sprite>("Art/Images/" + imgVal);
+        Sprite sp = Resources.Load<Sprite>("Arts/Images/" + imgVal);
         if(sp == null){
             Debug.LogError("Can't find image: " + imgVal);
             return;
