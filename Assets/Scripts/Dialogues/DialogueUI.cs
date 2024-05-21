@@ -366,53 +366,61 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                 case DICE_TAG:
                     DiceCheck(tagValue);
                     break;
-                // 3. character tags
-                case HP_TAG:
-                    HPModification(tagValue);
-                    break;
-                // 4. world tags
+                // 3. world tags
                 case TIME_TAG:
                     TimeModification(tagValue);
                     break;
+                // 4. character tags
                 default:
-                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    if(Utils.IsCharacterTag(tagKey)) CharacterModification(tagKey, tagValue);
+                    else Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
                     break;
             }
         }
     }
 
     private void DiceCheck(string value){
-        // format: (components)>(level)
+        // format: (component1+component2-component3)>(level)
         string[] tokens = value.Split('>');
         if (tokens.Length != 2) {
             Debug.LogError("'dice' tag could not be appropriately parsed");
             return;
         }
 
-        string[] components = tokens[0].Split('+');
+        string[] subStrings = tokens[0].Split(new char[] { '+', '-' }, StringSplitOptions.RemoveEmptyEntries);
         string level = tokens[1];
+
+        List<(string, string)> components = new List<(string, string)>();
+        foreach(string subString in subStrings){
+            string sign = "+";
+            if (tokens[0].IndexOf(subString) > 0){
+                char prevChar = tokens[0][tokens[0].IndexOf(subString) - 1];
+                if (prevChar == '-') sign = "-";
+            }
+            components.Add((subString, sign));
+        }
 
         CheckManager.Instance.MakeCheck(components, level);
     }
 
-    private void HPModification(string value){
+    private void CharacterModification(string key, string value){
         const int INIT_IDX = 1;
         bool success = int.TryParse(value.Substring(INIT_IDX), out int number);
         if(!success){
-            Debug.LogError("'HP' tag could not be appropriately parsed");
+            Debug.LogError(key + " tag could not be appropriately parsed");
             return;
         }
-
+        
         if(value.StartsWith("+")){
-            // TODO: ChangeHP(number);
+            // TODO: Change(key, number);
         } 
         else if(value.StartsWith("-")){
-            // TODO: ChangeHP(-1 * number);
+            // TODO: Change(key, -1 * number);
         }
         else if(value.StartsWith("=")){
-            // TODO: SetHP(number);
+            // TODO: Set(key, number);
         }
-        else Debug.LogError("'HP' tag could not be appropriately parsed");
+        else Debug.LogError(key + " tag could not be appropriately parsed");
     }
 
     private void TimeModification(string value){

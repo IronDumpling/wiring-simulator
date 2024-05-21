@@ -7,7 +7,7 @@ public class CheckManager : MonoSingleton<CheckManager>{
     private int successCount = 0;
     private int failCount = 0;
 
-    public CheckResult MakeCheck(string[] components, string level){
+    public CheckResult MakeCheck(List<(string, string)> components, string level){
         CheckResult result = CheckResult.HugeFail;
 
         if(!Constants.checkLevels.ContainsKey(level)){
@@ -18,12 +18,22 @@ public class CheckManager : MonoSingleton<CheckManager>{
         int checkVal = Constants.checkLevels[level];
         int genVal = 0;
 
-        foreach(string component in components){
+        foreach(var pair in components){
+            string component = pair.Item1;
+            string sign = pair.Item2;
+            int val = 0;
+            
             // 1. dice
-            if(component.Contains("d")) genVal += DiceCheck(component);
+            if(component.Contains("d")) val = DiceCheck(component);
             // 2. character equipments
+            else if(Utils.IsCharacterTag(component)) {
+                // TODO: val = Get(key, number);
+            }
             // 3. correction
-            else if(int.TryParse(component, out int correction)) genVal += correction;
+            else if(int.TryParse(component, out int correction)) val = correction;
+
+            if(sign == "+") genVal += val;
+            else if(sign == "-") genVal -= val;
         }
 
         if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)) result = CheckResult.HugeSuccess;

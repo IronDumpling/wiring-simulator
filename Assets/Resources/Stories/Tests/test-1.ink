@@ -63,8 +63,8 @@ VAR correction_test = false
    +在血量基础上，投掷一个八面骰 #dice:HP+1d8>godly
    
    +投掷一个受事件影响补正的八面骰 
-    {correction_test} #dice:1d8+2>heoric 
-    {not correction_test} #dice:1d8>challenge
+    {correction_test} #dice:1d8+2>heroic 
+    {not correction_test} #dice:1d8-2>challenge
    +{not correction_test}获得事件补正+2
     ~correction_test = true
     

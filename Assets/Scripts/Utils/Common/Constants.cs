@@ -8,6 +8,7 @@ public enum CheckResult{
 }
 
 public static class Constants{
+    // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
         {"trivial", 0},
         {"easy", 0},
@@ -23,4 +24,8 @@ public static class Constants{
     };
     
     public static float HUGE_RESULT_THRESHOLD = 50f;
+
+    // character tags
+    public static string HP = "HP";
+    public static string SAN = "SAN";
 }
