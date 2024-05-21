@@ -22,7 +22,8 @@ VAR correction_test = false
   最终计数器将呈现出总计时间，以此判断时间tag是否正常运行。
 
   +快进十分钟 #time:+10min
-  +快进二十分钟 #time:+20min
+  +快进一小时二十分钟 #time:+1hr,20min
+  +快进一天一小时 #time:+1d,1hr
   +时间清零 #time:=0
   +退出时间推进测试
   ->test
@@ -55,15 +56,15 @@ VAR correction_test = false
     godly
     impossible
   
-   +投掷八面骰 #dice:none+1d8>easy
+   +投掷八面骰 #dice:1d8>easy
    
-   +投掷两个六面骰 #dice:none+2d6>medium
+   +投掷两个六面骰 #dice:2d6>medium
    
    +在血量基础上，投掷一个八面骰 #dice:HP+1d8>godly
    
    +投掷一个受事件影响补正的八面骰 
-    {correction_test} #dice:none+1d8+2>heoric 
-    {not correction_test} #dice:none+1d8>challenge
+    {correction_test} #dice:1d8+2>heoric 
+    {not correction_test} #dice:1d8>challenge
    +{not correction_test}获得事件补正+2
     ~correction_test = true
     
@@ -115,7 +116,7 @@ VAR correction_test = false
   
 =normal_test
     NPC说话 #speaker:NPC #title:NPC #portrait:
-    你说话 #speaker:你 #title:你 #portrait:
+    你说话 #speaker:YOU #title:YOU #portrait:
     
     +继续
         这是一张图 #image:Tests/Placeholder

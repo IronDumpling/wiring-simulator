@@ -44,7 +44,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private float SCROLL_SPEED;
     
     private bool isPanelExpanded = true;
-    private bool tutIsPlaying = false;
+    private bool isPlaying = false;
     private bool canGoToNextLine = false;
     private Story currStory;
     private Coroutine displayLine;
@@ -88,7 +88,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void Update(){
-        if (!tutIsPlaying) return;
+        if (!isPlaying) return;
         if (canGoToNextLine && IsUserInput() 
         && currStory.currentChoices.Count == 0){
             ContinueStory();
@@ -135,7 +135,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         dialogueVars.StartListening(currStory);
         dialogueVars.LoadVariables();
 
-        tutIsPlaying = true;
+        isPlaying = true;
         title.text = "???";
         displaySpeakerName = "???";
         content.contentContainer.Clear();
@@ -164,7 +164,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         dialogueVars.StopListening(currStory);
         dialogueVars.SaveVariables();
 
-        tutIsPlaying = false;
+        isPlaying = false;
         displaySpeakerName = "";
         CloseExpandPanel();
     }
@@ -222,6 +222,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         Button button = choiceEl.Q<Button>();
         button.text = chc.text + " " + '\u25B6';
         button.clicked += () => {
+            Debug.Log("Register Section Button");
             ClickSectionButton(chc, choiceEl);
         };
         content.Add(choiceEl);
@@ -274,6 +275,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         if (!canGoToNextLine) return;
         content.Remove(choiceEl);
         currStory.ChooseChoiceIndex(choice.index);
+        Debug.Log("Section Button");
         ContinueStory();
     }
     
@@ -379,16 +381,79 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
     }
 
-    private void DiceCheck(String value){
+    private void DiceCheck(string value){
+        // (components)>(level)
+        string[] tokens = value.Split('>');
+        if (tokens.Length != 2) {
+            Debug.LogError("'dice' tag could not be appropriately parsed");
+            return;
+        }
 
+        string[] components = tokens[0].Split('+');
+        string level = tokens[1];
+
+        // TODO: call check function
+        // DiceCheck(components, level);
     }
 
-    private void HPModification(String value){
+    private void HPModification(string value){
+        const int INIT_IDX = 1;
+        bool success = int.TryParse(value.Substring(INIT_IDX), out int number);
+        if(!success){
+            Debug.LogError("'HP' tag could not be appropriately parsed");
+            return;
+        }
 
+        if(value.StartsWith("+")){
+            // TODO: ChangeHP(number);
+        } 
+        else if(value.StartsWith("-")){
+            // TODO: ChangeHP(-1 * number);
+        }
+        else if(value.StartsWith("=")){
+            // TODO: SetHP(number);
+        }
+        else Debug.LogError("'HP' tag could not be appropriately parsed");
     }
 
-    private void TimeModification(String value){
+    private void TimeModification(string value){
+        const int INIT_IDX = 1;
+        string[] durations = value.Substring(INIT_IDX).Split(",");
 
+        const string DAY = "d";
+        const string HOUR = "hr";
+        const string MIN = "min";
+        const int DAY_TO_HOUR = 24;
+        const int HOUR_TO_MIN = 60;
+        
+        int time = 0;
+        int number;
+        foreach(string duration in durations){
+            if(duration.Contains(MIN) && 
+            int.TryParse(duration.Replace(MIN, ""), out number)){
+                time += number;
+            }
+            else if(duration.Contains(HOUR) && 
+            int.TryParse(duration.Replace(HOUR, ""), out number)){
+                time += number * HOUR_TO_MIN;
+            }
+            else if(duration.Contains(DAY) && 
+            int.TryParse(duration.Replace(DAY, ""), out number)){
+                time += number * DAY_TO_HOUR * HOUR_TO_MIN;
+            }
+            else Debug.LogError("'time' tag could not be appropriately parsed");
+        }
+
+        if(value.StartsWith("+")){
+            // TODO: ChangeTime(time);
+        } 
+        else if(value.StartsWith("-")){
+            // TODO: ChangeTime(-1 * time);
+        }
+        else if(value.StartsWith("=")){
+            // TODO: SetTime(time);
+        }
+        else Debug.LogError("'time' tag could not be appropriately parsed");
     }
 
     #endregion
