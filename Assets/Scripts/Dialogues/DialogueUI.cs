@@ -388,10 +388,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
 
     private void TimeModification(String value){
-        
-    }
 
-    private 
+    }
 
     #endregion
 }
