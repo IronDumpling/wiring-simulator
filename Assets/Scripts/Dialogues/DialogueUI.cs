@@ -416,6 +416,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
 
     private void TimeModification(string value){
+        // format: +1d,1hr,10min
         const int INIT_IDX = 1;
         string[] durations = value.Substring(INIT_IDX).Split(",");
 
