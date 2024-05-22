@@ -8,6 +8,10 @@ public enum CheckResult{
 }
 
 public static class Constants{
+    // dialogue
+    public static string CONTINUE = "继续";
+    public static string LEAVE = "离开"; 
+
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
         {"trivial", 0},

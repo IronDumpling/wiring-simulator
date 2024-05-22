@@ -145,14 +145,21 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void ContinueStory(){
+        // TODO: skip empty line
+        // while(currStory.canContinue && currStory.currentText == "\n"){
+            // currStory.Continue();
+            // HandleTags(currStory.currentTags);
+        // }
+        
         if(!currStory.canContinue){
             StartCoroutine(ExitDialogue());
             return;
         }
         if(displayLine != null) StopCoroutine(displayLine); 
-        
+    
+        currStory.Continue();
         HandleTags(currStory.currentTags);
-        displayLine = StartCoroutine(DisplayLine(currStory.Continue()));
+        displayLine = StartCoroutine(DisplayLine(currStory.currentText));
 
         MoveSpacerToEnd();
         ScrollToBottom();
@@ -172,6 +179,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     #region Renders
     private IEnumerator DisplayLine(string line){
+        if(line == "\n") yield break;
+
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
         label.text = displaySpeakerName + "-";
@@ -193,8 +202,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         List<Choice> currChoices = currStory.currentChoices;
 
         if(currChoices.Count == 1 && 
-        (currChoices[0].text == "继续" || 
-        currChoices[0].text == "离开")){
+        (currChoices[0].text == Constants.CONTINUE || 
+        currChoices[0].text == Constants.LEAVE)){
             DisplaySectionButton(currChoices[0]);
             return;
         }
@@ -206,9 +215,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             content.Add(choiceElement);
         }
         
-        int index = 0;
+        int index = 1;
         foreach(Choice chc in currChoices){
-            Button button = choices[index].Q<Button>();
+            Button button = choices[index-1].Q<Button>();
             button.text = index + ".-" + chc.text;
             button.clicked += () => {
                 MakeChoice(chc, choices);
@@ -222,7 +231,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         Button button = choiceEl.Q<Button>();
         button.text = chc.text + " " + '\u25B6';
         button.clicked += () => {
-            Debug.Log("Register Section Button");
             ClickSectionButton(chc, choiceEl);
         };
         content.Add(choiceEl);
@@ -275,7 +283,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         if (!canGoToNextLine) return;
         content.Remove(choiceEl);
         currStory.ChooseChoiceIndex(choice.index);
-        Debug.Log("Section Button");
         ContinueStory();
     }
     
@@ -341,6 +348,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #region Tags
     private void HandleTags(List<string> tags){
         foreach (string tag in tags) {
+            Debug.Log("Current tag " + tag);
+
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2) {
                 Debug.LogError("Tag could not be appropriately parsed: " + tag);
@@ -373,7 +382,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                 // 4. character tags
                 default:
                     if(Utils.IsCharacterTag(tagKey)) CharacterModification(tagKey, tagValue);
-                    else Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    else Debug.LogWarning("Tag came in but is not being handled: " + tag);
                     break;
             }
         }
