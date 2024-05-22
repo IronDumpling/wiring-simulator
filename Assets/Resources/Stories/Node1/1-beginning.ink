@@ -1,4 +1,4 @@
-INCLUDE 0-global.ink
+INCLUDE ../0-global.ink
 
 ->beginning
 

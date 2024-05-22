@@ -34,6 +34,10 @@ public class DialogueVar
         // DataManager.SaveData(SAVE_VAR_KEY, globalVariablesStory.state.ToJson());
     }
 
+    public string LoadVariables() {
+        return "";
+    }
+
     public string LoadVariables(string key) {
         // return DataManager.LoadData(key);
         return "";
