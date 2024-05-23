@@ -28,6 +28,7 @@ public class CheckManager : MonoSingleton<CheckManager>{
             // 2. character equipments
             else if(Utils.IsCharacterTag(component)) {
                 // TODO: val = Get(key, number);
+                val = GameManager.Instance.character.GetVal(component);
             }
             // 3. correction
             else if(int.TryParse(component, out int correction)) val = correction;

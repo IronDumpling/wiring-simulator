@@ -4,9 +4,15 @@
 namespace CharacterProperties
 {
     // maybe use interface to group them together, and the interface will have method that return the name of the property
-    #region core properties
-    public class HP
+
+    interface IProperty
     {
+        public string name { get; }
+    }
+    #region core properties
+    public class HP: IProperty
+    {
+        public string name => "HP";
         public int currentHP { get; set; }
         public int maxHP { get; set; }
 
@@ -18,8 +24,9 @@ namespace CharacterProperties
         }
     }
 
-    public class SAN
+    public class SAN: IProperty
     {
+        public string name => "SAN";
         public int currentSAN { get; set; }
         public int maxSAN { get; set; }
 
@@ -30,8 +37,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Time
+    public class Time: IProperty
     {
+        public string name => "Time";
         public int currentTime { get; set; }
 
         public Time()
@@ -44,8 +52,9 @@ namespace CharacterProperties
 
 
     #region dynamic properties
-    public class Hunger
+    public class Hunger: IProperty
     {
+        public string name => "Hunger";
         public int currentHunger { get; set; }
         public int maxHunger { get; set; }
 
@@ -56,8 +65,9 @@ namespace CharacterProperties
         }
     }
     
-    public class Thirst
+    public class Thirst: IProperty
     {
+        public string name => "Thirst";
         public int currentThirst { get; set; }
         public int maxThirst { get; set; }
 
@@ -68,8 +78,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Sleep
+    public class Sleep: IProperty
     {
+        public string name => "Sleep";
         public int currentSleep { get; set; }
         public int maxSleep { get; set; }
 
@@ -80,8 +91,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Illness
+    public class Illness :IProperty
     {
+        public string name => "Illness";
         public int currentIllness { get; set; }
         public int maxIllness { get; set; }
 
@@ -92,8 +104,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Mood
+    public class Mood: IProperty
     {
+        public string name => "Mood";
         public int currentMood { get; set; }
         public int maxMood { get; set; }
 
@@ -106,8 +119,9 @@ namespace CharacterProperties
     #endregion
 
     #region Equipment properties
-    public class Intelligent
+    public class Intelligent: IProperty
     {
+        public string name => "Intelligent";
         public int currentIntelligent { get; set; }
         public int maxIntelligent { get; set; }
 
@@ -118,8 +132,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Mind
+    public class Mind: IProperty
     {
+        public string name => "Mind";
         public int currentMind { get; set; }
         public int maxMind { get; set; }
 
@@ -131,8 +146,9 @@ namespace CharacterProperties
     }
 
 
-    public class Strength
+    public class Strength: IProperty
     {
+        public string name => "Strength";
         public int currentStrength { get; set; }
         public int maxStrength { get; set; }
 
@@ -143,8 +159,9 @@ namespace CharacterProperties
         }
     }
 
-    public class Speed
+    public class Speed: IProperty
     {
+        public string name => "Speed";
         public int currentSpeed { get; set; }
         public int maxSpeed { get; set; }
 
