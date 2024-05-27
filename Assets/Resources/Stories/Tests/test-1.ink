@@ -80,6 +80,7 @@ VAR correction_test = false
   
   
   
+  
 =frequency_test
     
   对话或事件触发次数的测试。
@@ -99,6 +100,7 @@ VAR correction_test = false
   
   
   
+  
 =value_test
   VAR HP = 5
   数值计算及选项按条件来判断是否出现的测试。
@@ -114,6 +116,8 @@ VAR correction_test = false
   -目前的血量为：
   目前的饱腹度为：
   ->value_test
+  
+  
   
   
   
