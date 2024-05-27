@@ -472,6 +472,5 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
     }
-
     #endregion
 }
