@@ -409,7 +409,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             components.Add((subString, sign));
         }
 
-        CheckManager.Instance.MakeCheck(components, level); // TODO return value
+        string result = CheckManager.Instance.MakeCheck(components, level);
+
+        VisualElement textLine = textArea.Instantiate();
+        Label label = textLine.Q<Label>();
+        label.text = result;
+        content.Add(textLine);
     }
 
     private void CharacterModification(string key, string value){

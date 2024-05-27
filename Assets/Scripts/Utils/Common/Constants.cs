@@ -15,16 +15,16 @@ public static class Constants{
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
         {"trivial", 0},
-        {"easy", 0},
-        {"medium", 0},
+        {"easy", 3},
+        {"medium", 6},
 
-        {"challenge", 0},
-        {"formidable", 0},
-        {"legendary", 0},
+        {"challenge", 9},
+        {"formidable", 12},
+        {"legendary", 15},
 
-        {"heroic", 0},
-        {"godly", 0},
-        {"impossible", 0},
+        {"heroic", 18},
+        {"godly", 21},
+        {"impossible", 24},
     };
     
     public static float HUGE_RESULT_THRESHOLD = 50f;
