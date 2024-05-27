@@ -75,8 +75,7 @@ VAR correction_test = false
    +[退出掷骰测试]
   ->test
 
-   -投掷结果：//投掷结果的位置，也是最好能在文本上显示出来。
-  ->dice_test
+   -->dice_test
   
   
   

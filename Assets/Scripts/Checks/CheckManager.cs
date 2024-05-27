@@ -36,10 +36,19 @@ public class CheckManager : MonoSingleton<CheckManager>{
             else if(sign == "-") genVal -= val;
         }
 
-        if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)) checkResult = CheckResult.HugeSuccess;
-        else if (genVal >= checkVal) checkResult = CheckResult.Success;
-        else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD / 100f)) checkResult = CheckResult.Fail;
-        else checkResult = CheckResult.HugeFail;
+        if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)){
+            checkResult = CheckResult.HugeSuccess;
+            successCount++;
+        }else if (genVal >= checkVal){
+            checkResult = CheckResult.Success;
+            successCount++;
+        }else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD / 100f)){
+            checkResult = CheckResult.Fail;
+            failCount++;
+        }else{
+            checkResult = CheckResult.HugeFail;
+            failCount++;
+        }
 
         return GetResult(genVal, checkVal, checkResult);
     }
@@ -55,7 +64,9 @@ public class CheckManager : MonoSingleton<CheckManager>{
         
         for(int i = 0; i < diceCount; i++){
             Dice dice = new Dice(diceMax);
-            result += dice.Roll();
+            int roll = dice.Roll();
+            result += roll;
+            Debug.Log("dice " + i + ": " + roll);
         }
 
         return result;
