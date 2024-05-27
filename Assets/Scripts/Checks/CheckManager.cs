@@ -25,9 +25,9 @@ public class CheckManager : MonoSingleton<CheckManager>{
             
             // 1. dice
             if(component.Contains("d")) val = DiceCheck(component);
-            // 2. character equipments
+            // 2. character
             else if(Utils.IsCharacterTag(component)) {
-                // TODO: val = Get(key, number);
+                // TODO: val = Get(key);
             }
             // 3. correction
             else if(int.TryParse(component, out int correction)) val = correction;

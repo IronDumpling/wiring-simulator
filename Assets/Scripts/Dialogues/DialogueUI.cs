@@ -373,7 +373,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                     break;
                 // 2. check tags
                 case DICE_TAG:
-                    DiceCheck(tagValue);
+                    Check(tagValue);
                     break;
                 // 3. world tags
                 case TIME_TAG:
@@ -388,7 +388,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
     }
 
-    private void DiceCheck(string value){
+    private void Check(string value){
         // format: (component1+component2-component3)>(level)
         string[] tokens = value.Split('>');
         if (tokens.Length != 2) {
@@ -409,7 +409,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             components.Add((subString, sign));
         }
 
-        CheckManager.Instance.MakeCheck(components, level);
+        CheckManager.Instance.MakeCheck(components, level); // TODO return value
     }
 
     private void CharacterModification(string key, string value){
