@@ -21,7 +21,7 @@ INCLUDE ../0-global.ink
 
 
 {translator_you_employ == 3 && not know_the_tent_post_1 && get_the_aid_1:
-你那粗犷的翻译忽然眼神一亮。 #speaker: time:10min
+你那粗犷的翻译忽然眼神一亮。 #speaker: time:+10min
 我认识他们！ #speaker:翻译
 他高声说着，连前台的志愿者都抬起头。随即，他朝前几步，开始与那两人攀谈。 #speaker:
 他们说话的声音越来越小，都低着头，不时朝你投来一瞥。
@@ -36,13 +36,13 @@ INCLUDE ../0-global.ink
 
 
 
-*{not know_doctor_1_can_speak_Chinese}[（向女人搭话）你会说中文吗？] #time:10min
+*{not know_doctor_1_can_speak_Chinese}[（向女人搭话）你会说中文吗？] #time:+10min
 ->NPC_doctor_1
 
 +{know_doctor_1_can_speak_Chinese}[（向女人搭话）我想问问。]
 ->NPC_doctor_1
 
-+{konw_you_can_buy_EOL}{not negative_event_4_complete}[朝两名工作人员打手势。]#time:10min
++{konw_you_can_buy_EOL}{not negative_event_4_complete}[朝两名工作人员打手势。]#time:+10min
 
 他们会过意，假意到帐篷外面与你谈笑——实际上是用药物和食品换了你的一张钞票。
 ~MON --
@@ -50,7 +50,7 @@ INCLUDE ../0-global.ink
 
 ->position_tent_1
 
-*[填上个人信息] #time:10min
+*[填上个人信息] #time:+10min
 
 +[离开]
 ->END

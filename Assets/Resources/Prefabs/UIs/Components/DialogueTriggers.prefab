@@ -62,4 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doc: {fileID: 9005308923018342285}
-  texts: []
+  texts:
+  - {fileID: 4900000, guid: 903a253f17a9a4a67896a3e62c90aa67, type: 3}
+  - {fileID: 4900000, guid: 5b80b7d5344af4220bef23ad306db613, type: 3}
+  - {fileID: 4900000, guid: 8877562b1427948b996da89311a1bfa6, type: 3}
+  - {fileID: 4900000, guid: 6705e4615887f6049914fe5e0c13dc4c, type: 3}
