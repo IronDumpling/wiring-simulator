@@ -145,20 +145,20 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void ContinueStory(){
-        // TODO: skip empty line
-        // while(currStory.canContinue && currStory.currentText == "\n"){
-            // currStory.Continue();
-            // HandleTags(currStory.currentTags);
-        // }
-        
         if(!currStory.canContinue){
             StartCoroutine(ExitDialogue());
             return;
         }
-        if(displayLine != null) StopCoroutine(displayLine); 
-    
+        
         currStory.Continue();
         HandleTags(currStory.currentTags);
+
+        while(currStory.canContinue && currStory.currentText == "\n"){
+            currStory.Continue();
+            HandleTags(currStory.currentTags);
+        }
+
+        if(displayLine != null) StopCoroutine(displayLine); 
         displayLine = StartCoroutine(DisplayLine(currStory.currentText));
 
         MoveSpacerToEnd();
@@ -179,7 +179,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        if(line == "\n") yield break;
+        // if(line == "\n") yield break;
 
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
