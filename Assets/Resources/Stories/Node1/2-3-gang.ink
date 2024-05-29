@@ -17,19 +17,21 @@ INCLUDE ../0-global.ink
     
     }
     
-    *找团队大一点的蛇头。 #time:10min
+    *[找团队大一点的蛇头。] #time:10min
     一个接近二十人的团队吸引了你的注意。队伍闹哄哄的，显然是推搡着蛇头赶快出发；但他还想再揽些客源。就在此时，他也瞧见了你。
     
     要加入吗？马上，就出发了。#speaker:蛇头
     他磕磕绊绊地说着中文，带着浓烈的地方口音，仿佛有块粘牙的糖。有几名偷渡客似乎按捺不住，朝他吼了几声。他没有回头。#speaker:
     赶快，快。#speaker:蛇头
     
-     **路程有多久？#speaker:
+     **[路程有多久？]#speaker:
         
     sa天。#speaker:蛇头
     他伸出三根手指。你知道他是说“三天”。#speaker:
     
-     ***多少钱？#speaker:
+    ~know_the_travel_time_1 = true
+    
+     ***[多少钱？]#speaker:
      
     他给你比了个数。（金钱-3）#speaker:
     安全。包安全。#speaker:蛇头
@@ -40,42 +42,34 @@ INCLUDE ../0-global.ink
      但走线客的分别本就是常态。先走一步，或许也可以在之后碰头。
      }
      
-     ****好，现在就走吧。#speaker:
+     ****[好，现在就走吧。]#speaker:
      {translator_you_employ > 0:
-     
          你和翻译攀谈几句，便就此别过。#speaker:
-     
-     ~translator_you_employ = 0
-     
      }
      
-    //  ->leave_ShoreVillage  
+      ->END 
      
-     ****我还没准备好。下一班是什么时候？#speaker:
+     ****[我还没准备好。下一班是什么时候？]#speaker:
     都有，每天都有。#speaker:蛇头
     似乎是意识到你不打算即刻加入，他很快转过身，挥了挥手里的旗子。人群跟着他朝道路尽头走去，聚落转瞬间变得空荡不少。#speaker:
     你忽然明白，加入这种队伍无疑是安全的——但是会多花不少时间。
      ->position_smuggler_1
     
-    +找人少的蛇头。#speaker: #time:20min
+    +[找人少的蛇头。]#speaker: #time:20min
     
     {not negative_event_3_complete:
      你忽然想起那个戴鸭舌帽的男人——你还没和莘先生联系。#speaker:
      但走线客的分别本就是常态。先走一步，或许也可以在之后碰头。
      }
      
-     ++好，现在就走吧。#speaker:
+     ++[好，现在就走吧。]#speaker:
      {translator_you_employ > 0:
-     
          你和翻译攀谈几句，便就此别过。
-     
-     ~translator_you_employ = 0
-     
      }
      
-    //  ->leave_ShoreVillage 
+      ->END 
      
-     ++我还没准备好。#speaker:
+     ++[我还没准备好。]#speaker:
      
     似乎是意识到你不打算即刻加入，他很快转过身，挥了挥手里的旗子。
      ->position_smuggler_1
@@ -83,11 +77,11 @@ INCLUDE ../0-global.ink
     
     ->position_smuggler_1
     
-    +雇佣一名翻译。 #time:10min
+    +[雇佣一名翻译。] #time:10min
     ->employ_translator
     
     
-    +离开。
+    +[离开。]#continue
     ->END
     
 
@@ -149,10 +143,10 @@ INCLUDE ../0-global.ink
   }
     
     
-    +再找找。#speaker: #time:10min
+    +[再找找。]#speaker: #time:10min
     ->employ_translator
 
-    +{translator_you_employ != translator_you_meet}雇佣他。#speaker:
+    +{translator_you_employ != translator_you_meet}[雇佣他。]#speaker:
     
     {translator_you_employ > 0:
     你和原先的翻译作别。#speaker:
@@ -166,7 +160,7 @@ INCLUDE ../0-global.ink
     ~translator_you_employ = translator_you_meet
     
     
-    +该打住了。#speaker:
+    +[该打住了。]#speaker:
     
     -->position_smuggler_1
     

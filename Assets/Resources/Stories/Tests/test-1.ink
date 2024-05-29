@@ -46,15 +46,9 @@ VAR correction_test = false
   通过修改投掷内容或比对值的大小，可以判断掷骰系统是否正常运行。
   注：在选择“受事件影响补正的八面骰”之前，应先点击“获得事件补正”一项。
   检定难度标准分级：
-    trivial
-    easy
-    medium
-    challenge
-    formidable
-    ledendary
-    heroic
-    godly
-    impossible
+    trivial, easy, medium
+    challenge, formidable, ledendary
+    heroic, godly, impossible
   
    +[投掷八面骰] #dice:1d8>easy
    
@@ -62,9 +56,9 @@ VAR correction_test = false
    
    +[在血量基础上，投掷一个八面骰] #dice:HP+1d8>godly
    
-   +[投掷一个受事件影响补正的八面骰] 
-    {correction_test} #dice:1d8+2>heroic 
-    {not correction_test} #dice:1d8-2>challenge
+   +[投掷两个受事件影响补正的八面骰] 
+    {correction_test} #dice:2d8+2>formidable
+    {not correction_test} #dice:2d8-2>formidable
    +{not correction_test}[获得事件补正+2]
     ~correction_test = true
     
@@ -75,8 +69,8 @@ VAR correction_test = false
    +[退出掷骰测试]
   ->test
 
-   -投掷结果：//投掷结果的位置，也是最好能在文本上显示出来。
-  ->dice_test
+   -->dice_test
+  
   
   
   
@@ -99,21 +93,24 @@ VAR correction_test = false
   
   
   
+  
 =value_test
   VAR HP = 5
   数值计算及选项按条件来判断是否出现的测试。
   
-  +[将血量增加一点] #HP:+1
-  +[将饱腹度增加两点] #FUL:+2
-  +[将血量减少一点] #HP:-1
-  +[将血量变为1] #HP:=1
-  +[将血量增加至上限] //这个tag还不知道怎么写，看程序怎么样方便。
-  +{HP == 20}[当血量达到20，该选项才会出现]
+  +[将生命增加一点] #HP:+1
+  +[将理智增加两点] #SAN:+2
+  +[将生命减少一点] #HP:-1
+  +[将生命变为1] #HP:=1
+  +[将生命增加至上限] //这个tag还不知道怎么写，看程序怎么样方便。
+  +{HP >= 20}[当生命达到20，该选项才会出现]
   +[退出数值测试]
     ->test
   -目前的血量为：
   目前的饱腹度为：
   ->value_test
+  
+  
   
   
   

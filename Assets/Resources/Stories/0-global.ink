@@ -30,3 +30,4 @@ VAR buy_the_EOL = 0
 VAR know_the_tent_post_1 = false
 VAR get_the_aid_1 = false
 VAR meet_shen_2 = false
+VAR know_the_travel_time_1 = false

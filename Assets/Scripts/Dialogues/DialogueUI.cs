@@ -145,20 +145,20 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void ContinueStory(){
-        // TODO: skip empty line
-        // while(currStory.canContinue && currStory.currentText == "\n"){
-            // currStory.Continue();
-            // HandleTags(currStory.currentTags);
-        // }
-        
         if(!currStory.canContinue){
             StartCoroutine(ExitDialogue());
             return;
         }
-        if(displayLine != null) StopCoroutine(displayLine); 
-    
+        
         currStory.Continue();
         HandleTags(currStory.currentTags);
+
+        while(currStory.canContinue && currStory.currentText == "\n"){
+            currStory.Continue();
+            HandleTags(currStory.currentTags);
+        }
+
+        if(displayLine != null) StopCoroutine(displayLine); 
         displayLine = StartCoroutine(DisplayLine(currStory.currentText));
 
         MoveSpacerToEnd();
@@ -179,7 +179,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        if(line == "\n") yield break;
+        // if(line == "\n") yield break;
 
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
@@ -373,7 +373,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                     break;
                 // 2. check tags
                 case DICE_TAG:
-                    DiceCheck(tagValue);
+                    Check(tagValue);
                     break;
                 // 3. world tags
                 case TIME_TAG:
@@ -388,7 +388,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
     }
 
-    private void DiceCheck(string value){
+    private void Check(string value){
         // format: (component1+component2-component3)>(level)
         string[] tokens = value.Split('>');
         if (tokens.Length != 2) {
@@ -409,7 +409,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             components.Add((subString, sign));
         }
 
-        CheckManager.Instance.MakeCheck(components, level);
+        string result = CheckManager.Instance.MakeCheck(components, level);
+
+        VisualElement textLine = textArea.Instantiate();
+        Label label = textLine.Q<Label>();
+        label.text = result;
+        content.Add(textLine);
     }
 
     private void CharacterModification(string key, string value){
@@ -472,6 +477,5 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
     }
-
     #endregion
 }
