@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -7,12 +6,15 @@ public class CheckManager : MonoSingleton<CheckManager>{
     private int successCount = 0;
     private int failCount = 0;
 
-    public string MakeCheck(List<(string, string)> components, string level){
-        CheckResult checkResult = CheckResult.HugeFail;
+    public int SuccessCount { get { return successCount;}}
+    public int FailCount { get { return failCount;}}
+
+    public CheckResultData MakeCheck(List<(string, string)> components, string level){
+        CheckResult result = CheckResult.HugeFail;
 
         if(!Constants.checkLevels.ContainsKey(level)){
             Debug.LogError("Check level: " + level + " could not be recognized.");
-            return GetResult(0, 0, checkResult);
+            return new CheckResultData(0, 0, result);
         }
 
         int checkVal = Constants.checkLevels[level];
@@ -37,20 +39,20 @@ public class CheckManager : MonoSingleton<CheckManager>{
         }
 
         if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)){
-            checkResult = CheckResult.HugeSuccess;
+            result = CheckResult.HugeSuccess;
             successCount++;
         }else if (genVal >= checkVal){
-            checkResult = CheckResult.Success;
+            result = CheckResult.Success;
             successCount++;
         }else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD / 100f)){
-            checkResult = CheckResult.Fail;
+            result = CheckResult.Fail;
             failCount++;
         }else{
-            checkResult = CheckResult.HugeFail;
+            result = CheckResult.HugeFail;
             failCount++;
         }
 
-        return GetResult(genVal, checkVal, checkResult);
+        return new CheckResultData(genVal, checkVal, result);
     }
 
     private int DiceCheck(string value){
@@ -70,9 +72,5 @@ public class CheckManager : MonoSingleton<CheckManager>{
         }
 
         return result;
-    }
-
-    private string GetResult(int gen, int check, CheckResult checkResult){
-        return "(" + gen + "/" + check + " " + checkResult.ToString() + ")";
     }
 }

@@ -1,12 +1,5 @@
 using System.Collections.Generic;
 
-public enum CheckResult{
-    HugeFail,
-    Fail,
-    Success,
-    HugeSuccess,
-}
-
 public static class Constants{
     // dialogue
     public static string CONTINUE = "继续";

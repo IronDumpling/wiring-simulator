@@ -53,7 +53,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private const string PORTRAIT_TAG = "portrait";
     private const string IMG_TAG = "image";
     private const string DICE_TAG = "dice";
-    private const string HP_TAG = "HP";
     private const string TIME_TAG = "time";
     private string displaySpeakerName = "";
     private DialogueVar dialogueVars;
@@ -150,6 +149,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         
+        // update variable 
+
         currStory.Continue();
         HandleTags(currStory.currentTags);
 
@@ -179,8 +180,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        // if(line == "\n") yield break;
-
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
         label.text = displaySpeakerName + "-";
@@ -409,11 +408,11 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             components.Add((subString, sign));
         }
 
-        string result = CheckManager.Instance.MakeCheck(components, level);
+        CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
 
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
-        label.text = result;
+        label.text = result.PrintResult();
         content.Add(textLine);
     }
 

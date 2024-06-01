@@ -8,6 +8,10 @@ VAR NPC3 = "便利店老板"
 VAR NPC4 = "蛇头"
 VAR NPC5 = "翻译"
 
+CONST HUGE_FAIL = "HugeFail"
+CONST FAIL = "Fail"
+CONST SUCCESS = "Success"
+CONST HUGE_SUCCESS = "HugeSuccess"
 
 //节点一的初始参数
 
