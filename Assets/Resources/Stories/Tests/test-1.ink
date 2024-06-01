@@ -1,3 +1,5 @@
+INCLUDE ../0-global.ink
+
 -> test
 
 === test ===
@@ -50,12 +52,13 @@ VAR correction_test = false
     challenge, formidable, ledendary
     heroic, godly, impossible
   
-   +[投掷八面骰] #dice:1d8>easy
-    // VAR dice_result = #dice:1d8>easy
-    // {dice_result == huge_success} ...
-    // {dice_result == success} ...
-    // {dice_result == fail} ...
-    // {dice_result == huge_fail} ...
+   +[投掷八面骰]
+    VAR dice_result = ""
+    #dice:1d8>easy
+    {dice_result == HUGE_SUCCESS} 这是一次大成功
+    {dice_result == SUCCESS} 这是一次成功
+    {dice_result == FAIL} 这是一次失败
+    {dice_result == HUGE_FAIL} 这是一次大失败
    
    +[投掷两个六面骰] #dice:2d6>medium
    
@@ -100,7 +103,7 @@ VAR correction_test = false
   
   
 =value_test
-  VAR HP = 5
+//   VAR HP = 5
   数值计算及选项按条件来判断是否出现的测试。
   
   +[将生命增加一点] #HP:+1

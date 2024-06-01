@@ -409,7 +409,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
-
+        
+        currStory.variablesState["dice_result"] = result.Result.ToString();
+        
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
         label.text = result.PrintResult();
