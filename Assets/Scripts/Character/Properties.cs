@@ -13,6 +13,7 @@ namespace CharacterProperties
     public class HP: IProperty
     {
         public string name => "HP";
+        
         public int currentHP { get; set; }
         public int maxHP { get; set; }
 
