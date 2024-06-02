@@ -426,16 +426,22 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         
+        
         if(value.StartsWith("+")){
             // TODO: Change(key, number);
+            GameManager.Instance.character.IncreaseVal(key, number);
         } 
         else if(value.StartsWith("-")){
             // TODO: Change(key, -1 * number);
+            GameManager.Instance.character.DecreaseVal(key, number);
         }
         else if(value.StartsWith("=")){
             // TODO: Set(key, number);
+            GameManager.Instance.character.SetVal(key, number);
         }
         else Debug.LogError(key + " tag could not be appropriately parsed");
+        
+        Debug.Log($"{key} now have value {GameManager.Instance.character.GetVal(key)}");
     }
 
     private void TimeModification(string value){
@@ -466,17 +472,22 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             }
             else Debug.LogError("'time' tag could not be appropriately parsed");
         }
-
+        
         if(value.StartsWith("+")){
             // TODO: ChangeTime(time);
+            GameManager.Instance.character.IncreaseTime(time);
         } 
         else if(value.StartsWith("-")){
             // TODO: ChangeTime(-1 * time);
+            GameManager.Instance.character.DecreaseTime(time);
         }
         else if(value.StartsWith("=")){
             // TODO: SetTime(time);
+            GameManager.Instance.character.SetTime(time);
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
+        
+        Debug.Log($"Current Time: {GameManager.Instance.character.GetTime()}");
     }
     #endregion
 }

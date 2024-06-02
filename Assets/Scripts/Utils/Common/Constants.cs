@@ -25,4 +25,16 @@ public static class Constants{
     // character tags
     public static string HP = "HP";
     public static string SAN = "SAN";
+    // "HP" => GetHP(),
+    // "SAN" => GetSAN(),
+    // "Time" => GetTime(),
+    // "Hunger" => GetHunger(),
+    // "Thirst" => GetThirst(),
+    // "Sleep" => GetSleep(),
+    // "Illness" => GetIllness(),
+    // "Mood" => GetMood(),
+    // "Intelligent" => GetIntelligent(),
+    // "Mind" => GetMind(),
+    // "Strength" => GetStrength(),
+    // "Speed" => GetSpeed(),
 }
