@@ -99,6 +99,8 @@ public class Character
     #endregion SAN
     
     #region Time
+
+    // TODO: Use timestamp?
     public int GetTime()
     {
         return m_time.currentTime;
@@ -251,6 +253,7 @@ public class Character
     #region Intelligent
     public int GetIntelligent()
     {
+        // TODO: correction from dynamic values
         return m_intelligent.currentIntelligent;
     }
 

@@ -26,7 +26,7 @@ VAR correction_test = false
   +[快进十分钟] #time:+10min
   +[快进一小时二十分钟] #time:+1hr,20min
   +[快进一天一小时] #time:+1d,1hr
-  +[时间清零] #time:=0
+  +[时间清零] #time:=0min
   +[退出时间推进测试]
   ->test
 
@@ -52,13 +52,11 @@ VAR correction_test = false
     challenge, formidable, ledendary
     heroic, godly, impossible
   
-   +[投掷八面骰]
-    VAR dice_result = ""
-    #dice:1d8>easy
-    {dice_result == HUGE_SUCCESS} 这是一次大成功
-    {dice_result == SUCCESS} 这是一次成功
-    {dice_result == FAIL} 这是一次失败
-    {dice_result == HUGE_FAIL} 这是一次大失败
+   +[投掷八面骰] #dice:1d8>easy
+    {CHECK == HUGE_SUCCESS} 这是一次大成功
+    {CHECK == SUCCESS} 这是一次成功
+    {CHECK == FAIL} 这是一次失败
+    {CHECK == HUGE_FAIL} 这是一次大失败
    
    +[投掷两个六面骰] #dice:2d6>medium
    
@@ -103,7 +101,6 @@ VAR correction_test = false
   
   
 =value_test
-//   VAR HP = 5
   数值计算及选项按条件来判断是否出现的测试。
   
   +[将生命增加一点] #HP:+1

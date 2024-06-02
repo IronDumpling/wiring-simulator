@@ -37,4 +37,5 @@ public static class Constants{
     // "Mind" => GetMind(),
     // "Strength" => GetStrength(),
     // "Speed" => GetSpeed(),
+    // TODO
 }

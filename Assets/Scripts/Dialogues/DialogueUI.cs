@@ -410,7 +410,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
         
-        currStory.variablesState["dice_result"] = result.Result.ToString();
+        currStory.variablesState["CHECK"] = result.Result.ToString(); // sync
         
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
@@ -428,15 +428,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         
         
         if(value.StartsWith("+")){
-            // TODO: Change(key, number);
             GameManager.Instance.character.IncreaseVal(key, number);
         } 
         else if(value.StartsWith("-")){
-            // TODO: Change(key, -1 * number);
             GameManager.Instance.character.DecreaseVal(key, number);
         }
         else if(value.StartsWith("=")){
-            // TODO: Set(key, number);
             GameManager.Instance.character.SetVal(key, number);
         }
         else Debug.LogError(key + " tag could not be appropriately parsed");

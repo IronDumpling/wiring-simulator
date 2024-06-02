@@ -2,6 +2,7 @@ VAR HP = 1
 VAR SAN = 2
 VAR HUN = 5
 VAR MON = 0
+VAR CHECK = ""
 
 VAR NPC2 = "志愿者"
 VAR NPC3 = "便利店老板"

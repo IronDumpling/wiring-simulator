@@ -29,7 +29,7 @@ public class CheckManager : MonoSingleton<CheckManager>{
             if(component.Contains("d")) val = DiceCheck(component);
             // 2. character
             else if(Utils.IsCharacterTag(component)) {
-                // TODO: val = Get(key);
+                val = GameManager.Instance.character.GetVal(component);
             }
             // 3. correction
             else if(int.TryParse(component, out int correction)) val = correction;
