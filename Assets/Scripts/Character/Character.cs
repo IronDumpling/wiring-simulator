@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CharacterProperties;
+using Ink;
 using Ink.Runtime;
 using TMPro;
 using Unity.VisualScripting;
@@ -26,7 +27,24 @@ public class Character
     private Mind m_mind;
     private Strength m_strength;
     private Speed m_speed;
+    
+    public Character(CharacterSetUp setup){
+        m_hp = new HP(setup.maxHp);
+        m_san = new SAN(setup.maxSan);
+        m_time = new Time();
 
+        m_hunger = new Hunger(setup.maxHunger);
+        m_thirst = new Thirst(setup.maxThirst);
+        m_sleep = new Sleep(setup.maxSleep);
+        m_illness = new Illness(setup.maxIllness);
+        m_mood = new Mood(setup.maxMood);
+
+        m_intelligent = new Intelligent(setup.maxIntelligent);
+        m_mind = new Mind(setup.maxMind);
+        m_strength = new Strength(setup.maxStrength);
+        m_speed = new Speed(setup.maxSpeed);
+    }
+    
     public Character(int maxHp, int maxSan, int maxHunger, int maxThirst, int maxSleep, int maxIllness, int maxMood, 
         int maxIntelligent, int maxMind, int maxStrength, int maxSpeed)
     {
@@ -120,6 +138,11 @@ public class Character
     {
         m_time.currentTime -= delta;
         if (m_time.currentTime < 0) m_time.currentTime = 0;
+    }
+
+    public string GetTimeString()
+    {
+        return m_time.ToString();
     }
     #endregion Time
     

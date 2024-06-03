@@ -47,6 +47,37 @@ namespace CharacterProperties
         {
             this.currentTime = 0;
         }
+
+        public override string ToString()
+        {
+            string timeString = "";
+            int sec = currentTime % 60;
+            int rest = currentTime / 60;
+
+            timeString = $"{sec}s";
+            
+            int min = rest % 60;
+            rest = rest / 60;
+            if (min != 0) timeString = $"{min}min " + timeString;
+            
+            int hr = rest % 60;
+            rest = rest / 60;
+            if (min != 0) timeString = $"{hr}hour " + timeString;
+            
+            int day = rest % 24;
+            rest = rest / 60;
+            if (min != 0) timeString = $"{day}day " + timeString;
+
+            int month = rest % 30;
+            rest = rest / 30;
+            if (min != 0) timeString = $"{month}month " + timeString;
+
+            int year = rest % 12;
+            if (min != 0) timeString = $"{year}year " + timeString;
+
+            return timeString;
+
+        }
     }
 
     #endregion
