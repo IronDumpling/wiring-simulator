@@ -31,17 +31,17 @@ public static class Constants{
     public const string SAN = "SAN";
 
     // 1.2 Dynamic Status
-    // "Hunger" => GetHunger(),
-    // "Thirst" => GetThirst(),
-    // "Sleep" => GetSleep(),
-    // "Illness" => GetIllness(),
-    // "Mood" => GetMood(),
+    public const string Hunger = "Hunger";
+    public const string Thirst = "Thirst";
+    public const string Sleep = "Sleep";
+    public const string Illness = "Illness";
+    public const string Mood = "Mood";
 
     // 1.3 Equipment Status
-    // "Intelligent" => GetIntelligent(),
-    // "Mind" => GetMind(),
-    // "Strength" => GetStrength(),
-    // "Speed" => GetSpeed(),
+    public const string Intelligent = "Intelligent";
+    public const string Mind = "Mind";
+    public const string Strength = "Strength";
+    public const string Speed = "Speed";
 
     // 2. Utils  
     public const string CHECK = "CHECK";

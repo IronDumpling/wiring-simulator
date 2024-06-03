@@ -6,17 +6,18 @@ using UnityEngine.Serialization;
 
 public class GameManager: MonoSingleton<GameManager>
 {
-    public int maxHp=100;
-    public int maxSan=100;
-    public int maxHunger=100;
-    public int maxThirst=100;
-    public int maxSleep=100;
-    public int maxIllness=100;
-    public int maxMood=100;
-    public int maxIntelligent=100;
-    public int maxMind=100;
-    public int maxStrength=100;
-    public int maxSpeed=100;
+    public CharacterSetUp characterSetUp;
+    // public int maxHp=100;
+    // public int maxSan=100;
+    // public int maxHunger=100;
+    // public int maxThirst=100;
+    // public int maxSleep=100;
+    // public int maxIllness=100;
+    // public int maxMood=100;
+    // public int maxIntelligent=100;
+    // public int maxMind=100;
+    // public int maxStrength=100;
+    // public int maxSpeed=100;
     public Character character;
     
     // TODO: Use Scriptable Object to initialize it with these values
@@ -34,8 +35,15 @@ public class GameManager: MonoSingleton<GameManager>
 
     protected override void Init()
     {
-        character = new Character(maxHp, maxSan, maxHunger, maxThirst, maxSleep, maxIllness, maxMood, maxIntelligent,
-            maxMind, maxStrength, maxSpeed);
+        if (characterSetUp == null)
+        {
+            Debug.LogError("No Set Up File");
+            return;
+        }
+
+        character = new Character(characterSetUp);
+        // character = new Character(maxHp, maxSan, maxHunger, maxThirst, maxSleep, maxIllness, maxMood, maxIntelligent,
+        //     maxMind, maxStrength, maxSpeed);
     }
 }
     
