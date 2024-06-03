@@ -19,7 +19,18 @@ public class GameManager: MonoSingleton<GameManager>
     public int maxSpeed=100;
     public Character character;
     
-    
+    // TODO: Use Scriptable Object to initialize it with these values
+    // public int Hp=5;
+    // public int San=5;
+    // public int Hunger=5;
+    // public int Thirst=5;
+    // public int Sleep=5;
+    // public int Illness=5;
+    // public int Mood=5;
+    // public int Intelligent=5;
+    // public int Mind=5;
+    // public int Strength=5;
+    // public int Speed=5;
 
     protected override void Init()
     {

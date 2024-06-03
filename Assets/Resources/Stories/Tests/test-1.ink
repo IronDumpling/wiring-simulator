@@ -53,14 +53,28 @@ VAR correction_test = false
     heroic, godly, impossible
   
    +[投掷八面骰] #dice:1d8>easy
-    {CHECK == HUGE_SUCCESS} 这是一次大成功
-    {CHECK == SUCCESS} 这是一次成功
-    {CHECK == FAIL} 这是一次失败
-    {CHECK == HUGE_FAIL} 这是一次大失败
+   { CHECK:
+    - HUGE_SUCCESS: 这是一次大成功
+    - SUCCESS: 这是一次成功
+    - FAIL: 这是一次失败
+    - HUGE_FAIL: 这是一次大失败
+    }
    
    +[投掷两个六面骰] #dice:2d6>medium
+   { CHECK:
+    - HUGE_SUCCESS: 这是一次大成功
+    - SUCCESS: 这是一次成功
+    - FAIL: 这是一次失败
+    - HUGE_FAIL: 这是一次大失败
+    }
    
    +[在血量基础上，投掷一个八面骰] #dice:HP+1d8>godly
+   { CHECK:
+    - HUGE_SUCCESS: 这是一次大成功
+    - SUCCESS: 这是一次成功
+    - FAIL: 这是一次失败
+    - HUGE_FAIL: 这是一次大失败
+    }
    
    +[投掷两个受事件影响补正的八面骰] 
     {correction_test} #dice:2d8+2>formidable
@@ -72,8 +86,7 @@ VAR correction_test = false
    
    ->dice_test
    
-   +[退出掷骰测试]
-  ->test
+   +[退出掷骰测试]->test
 
    -->dice_test
   

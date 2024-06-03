@@ -410,7 +410,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
         
-        currStory.variablesState["CHECK"] = result.Result.ToString(); // sync
+        currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // sync
         
         VisualElement textLine = textArea.Instantiate();
         Label label = textLine.Q<Label>();
@@ -426,7 +426,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         
-        
         if(value.StartsWith("+")){
             GameManager.Instance.character.IncreaseVal(key, number);
         } 
@@ -437,6 +436,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             GameManager.Instance.character.SetVal(key, number);
         }
         else Debug.LogError(key + " tag could not be appropriately parsed");
+
+        currStory.variablesState[key] = GameManager.Instance.character.GetVal(key); // sync
         
         Debug.Log($"{key} now have value {GameManager.Instance.character.GetVal(key)}");
     }
@@ -471,18 +472,17 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         
         if(value.StartsWith("+")){
-            // TODO: ChangeTime(time);
             GameManager.Instance.character.IncreaseTime(time);
         } 
         else if(value.StartsWith("-")){
-            // TODO: ChangeTime(-1 * time);
             GameManager.Instance.character.DecreaseTime(time);
         }
         else if(value.StartsWith("=")){
-            // TODO: SetTime(time);
             GameManager.Instance.character.SetTime(time);
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
+
+        currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTime(); // sync
         
         Debug.Log($"Current Time: {GameManager.Instance.character.GetTime()}");
     }

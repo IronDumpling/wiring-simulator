@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public static class Constants{
     // dialogue
-    public static string CONTINUE = "继续";
-    public static string LEAVE = "离开"; 
+    public const string CONTINUE = "继续";
+    public const string LEAVE = "离开"; 
 
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
@@ -20,22 +20,32 @@ public static class Constants{
         {"impossible", 24},
     };
     
-    public static float HUGE_RESULT_THRESHOLD = 50f;
+    public const float HUGE_RESULT_THRESHOLD = 50f;
 
-    // character tags
-    public static string HP = "HP";
-    public static string SAN = "SAN";
-    // "HP" => GetHP(),
-    // "SAN" => GetSAN(),
-    // "Time" => GetTime(),
+    // Common Names
+    // global var names in Ink file and tag names
+    
+    // 1. Character
+    // 1.1 Core Status
+    public const string HP = "HP";
+    public const string SAN = "SAN";
+
+    // 1.2 Dynamic Status
     // "Hunger" => GetHunger(),
     // "Thirst" => GetThirst(),
     // "Sleep" => GetSleep(),
     // "Illness" => GetIllness(),
     // "Mood" => GetMood(),
+
+    // 1.3 Equipment Status
     // "Intelligent" => GetIntelligent(),
     // "Mind" => GetMind(),
     // "Strength" => GetStrength(),
     // "Speed" => GetSpeed(),
-    // TODO
+
+    // 2. Utils  
+    public const string CHECK = "CHECK";
+    
+    // 3. World
+    public const string TIME = "time";
 }

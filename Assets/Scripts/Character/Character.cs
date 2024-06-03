@@ -348,9 +348,8 @@ public class Character
     {
         return name switch
         {
-            "HP" => GetHP(),
-            "SAN" => GetSAN(),
-            "Time" => GetTime(),
+            Constants.HP => GetHP(),
+            Constants.SAN => GetSAN(),
             "Hunger" => GetHunger(),
             "Thirst" => GetThirst(),
             "Sleep" => GetSleep(),
@@ -360,6 +359,7 @@ public class Character
             "Mind" => GetMind(),
             "Strength" => GetStrength(),
             "Speed" => GetSpeed(),
+            Constants.TIME => GetTime(),
             _ => 0
         };
     }
@@ -368,14 +368,11 @@ public class Character
     {
         switch (name)
         {
-            case "HP":
+            case Constants.HP:
                 SetHP(val);
                 break;
-            case "SAN":
+            case Constants.SAN:
                 SetSAN(val);
-                break;
-            case "Time":
-                SetTime(val);
                 break;
             case "Hunger":
                 SetHunger(val);
@@ -404,6 +401,9 @@ public class Character
             case "Speed":
                 SetSpeed(val);
                 break;
+            case Constants.TIME:
+                SetTime(val);
+                break;
             default:
                 Debug.Log("Unknown Properties");
                 break;
@@ -415,14 +415,11 @@ public class Character
     {
         switch (name)
         {
-            case "HP":
+            case Constants.HP:
                 IncreaseHP(delta);
                 break;
-            case "SAN":
+            case Constants.SAN:
                 IncreaseSAN(delta);
-                break;
-            case "Time":
-                IncreaseTime(delta);
                 break;
             case "Hunger":
                 IncreaseHunger(delta);
@@ -451,6 +448,9 @@ public class Character
             case "Speed":
                 IncreaseSpeed(delta);
                 break;
+            case Constants.TIME:
+                IncreaseTime(delta);
+                break;
             default:
                 Debug.Log("Unknown Properties");
                 break;
@@ -461,14 +461,11 @@ public class Character
     {
         switch (name)
         {
-            case "HP":
+            case Constants.HP:
                 DecreaseHP(delta);
                 break;
-            case "SAN":
+            case Constants.SAN:
                 DecreaseSAN(delta);
-                break;
-            case "Time":
-                DecreaseTime(delta);
                 break;
             case "Hunger":
                 DecreaseHunger(delta);
@@ -496,6 +493,9 @@ public class Character
                 break;
             case "Speed":
                 DecreaseSpeed(delta);
+                break;
+            case Constants.TIME:
+                DecreaseTime(delta);
                 break;
             default:
                 Debug.Log("Unknown Properties");

@@ -2,12 +2,14 @@ VAR HP = 1
 VAR SAN = 2
 VAR HUN = 5
 VAR MON = 0
-VAR CHECK = ""
 
-VAR NPC2 = "志愿者"
-VAR NPC3 = "便利店老板"
-VAR NPC4 = "蛇头"
-VAR NPC5 = "翻译"
+VAR CHECK = ""
+VAR time = 0 // 统一大小写，C#，tag和global var中需要用相同的名字
+
+CONST NPC2 = "志愿者"
+CONST NPC3 = "便利店老板"
+CONST NPC4 = "蛇头"
+CONST NPC5 = "翻译"
 
 CONST HUGE_FAIL = "HugeFail"
 CONST FAIL = "Fail"
