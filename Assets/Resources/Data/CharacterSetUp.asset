@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88c07a27b8ad4142addff16de8dce83e, type: 3}
-  m_Name: CharacterSetUp'
+  m_Name: CharacterSetUp
   m_EditorClassIdentifier: 
   maxHp: 100
   maxSan: 100
@@ -23,3 +23,14 @@ MonoBehaviour:
   maxMind: 100
   maxStrength: 100
   maxSpeed: 100
+  Hp: 5
+  San: 5
+  Hunger: 5
+  Thirst: 5
+  Sleep: 5
+  Illness: 5
+  Mood: 5
+  Intelligent: 5
+  Mind: 5
+  Strength: 5
+  Speed: 5

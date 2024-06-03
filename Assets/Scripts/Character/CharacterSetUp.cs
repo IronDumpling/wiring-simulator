@@ -15,4 +15,16 @@ public class CharacterSetUp: ScriptableObject
     public int maxMind;
     public int maxStrength;
     public int maxSpeed;
+
+    public int Hp;
+    public int San;
+    public int Hunger;
+    public int Thirst;
+    public int Sleep;
+    public int Illness;
+    public int Mood;
+    public int Intelligent;
+    public int Mind;
+    public int Strength;
+    public int Speed;
 }
