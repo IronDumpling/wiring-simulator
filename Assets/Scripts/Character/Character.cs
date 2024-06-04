@@ -30,19 +30,38 @@ public class Character
     
     public Character(CharacterSetUp setup){
         m_hp = new HP(setup.maxHp);
+        SetHP(setup.initialHp);
+        
         m_san = new SAN(setup.maxSan);
+        SetSAN(setup.initialSan);
         m_time = new Time();
 
         m_hunger = new Hunger(setup.maxHunger);
+        SetHunger(setup.initialHunger);
+        
         m_thirst = new Thirst(setup.maxThirst);
+        SetThirst(setup.initialThirst);
+        
         m_sleep = new Sleep(setup.maxSleep);
+        SetSleep(setup.initialSleep);
+        
         m_illness = new Illness(setup.maxIllness);
+        SetIllness(setup.initialIllness);
+        
         m_mood = new Mood(setup.maxMood);
-
+        SetMood(setup.initialMood);
+        
         m_intelligent = new Intelligent(setup.maxIntelligent);
+        SetIntelligent(setup.initialIntelligent);
+        
         m_mind = new Mind(setup.maxMind);
+        SetMind(setup.initialMind);
+        
         m_strength = new Strength(setup.maxStrength);
+        SetStrength(setup.initialStrength);
+        
         m_speed = new Speed(setup.maxSpeed);
+        SetSpeed(setup.initialSpeed);
     }
     
     public Character(int maxHp, int maxSan, int maxHunger, int maxThirst, int maxSleep, int maxIllness, int maxMood, 

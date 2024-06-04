@@ -4,27 +4,45 @@ using UnityEngine;
 [CreateAssetMenu]
 public class CharacterSetUp: ScriptableObject
 {
+    #region Core
+    [Header("Core")]
     public int maxHp;
+    public int initialHp;
+    
     public int maxSan;
+    public int initialSan;
+    #endregion Core
+    
+    #region Dynamic
+    [Header("Dynamic")]
     public int maxHunger;
+    public int initialHunger;
+    
     public int maxThirst;
+    public int initialThirst;
+    
     public int maxSleep;
+    public int initialSleep;
+    
     public int maxIllness;
+    public int initialIllness;
+    
     public int maxMood;
+    public int initialMood;
+    #endregion Dynamic
+    
+    #region Equipment
+    [Header("Equipment")]
     public int maxIntelligent;
+    public int initialIntelligent;
+    
     public int maxMind;
+    public int initialMind;
+    
     public int maxStrength;
+    public int initialStrength;
+    
     public int maxSpeed;
-
-    public int Hp;
-    public int San;
-    public int Hunger;
-    public int Thirst;
-    public int Sleep;
-    public int Illness;
-    public int Mood;
-    public int Intelligent;
-    public int Mind;
-    public int Strength;
-    public int Speed;
+    public int initialSpeed;
+    #endregion
 }
