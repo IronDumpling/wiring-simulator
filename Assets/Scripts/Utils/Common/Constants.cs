@@ -3,7 +3,18 @@ using System.Collections.Generic;
 public static class Constants{
     // dialogue
     public const string CONTINUE = "继续";
-    public const string LEAVE = "离开"; 
+    public const string LEAVE = "离开";
+
+    // UI
+    public const float TYPE_SPEED = 0.04f;
+    public const float SCROLL_SPEED_AMPLIFIER = 50f;
+    public const float SCROLL_DAMP = 0.1f;
+    public const float SCROLL_OFFSET = 100f;
+    public const float SPACER_HEIGHT = 200f; 
+    public const float MIN_WIDTH = 500f; 
+    public const float EXIT_LAG_TIME = 0.5f;
+    public const int PANEL_WIDTH = 30;
+    public const float HIDE_POSITION = 98.5f;
 
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
@@ -59,4 +70,11 @@ public static class Constants{
     
     // 3. World
     public const string TIME = "time";
+
+    // 4. Tag
+    public const string SPEAKER_TAG = "speaker";
+    public const string TITLE_TAG = "title";
+    public const string PORTRAIT_TAG = "portrait";
+    public const string IMG_TAG = "image";
+    public const string DICE_TAG = "dice";
 }

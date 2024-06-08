@@ -61,15 +61,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5452738819f43e19c8ab1d21210be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TYPE_SPEED: 0.04
-  SCROLL_SPEED_AMPLIFIER: 50
-  SCROLL_DAMP: 0.1
-  SCROLL_OFFSET: 100
-  SPACER_HEIGHT: 200
-  MIN_WIDTH: 500
-  EXIT_LAG_TIME: 0.5
-  PANEL_WIDTH: 30
-  HIDE_POSITION: 98.5
-  doc: {fileID: 983548256566562984}
-  globalJSON: {fileID: 4900000, guid: d5458671c0cac4ed5b0fa01e48d284b7, type: 3}
-  defaultInkJSON: {fileID: 4900000, guid: eb387db1b0de64403950955a10f5061a, type: 3}
+  m_doc: {fileID: 983548256566562984}
+  m_globalnk: {fileID: 4900000, guid: d5458671c0cac4ed5b0fa01e48d284b7, type: 3}
+  m_defaultInk: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
