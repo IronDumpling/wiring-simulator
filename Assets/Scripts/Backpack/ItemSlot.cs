@@ -2,26 +2,24 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ItemSlot : MonoBehaviour{
     private int _count;
-    public int m_Count
-    {
+    public int m_Count{
         get { return _count; }
-        set
-        {
+        set {
             _count = value;
-            // transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = $"{_count}";
+            transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = $"{_count}";
         }
     }
 
     private Item _item;
     public Item m_Item{
         get { return _item; }
-        set{
+        set {
             _item = value;
-            // transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Item.m_Thumbnail;
+            transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Item.thumbnail;
         }
     }
 
@@ -45,8 +43,8 @@ public class ItemSlot : MonoBehaviour{
         }
 
         if (!infoCard.activeSelf) infoCard.SetActive(true);
-        // infoCard.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Item.m_Thumbnail;
-        // infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = m_Item.m_Name + m_Item.m_Text;
-        // infoCard.transform.GetChild(2).gameObject.GetComponent<Button>().onClick = m_Item.m_UseButton;
+        infoCard.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Item.thumbnail;
+        infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = m_Item.name + m_Item.text;
+        // infoCard.transform.GetChild(2).gameObject.GetComponent<Button>().clicked = m_Item.useButton;
     }
 }
