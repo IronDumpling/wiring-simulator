@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c07a27b8ad4142addff16de8dce83e, type: 3}
   m_Name: CharacterSetUp
   m_EditorClassIdentifier: 
-  maxHp: 10
-  initialHp: 5
-  maxSan: 10
-  initialSan: 5
+  maxHp: 100
+  initialHp: 50
+  maxSan: 100
+  initialSan: 50
   maxHunger: 10
   initialHunger: 5
   maxThirst: 10
