@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88c07a27b8ad4142addff16de8dce83e, type: 3}
   m_Name: CharacterSetUp
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   maxHp: 100
   initialHp: 50
   maxSan: 100
@@ -35,3 +35,14 @@ MonoBehaviour:
   initialStrength: 5
   maxSpeed: 10
   initialSpeed: 5
+  globalSideEffect:
+  - end: 4
+    effect: -2
+  - end: 8
+    effect: -1
+  - end: 12
+    effect: 0
+  - end: 16
+    effect: 1
+  - end: 20
+    effect: 2
