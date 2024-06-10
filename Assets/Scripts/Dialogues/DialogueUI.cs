@@ -482,9 +482,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
 
-        currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTime(); // sync
+        currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTimeString(); // sync
         
-        Debug.Log($"Current Time: {GameManager.Instance.character.GetTime()}");
+        Debug.Log($"Current Time: {GameManager.Instance.character.GetTimeString()}");
     }
     #endregion
 }
