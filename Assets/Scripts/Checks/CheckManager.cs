@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckManager : MonoSingleton<CheckManager>{
-    private int successCount = 0;
-    private int failCount = 0;
+    private int m_successCount = 0;
+    private int m_failCount = 0;
 
-    public int SuccessCount { get { return successCount;}}
-    public int FailCount { get { return failCount;}}
+    public int successCount { get { return m_successCount;}}
+    public int failCount { get { return m_failCount;}}
 
     public CheckResultData MakeCheck(List<(string, string)> components, string level){
         CheckResult result = CheckResult.HugeFail;
@@ -40,16 +40,16 @@ public class CheckManager : MonoSingleton<CheckManager>{
 
         if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)){
             result = CheckResult.HugeSuccess;
-            successCount++;
+            m_successCount++;
         }else if (genVal >= checkVal){
             result = CheckResult.Success;
-            successCount++;
+            m_successCount++;
         }else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD / 100f)){
             result = CheckResult.Fail;
-            failCount++;
+            m_failCount++;
         }else{
             result = CheckResult.HugeFail;
-            failCount++;
+            m_failCount++;
         }
 
         return new CheckResultData(genVal, checkVal, result);
