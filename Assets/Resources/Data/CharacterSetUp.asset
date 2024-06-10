@@ -16,6 +16,7 @@ MonoBehaviour:
   initialHp: 5
   maxSan: 100
   initialSan: 5
+  staringYear: 2020
   maxHunger: 100
   initialHunger: 5
   maxThirst: 100

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿
 using UnityEngine;
-using UnityEngine.Serialization;
 
+using CharacterProperties;
 
 public class GameManager: MonoSingleton<GameManager>
 {

@@ -1,48 +1,58 @@
 ﻿
 using UnityEngine;
-
-[CreateAssetMenu]
-public class CharacterSetUp: ScriptableObject
+using System.Collections.Generic;
+namespace CharacterProperties
 {
-    #region Core
-    [Header("Core")]
-    public int maxHp;
-    public int initialHp;
+    [CreateAssetMenu]
+    public class CharacterSetUp: ScriptableObject
+    {
+        #region Core
+        [Header("Core")]
+        public int maxHp;
+        public int initialHp;
     
-    public int maxSan;
-    public int initialSan;
-    #endregion Core
+        public int maxSan;
+        public int initialSan;
+
+        public int staringYear;
+        #endregion Core
     
-    #region Dynamic
-    [Header("Dynamic")]
-    public int maxHunger;
-    public int initialHunger;
+        #region Dynamic
+        [Header("Dynamic")]
+        public int maxHunger;
+        public int initialHunger;
     
-    public int maxThirst;
-    public int initialThirst;
+        public int maxThirst;
+        public int initialThirst;
     
-    public int maxSleep;
-    public int initialSleep;
+        public int maxSleep;
+        public int initialSleep;
     
-    public int maxIllness;
-    public int initialIllness;
+        public int maxIllness;
+        public int initialIllness;
     
-    public int maxMood;
-    public int initialMood;
-    #endregion Dynamic
+        public int maxMood;
+        public int initialMood;
+        #endregion Dynamic
     
-    #region Equipment
-    [Header("Equipment")]
-    public int maxIntelligent;
-    public int initialIntelligent;
+        #region Equipment
+        [Header("Equipment")]
+        public int maxIntelligent;
+        public int initialIntelligent;
     
-    public int maxMind;
-    public int initialMind;
+        public int maxMind;
+        public int initialMind;
     
-    public int maxStrength;
-    public int initialStrength;
+        public int maxStrength;
+        public int initialStrength;
     
-    public int maxSpeed;
-    public int initialSpeed;
-    #endregion
+        public int maxSpeed;
+        public int initialSpeed;
+        #endregion
+        
+        #region Others
+        public List<SideEffectBlock> globalSideEffect;
+        #endregion
+    }
 }
+
