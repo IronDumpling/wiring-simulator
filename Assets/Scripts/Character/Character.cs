@@ -79,13 +79,13 @@ namespace CharacterProperties
             m_speed = new Speed(setup.maxSpeed);
             SetSpeed(setup.initialSpeed);
 
-            m_globalSideEffect = new List<SideEffectBlock>(setup.globalSideEffect);
+            m_globalSideEffect = new List<SideEffectBlock>(setup.globalEqipmentSideEffect);
             m_globalSideEffect.Sort();
 
             int start = 1;
             for (int i = 0; i < m_globalSideEffect.Count; i ++)
             {
-                Debug.Assert(m_globalSideEffect[i].end < start, "The smallest end in global effect can not be less than 1, or can not have duplicate end");
+                Debug.Assert(m_globalSideEffect[i].end >= start, "The smallest end in global effect can not be less than 1, or can not have duplicate end");
 
 
                 start = m_globalSideEffect[i].end + 1;
@@ -145,6 +145,12 @@ namespace CharacterProperties
             m_hp.currentHP -= delta;
             if (m_hp.currentHP < 0) m_hp.currentHP = 0;
         }
+
+        public void ChangeHP(int delta)
+        {
+            m_hp.currentHP += delta;
+            m_hp.currentHP = Mathf.Clamp(m_hp.currentHP, 0, m_hp.maxHP);
+        }
         
         #endregion HP
         
@@ -170,6 +176,12 @@ namespace CharacterProperties
         {
             m_san.currentSAN -= delta;
             if (m_san.currentSAN < 0) m_san.currentSAN = 0;
+        }
+
+        public void ChangeSAN(int delta)
+        {
+            m_san.currentSAN += delta;
+            m_san.currentSAN = Mathf.Clamp(m_san.currentSAN, 0, m_san.maxSAN);
         }
         
         #endregion SAN
@@ -470,6 +482,19 @@ namespace CharacterProperties
             };
         }
 
+        public List<Tuple<string, int>> GetDynamicStat()
+        {
+            var list = new List<Tuple<string, int>>();
+            list.Add(new Tuple<string, int>(Constants.Hunger, m_hunger.currentHunger));
+            list.Add(new Tuple<string, int>(Constants.Thirst, m_thirst.currentThirst));
+            list.Add(new Tuple<string, int>(Constants.Sleep, m_sleep.currentSleep));
+            list.Add(new Tuple<string, int>(Constants.Illness, m_illness.currentIllness));
+            list.Add(new Tuple<string, int>(Constants.Mood, m_mood.currentMood));
+            
+            
+            return list;
+        } 
+
         public void SetVal(string name, int val)
         {
             switch (name)
@@ -608,6 +633,7 @@ namespace CharacterProperties
                     break;
             }
         }
+        
     }
 }
 

@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
+
 namespace CharacterProperties
 {
     [CreateAssetMenu]
@@ -15,6 +17,9 @@ namespace CharacterProperties
         public int initialSan;
 
         public int staringYear;
+
+        public int timeTriggerInterval;
+        public List<SideEffectBlock> globalCoreSideEffect;
         #endregion Core
     
         #region Dynamic
@@ -51,7 +56,7 @@ namespace CharacterProperties
         #endregion
         
         #region Others
-        public List<SideEffectBlock> globalSideEffect;
+        public List<SideEffectBlock> globalEqipmentSideEffect;
         #endregion
     }
 }
