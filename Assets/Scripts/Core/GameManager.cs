@@ -29,7 +29,7 @@ public class GameManager: MonoSingleton<GameManager>
     {
         m_timeStateManager.Update(character.GetTime());
         
-        Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
+        // Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
     }
 }
     
