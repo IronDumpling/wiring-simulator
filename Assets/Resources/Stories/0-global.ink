@@ -5,6 +5,7 @@ VAR MON = 0
 
 VAR CHECK = ""
 VAR time = 0 // 统一大小写，C#，tag和global var中需要用相同的名字
+VAR EVENT = 0
 
 CONST NPC2 = "志愿者"
 CONST NPC3 = "便利店老板"

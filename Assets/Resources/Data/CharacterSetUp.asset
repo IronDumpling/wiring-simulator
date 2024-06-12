@@ -16,6 +16,16 @@ MonoBehaviour:
   initialHp: 50
   maxSan: 100
   initialSan: 50
+  staringYear: 2020
+  globalCoreSideEffect:
+  - end: 1
+    effect: -3
+  - end: 3
+    effect: -1
+  - end: 9
+    effect: 0
+  - end: 10
+    effect: 1
   maxHunger: 10
   initialHunger: 5
   maxThirst: 10
@@ -34,3 +44,14 @@ MonoBehaviour:
   initialStrength: 5
   maxSpeed: 10
   initialSpeed: 5
+  globalEqipmentSideEffect:
+  - end: 1
+    effect: -3
+  - end: 3
+    effect: -1
+  - end: 7
+    effect: 0
+  - end: 9
+    effect: 1
+  - end: 10
+    effect: 3

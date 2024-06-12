@@ -1,6 +1,8 @@
 
 
 
+using System;
+
 namespace CharacterProperties
 {
     // maybe use interface to group them together, and the interface will have method that return the name of the property
@@ -42,40 +44,24 @@ namespace CharacterProperties
     {
         public string name => "Time";
         public int currentTime { get; set; }
+        private DateTime m_startingDate;
 
         public Time()
         {
+            m_startingDate = new DateTime(0, 1, 1);
             this.currentTime = 0;
+        }
+
+        public Time(int staringYear)
+        {
+            m_startingDate = new DateTime(staringYear, 1, 1);
+            currentTime = 0;
         }
 
         public override string ToString()
         {
-            string timeString = "";
-            int sec = currentTime % 60;
-            int rest = currentTime / 60;
-
-            timeString = $"{sec}s";
-            
-            int min = rest % 60;
-            rest = rest / 60;
-            if (min != 0) timeString = $"{min}min " + timeString;
-            
-            int hr = rest % 60;
-            rest = rest / 60;
-            if (min != 0) timeString = $"{hr}hour " + timeString;
-            
-            int day = rest % 24;
-            rest = rest / 60;
-            if (min != 0) timeString = $"{day}day " + timeString;
-
-            int month = rest % 30;
-            rest = rest / 30;
-            if (min != 0) timeString = $"{month}month " + timeString;
-
-            int year = rest % 12;
-            if (min != 0) timeString = $"{year}year " + timeString;
-
-            return timeString;
+            DateTime currentDate = m_startingDate.AddMinutes(currentTime);
+            return currentDate.ToString("yyyy-MM-dd HH:mm");
 
         }
     }
