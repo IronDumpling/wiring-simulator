@@ -11,7 +11,10 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     [SerializeField] private UIDocument m_doc;
     private VisualElement m_root;
     private VisualElement m_panel;
-    private VisualElement m_card;
+    private VisualElement m_image;
+    private Label m_name;
+    private Label m_effect;
+    private VisualElement m_description;
     private VisualElement m_slots;
     private VisualElement m_categories;
 
@@ -27,7 +30,12 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
         m_root = m_doc.rootVisualElement;
         m_panel = m_root.Q<VisualElement>(name: "panel");
-        m_card = m_root.Q<VisualElement>(name: "card");
+        
+        m_image = m_root.Q<VisualElement>(name: "image");
+        m_name = m_root.Q<Label>(name: "name");
+        m_effect = m_root.Q<Label>(name: "effect");
+        m_description = m_root.Q<VisualElement>(name: "description");
+
         m_categories = m_root.Q<VisualElement>(name: "categories");
         m_slots = m_root.Q<VisualElement>(name: "slots");
         
@@ -50,7 +58,10 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #endregion
 
     #region Card
-
+    private void DisplayCard(){
+        // m_name.text = ;
+        // m_effect.text = ;
+    }
     #endregion
 
     #region Grid
@@ -69,6 +80,10 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         List<Object> objects = GameManager.Instance.backpack.GetObjects();
         foreach(Object obj in objects){
             VisualElement slot = m_slot.Instantiate();
+            Button button = slot.Q<Button>();
+            button.clicked += () => {
+                DisplayCard();
+            };
             m_slots.Add(slot);
         }
     }
