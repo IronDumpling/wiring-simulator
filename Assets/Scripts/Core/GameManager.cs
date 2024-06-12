@@ -1,13 +1,15 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
+using CharacterProperties;
+using Time = UnityEngine.Time;
 
 public class GameManager: MonoSingleton<GameManager>
 {
     public CharacterSetUp characterSetUp;
     public Character character;
+    public TimeStatManager m_timeStateManager;
 
     protected override void Init()
     {
@@ -18,6 +20,14 @@ public class GameManager: MonoSingleton<GameManager>
         }
 
         character = new Character(characterSetUp);
+        m_timeStateManager = new TimeStatManager(character, characterSetUp);
+    }
+
+    private void Update()
+    {
+        m_timeStateManager.Update(character.GetTime());
+        
+        Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
     }
 }
     

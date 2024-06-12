@@ -9,119 +9,101 @@ using Ink.Runtime;
 using DG.Tweening;
 
 public class DialogueUI : MonoSingleton<DialogueUI>{
-    [Header("Params")]
-    [SerializeField] private float TYPE_SPEED = 0.04f;
-    [SerializeField] private float SCROLL_SPEED_AMPLIFIER = 50f;
-    [SerializeField] private float SCROLL_DAMP = 0.1f;
-    [SerializeField] private float SCROLL_OFFSET = 100f;
-    [SerializeField] private float SPACER_HEIGHT = 200f; 
-    [SerializeField] private float MIN_WIDTH = 500f; 
-    [SerializeField] private float EXIT_LAG_TIME = 0.5f;
-    [SerializeField] private int PANEL_WIDTH = 30;
-    [SerializeField] private float HIDE_POSITION = 98.5f;
-
     [Header("UI")]
-    public UIDocument doc;
-    
-    [Header("Dialogue Content")]
-    [SerializeField] private TextAsset globalJSON;
-    [SerializeField] private TextAsset defaultInkJSON;
-    
-    private VisualElement root;
-    private VisualElement expPanel;
-    private VisualElement expBody;
-    private bool isMouseOverElement = false;
-    private Label title;
-    private ScrollView content;
-    private Scroller scroller;
-    private Button expand;
-    private VisualElement spacer;
+    [SerializeField] private UIDocument m_doc;
+    private VisualElement m_root;
+    private VisualElement m_panel;
+    private VisualElement m_body;
+    private Label m_title;
+    private ScrollView m_content;
+    private Scroller m_scroller;
+    private Button m_expandButton;
+    private VisualElement m_spacer;
     private VisualTreeAsset choice;
-    private VisualTreeAsset sectionButton;
-    private VisualTreeAsset textArea;
-    private VisualTreeAsset imgArea;
-
-    private float SCROLL_SPEED;
+    private VisualTreeAsset m_sectionButton;
+    private VisualTreeAsset m_textArea;
+    private VisualTreeAsset m_imgArea;
     
-    private bool isPanelExpanded = true;
-    private bool isPlaying = false;
-    private bool canGoToNextLine = false;
-    private Story currStory;
-    private Coroutine displayLine;
-    private const string SPEAKER_TAG = "speaker";
-    private const string TITLE_TAG = "title";
-    private const string PORTRAIT_TAG = "portrait";
-    private const string IMG_TAG = "image";
-    private const string DICE_TAG = "dice";
-    private const string TIME_TAG = "time";
-    private string displaySpeakerName = "";
-    private DialogueVar dialogueVars;
+    [Header("UI Logic")]
+    private float m_scrollSpeed = 0;
+    private bool m_isPanelExpanded = true;
+    private bool m_isPlaying = false;
+    private bool m_canGoToNextLine = false;
+    private bool m_isMouseOverElement = false;
+
+    [Header("Dialogue")]
+    private Story m_currStory;
+    private Coroutine m_displayLine;
+    private string m_displaySpeakerName = "";
+    private DialogueVar m_dialogueVars;
+
+    [Header("Dialogue Content")]
+    [SerializeField] private TextAsset m_globalnk;
+    [SerializeField] private TextAsset m_defaultInk;
     
     #region Life Cycles
-    private void Awake()
-    {
-        root = doc.rootVisualElement;
+    private void Awake(){
+        m_root = m_doc.rootVisualElement;
 
-        expPanel = root.Q<VisualElement>(name: "Panel");
-        expBody = root.Q<VisualElement>(name: "Body");
+        m_panel = m_root.Q<VisualElement>(name: "Panel");
+        m_body = m_root.Q<VisualElement>(name: "Body");
 
-        expand = root.Q<Button>(name: "ExpandButton");
-        title = root.Q<Label>(name: "Title");
+        m_expandButton = m_root.Q<Button>(name: "ExpandButton");
+        m_title = m_root.Q<Label>(name: "Title");
         SetScrollView();
 
         choice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/RealChoice");
-        sectionButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
-        textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
-        imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
-        dialogueVars = new DialogueVar(globalJSON);
+        m_sectionButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
+        m_textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
+        m_imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
+        m_dialogueVars = new DialogueVar(m_globalnk);
     }
     
-    private void Start()
-    {   
+    private void Start(){   
         OpenExpandPanel();
         PreRegisterCallback();
-        BeginDialogue(defaultInkJSON);
+        BeginDialogue(m_defaultInk);
         // Assuming you have already obtained a reference to your specific VisualElement
-        expBody.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
-        expBody.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
+        m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
+        m_body.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
     }
     
     private void Update(){
-        if (!isPlaying) return;
-        if (canGoToNextLine && IsUserInput() 
-        && currStory.currentChoices.Count == 0){
+        if (!m_isPlaying) return;
+        if (m_canGoToNextLine && IsUserInput() 
+        && m_currStory.currentChoices.Count == 0){
             ContinueStory();
         }
     }
 
     public void OnApplicationQuit(){
-        dialogueVars.SaveVariables();
+        m_dialogueVars.SaveVariables();
     }
     #endregion
     
     #region Panels
     public void CloseExpandPanel(){
-        expPanel.style.width = PANEL_WIDTH;
-        Length width = new Length(HIDE_POSITION, LengthUnit.Percent);
-        expPanel.style.left = new StyleLength(width);
-        expBody.style.display = DisplayStyle.None;
-        expand.text = "\u2190";
-        isPanelExpanded = false;
+        m_panel.style.width = Constants.PANEL_WIDTH;
+        Length width = new Length(Constants.HIDE_POSITION, LengthUnit.Percent);
+        m_panel.style.left = new StyleLength(width);
+        m_body.style.display = DisplayStyle.None;
+        m_expandButton.text = "\u2190";
+        m_isPanelExpanded = false;
     }
     
     public void OpenExpandPanel(){
-        Length width = new Length(PANEL_WIDTH, LengthUnit.Percent);
-        expPanel.style.width = new StyleLength(width);
-        width = new Length(100 - PANEL_WIDTH, LengthUnit.Percent);
-        expPanel.style.left = new StyleLength(width);
-        expBody.style.display = DisplayStyle.Flex;
-        expand.text = "\u2192";
-        isPanelExpanded = true;
+        Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
+        m_panel.style.width = new StyleLength(width);
+        width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
+        m_panel.style.left = new StyleLength(width);
+        m_body.style.display = DisplayStyle.Flex;
+        m_expandButton.text = "\u2192";
+        m_isPanelExpanded = true;
     }
     
     public void PreRegisterCallback() {
-        expand.clicked += () => {
-            if(isPanelExpanded) CloseExpandPanel();
+        m_expandButton.clicked += () => {
+            if(m_isPanelExpanded) CloseExpandPanel();
             else OpenExpandPanel();
         };
     }
@@ -129,76 +111,76 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     
     #region Dialogues
     public void BeginDialogue(TextAsset inkJSON){
-        currStory = new Story(inkJSON.text);
+        m_currStory = new Story(inkJSON.text);
 
-        dialogueVars.StartListening(currStory);
-        dialogueVars.LoadVariables();
+        m_dialogueVars.StartListening(m_currStory);
+        m_dialogueVars.LoadVariables();
 
-        isPlaying = true;
-        title.text = "???";
-        displaySpeakerName = "???";
-        content.contentContainer.Clear();
+        m_isPlaying = true;
+        m_title.text = "???";
+        m_displaySpeakerName = "???";
+        m_content.contentContainer.Clear();
         DisplaySpacer();
         OpenExpandPanel();
         ContinueStory();
     }
     
     private void ContinueStory(){
-        if(!currStory.canContinue){
+        if(!m_currStory.canContinue){
             StartCoroutine(ExitDialogue());
             return;
         }
         
         // update variable 
 
-        currStory.Continue();
-        HandleTags(currStory.currentTags);
+        m_currStory.Continue();
+        HandleTags(m_currStory.currentTags);
 
-        while(currStory.canContinue && currStory.currentText == "\n"){
-            currStory.Continue();
-            HandleTags(currStory.currentTags);
+        while(m_currStory.canContinue && m_currStory.currentText == "\n"){
+            m_currStory.Continue();
+            HandleTags(m_currStory.currentTags);
         }
 
-        if(displayLine != null) StopCoroutine(displayLine); 
-        displayLine = StartCoroutine(DisplayLine(currStory.currentText));
+        if(m_displayLine != null) StopCoroutine(m_displayLine); 
+        m_displayLine = StartCoroutine(DisplayLine(m_currStory.currentText));
 
         MoveSpacerToEnd();
         ScrollToBottom();
     }
     
     private IEnumerator ExitDialogue(){
-        yield return new WaitForSeconds(EXIT_LAG_TIME);
+        yield return new WaitForSeconds(Constants.EXIT_LAG_TIME);
 
-        dialogueVars.StopListening(currStory);
-        dialogueVars.SaveVariables();
+        m_dialogueVars.StopListening(m_currStory);
+        m_dialogueVars.SaveVariables();
 
-        isPlaying = false;
-        displaySpeakerName = "";
+        m_isPlaying = false;
+        m_displaySpeakerName = "";
         CloseExpandPanel();
     }
     #endregion
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        VisualElement textLine = textArea.Instantiate();
+        VisualElement textLine = m_textArea.Instantiate();
         Label label = textLine.Q<Label>();
-        label.text = displaySpeakerName + "-";
-        content.Add(textLine);
-        canGoToNextLine = false;
+        label.text = m_displaySpeakerName + "-";
+        m_content.Add(textLine);
+        m_canGoToNextLine = false;
         foreach (char letter in line.ToCharArray()){
             if (IsUserInput()) {
-                label.text = displaySpeakerName + "-" + line;
+                label.text = m_displaySpeakerName + "-" + line;
                 break;
             }
             label.text += letter;
-            yield return new WaitForSeconds(TYPE_SPEED);
+            yield return new WaitForSeconds(Constants.TYPE_SPEED);
         }
         DisplayChoices();
-        canGoToNextLine = true;
+        m_canGoToNextLine = true;
     }
     
     private void DisplayChoices(){
-        List<Choice> currChoices = currStory.currentChoices;
+        List<Choice> currChoices = m_currStory.currentChoices;
 
         if(currChoices.Count == 1 && 
         (currChoices[0].text == Constants.CONTINUE || 
@@ -211,7 +193,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         foreach(Choice chc in currChoices) {   
             VisualElement choiceElement = choice.Instantiate();
             choices.Add(choiceElement);
-            content.Add(choiceElement);
+            m_content.Add(choiceElement);
         }
         
         int index = 1;
@@ -226,17 +208,17 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
 
     private void DisplaySectionButton(Choice chc){
-        VisualElement choiceEl = sectionButton.Instantiate();
+        VisualElement choiceEl = m_sectionButton.Instantiate();
         Button button = choiceEl.Q<Button>();
         button.text = chc.text + " " + '\u25B6';
         button.clicked += () => {
             ClickSectionButton(chc, choiceEl);
         };
-        content.Add(choiceEl);
+        m_content.Add(choiceEl);
     }
 
     private void DisplayImage(string imgVal){
-        VisualElement imgContainer = imgArea.Instantiate();
+        VisualElement imgContainer = m_imgArea.Instantiate();
         VisualElement img = imgContainer.Q<VisualElement>(name:"Image");
 
         Sprite sp = Resources.Load<Sprite>("Arts/Images/" + imgVal);
@@ -245,84 +227,84 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         if(img.style.width.value.value == 0){
-            img.style.width = MIN_WIDTH;
+            img.style.width = Constants.MIN_WIDTH;
             Debug.LogWarning("No valid width!");
         } 
         float aspectRatio = (float)sp.textureRect.height / (float)sp.textureRect.width;
         img.style.height = new StyleLength(img.style.width.value.value * aspectRatio);
         img.style.backgroundImage = new StyleBackground(sp);
-        content.Add(imgContainer);
+        m_content.Add(imgContainer);
     }
     
     private void DisplaySpacer(){
-        if(spacer != null){
-            if(content.Contains(spacer)) content.Remove(spacer);
-            spacer = null;
+        if(m_spacer != null){
+            if(m_content.Contains(m_spacer)) m_content.Remove(m_spacer);
+            m_spacer = null;
         }
-        spacer = new VisualElement();
-        spacer.style.height = SPACER_HEIGHT;
-        content.Add(spacer);
+        m_spacer = new VisualElement();
+        m_spacer.style.height = Constants.SPACER_HEIGHT;
+        m_content.Add(m_spacer);
     }
     #endregion
     
     #region Logics
     private void MakeChoice(Choice choice, List<VisualElement> choices){
-        if (!canGoToNextLine) return;
+        if (!m_canGoToNextLine) return;
         foreach(VisualElement choiceEl in choices){
-            content.Remove(choiceEl);
+            m_content.Remove(choiceEl);
         }
-        VisualElement textLine = textArea.Instantiate();
+        VisualElement textLine = m_textArea.Instantiate();
         textLine.Q<Label>().text = "你-\"" + choice.text + "\"";
-        content.Add(textLine);
-        currStory.ChooseChoiceIndex(choice.index);
+        m_content.Add(textLine);
+        m_currStory.ChooseChoiceIndex(choice.index);
         ContinueStory();
     }
     
     private void ClickSectionButton(Choice choice, VisualElement choiceEl){
-        if (!canGoToNextLine) return;
-        content.Remove(choiceEl);
-        currStory.ChooseChoiceIndex(choice.index);
+        if (!m_canGoToNextLine) return;
+        m_content.Remove(choiceEl);
+        m_currStory.ChooseChoiceIndex(choice.index);
         ContinueStory();
     }
     
     private void MoveSpacerToEnd(){
-        float contentHeight = content.contentContainer.layout.height;
-        float bottomOffset = Mathf.Max(0, contentHeight + spacer.layout.height/2f);
-        spacer.style.top = bottomOffset;
+        float m_contentHeight = m_content.contentContainer.layout.height;
+        float bottomOffset = Mathf.Max(0, m_contentHeight + m_spacer.layout.height/2f);
+        m_spacer.style.top = bottomOffset;
     }
     
     private void ScrollToBottom(){
-        float targetValue = scroller.highValue > 0 ? scroller.highValue + SCROLL_OFFSET : 0;
-        DOTween.To(()=>scroller.value, x=> scroller.value = x, targetValue, EXIT_LAG_TIME);
+        float targetValue = m_scroller.highValue > 0 ? m_scroller.highValue + Constants.SCROLL_OFFSET : 0;
+        DOTween.To(()=>m_scroller.value, x=> m_scroller.value = x, targetValue, Constants.EXIT_LAG_TIME);
     }
     
     private void SetScrollView(){
-        content = root.Q<ScrollView>(name: "Content");
-        content.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
-        scroller = content.verticalScroller;
-        scroller.valueChanged += ChangeSpeed;
-        content.RegisterCallback<WheelEvent>(ScrollCallback);
+        m_content = m_root.Q<ScrollView>(name: "Content");
+        m_content.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+        m_scroller = m_content.verticalScroller;
+        m_scroller.valueChanged += ChangeSpeed;
+        m_content.RegisterCallback<WheelEvent>(ScrollCallback);
     }
     
     public void ScrollCallback(WheelEvent evt){
-        content.UnregisterCallback<WheelEvent>(ScrollCallback);
-        SCROLL_SPEED += evt.delta.y * SCROLL_SPEED_AMPLIFIER;
+        m_content.UnregisterCallback<WheelEvent>(ScrollCallback);
+        m_scrollSpeed += evt.delta.y * Constants.SCROLL_SPEED_AMPLIFIER;
         evt.StopPropagation();
-        content.RegisterCallback<WheelEvent>(ScrollCallback);
+        m_content.RegisterCallback<WheelEvent>(ScrollCallback);
     }
     
     public void ChangeSpeed(float num){
-        scroller.valueChanged -= ChangeSpeed;
-        scroller.value += SCROLL_SPEED;
-        SCROLL_SPEED -= SCROLL_SPEED * SCROLL_DAMP;
-        scroller.valueChanged += ChangeSpeed;
+        m_scroller.valueChanged -= ChangeSpeed;
+        m_scroller.value += m_scrollSpeed;
+        m_scrollSpeed -= m_scrollSpeed * Constants.SCROLL_DAMP;
+        m_scroller.valueChanged += ChangeSpeed;
     }
     #endregion
     
     #region Variables
     public Ink.Runtime.Object GetVariableState(string varName){
         Ink.Runtime.Object varValue = null;
-        dialogueVars.variables.TryGetValue(varName, out varValue);
+        m_dialogueVars.variables.TryGetValue(varName, out varValue);
         if (varValue == null) {
             Debug.LogWarning("Ink Variable was found to be null: " + varName);
         }
@@ -332,15 +314,15 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     
     #region Inputs
     private void MouseEntered(MouseEnterEvent evt){
-        isMouseOverElement = true;
+        m_isMouseOverElement = true;
     }
     
     private void MouseLeft(MouseLeaveEvent evt){
-        isMouseOverElement = false;
+        m_isMouseOverElement = false;
     }
 
     private bool IsUserInput(){
-        return MouseClick.Instance.isInput && isMouseOverElement;
+        return MouseClick.Instance.isInput && m_isMouseOverElement;
     }    
     #endregion
 
@@ -358,24 +340,24 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             string tagValue = splitTag[1].Trim();
             switch (tagKey) {
                 // 1. dialogue tags
-                case SPEAKER_TAG:
-                    displaySpeakerName = tagValue;
+                case Constants.SPEAKER_TAG:
+                    m_displaySpeakerName = tagValue;
                     break;
-                case TITLE_TAG:
-                    title.text = tagValue;
+                case Constants.TITLE_TAG:
+                    m_title.text = tagValue;
                     break;
-                case PORTRAIT_TAG:
+                case Constants.PORTRAIT_TAG:
                     // TODO
                     break;
-                case IMG_TAG:
+                case Constants.IMG_TAG:
                     DisplayImage(tagValue);
                     break;
                 // 2. check tags
-                case DICE_TAG:
+                case Constants.DICE_TAG:
                     Check(tagValue);
                     break;
                 // 3. world tags
-                case TIME_TAG:
+                case Constants.TIME:
                     TimeModification(tagValue);
                     break;
                 // 4. character tags
@@ -410,12 +392,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
         
-        currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // sync
+        m_currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // sync
         
-        VisualElement textLine = textArea.Instantiate();
+        VisualElement textLine = m_textArea.Instantiate();
         Label label = textLine.Q<Label>();
         label.text = result.PrintResult();
-        content.Add(textLine);
+        m_content.Add(textLine);
     }
 
     private void CharacterModification(string key, string value){
@@ -437,7 +419,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         else Debug.LogError(key + " tag could not be appropriately parsed");
 
-        currStory.variablesState[key] = GameManager.Instance.character.GetVal(key); // sync
+        m_currStory.variablesState[key] = GameManager.Instance.character.GetVal(key); // sync
         
         Debug.Log($"{key} now have value {GameManager.Instance.character.GetVal(key)}");
     }
@@ -482,9 +464,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         else Debug.LogError("'time' tag could not be appropriately parsed");
 
-        currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTime(); // sync
+        m_currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTimeString(); // sync
         
-        Debug.Log($"Current Time: {GameManager.Instance.character.GetTime()}");
+        Debug.Log($"Current Time: {GameManager.Instance.character.GetTimeString()}");
     }
     #endregion
 }

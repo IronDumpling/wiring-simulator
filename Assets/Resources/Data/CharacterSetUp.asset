@@ -13,24 +13,45 @@ MonoBehaviour:
   m_Name: CharacterSetUp
   m_EditorClassIdentifier: 
   maxHp: 100
+  initialHp: 50
   maxSan: 100
-  maxHunger: 100
-  maxThirst: 100
-  maxSleep: 100
-  maxIllness: 100
-  maxMood: 100
-  maxIntelligent: 100
-  maxMind: 100
-  maxStrength: 100
-  maxSpeed: 100
-  Hp: 5
-  San: 5
-  Hunger: 5
-  Thirst: 5
-  Sleep: 5
-  Illness: 5
-  Mood: 5
-  Intelligent: 5
-  Mind: 5
-  Strength: 5
-  Speed: 5
+  initialSan: 50
+  staringYear: 2020
+  globalCoreSideEffect:
+  - end: 1
+    effect: -3
+  - end: 3
+    effect: -1
+  - end: 9
+    effect: 0
+  - end: 10
+    effect: 1
+  maxHunger: 10
+  initialHunger: 5
+  maxThirst: 10
+  initialThirst: 5
+  maxSleep: 10
+  initialSleep: 5
+  maxIllness: 10
+  initialIllness: 5
+  maxMood: 10
+  initialMood: 5
+  maxIntelligent: 10
+  initialIntelligent: 5
+  maxMind: 10
+  initialMind: 5
+  maxStrength: 10
+  initialStrength: 5
+  maxSpeed: 10
+  initialSpeed: 5
+  globalEqipmentSideEffect:
+  - end: 1
+    effect: -3
+  - end: 3
+    effect: -1
+  - end: 7
+    effect: 0
+  - end: 9
+    effect: 1
+  - end: 10
+    effect: 3
