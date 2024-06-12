@@ -11,8 +11,8 @@
             </ui:ScrollView>
         </ui:VisualElement>
         <ui:VisualElement name="grid" style="flex-grow: 1; height: 50%;">
-            <ui:VisualElement name="categories" style="flex-grow: 1; height: 5%; flex-direction: row;" />
-            <ui:ScrollView name="slots" style="height: 95%; flex-direction: row;" />
+            <ui:VisualElement name="categories" style="flex-grow: 1; height: 5%; flex-direction: row; justify-content: center;" />
+            <ui:ScrollView name="slots" style="height: 95%; flex-direction: row; justify-content: flex-start;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
