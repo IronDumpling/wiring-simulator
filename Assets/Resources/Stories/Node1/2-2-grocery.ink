@@ -39,15 +39,22 @@ INCLUDE ../0-global.ink
     
     ~temp quick_time = false
     
-      #dice:INT+1d8>challenge
-  
-        {CHECK == FAIL || CHECK == HUGE_FAIL:
-        你们的目光对视一瞬，随后，他径直从你身旁经过，又咕哝一句你听不懂的话。
-        
-        -else:
-        你们的目光对视一瞬，随后，他径直从你身旁经过。你听见他清楚地用当地语言说了一句“傻瓜”。
-        }
+    #dice:INT+1d8>challenge
+    {CHECK} // 临时使用这个方法
     
+    // 方法一： if else
+    {CHECK == FAIL || CHECK == HUGE_FAIL:
+        你们的目光对视一瞬，随后，他径直从你身旁经过，又咕哝一句你听不懂的话。
+    -else:
+        你们的目光对视一瞬，随后，他径直从你身旁经过。你听见他清楚地用当地语言说了一句“傻瓜”。
+    }
+    
+    // 方法二：switch case
+    {CHECK:
+    - FAIL: 你们的目光对视一瞬，随后，他径直从你身旁经过，又咕哝一句你听不懂的话。
+    - HUGE_FAIL: 你们的目光对视一瞬，随后，他径直从你身旁经过，又咕哝一句你听不懂的话。
+    - else:你们的目光对视一瞬，随后，他径直从你身旁经过。你听见他清楚地用当地语言说了一句“傻瓜”。
+    }
     
     *{translator_you_employ > 0}[（向翻译询问）他说什么？]#speaker:
     俚语，意思是“傻瓜”。#speaker:翻译
