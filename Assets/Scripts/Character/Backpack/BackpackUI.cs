@@ -56,13 +56,21 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #region Grid
 
     private void DisplayCategory(){
-        VisualElement category = m_category.Instantiate();
-        m_categories.Add(category);
+        foreach(string cg in Enum.GetNames(typeof(ObjectCategory))){
+            VisualElement category = m_category.Instantiate();
+            Button button = category.Q<Button>();
+            button.text = cg;
+            m_categories.Add(category);
+        }
+        
     }
 
     private void DisplaySlots(){
-        VisualElement slot = m_slot.Instantiate();
-        m_slots.Add(slot);
+        List<Object> objects = GameManager.Instance.backpack.GetObjects();
+        foreach(Object obj in objects){
+            VisualElement slot = m_slot.Instantiate();
+            m_slots.Add(slot);
+        }
     }
 
     #endregion

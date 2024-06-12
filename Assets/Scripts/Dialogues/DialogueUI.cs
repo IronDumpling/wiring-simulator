@@ -428,27 +428,21 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         // format: +1d,1hr,10min
         const int INIT_IDX = 1;
         string[] durations = value.Substring(INIT_IDX).Split(",");
-
-        const string DAY = "d";
-        const string HOUR = "hr";
-        const string MIN = "min";
-        const int DAY_TO_HOUR = 24;
-        const int HOUR_TO_MIN = 60;
         
         int time = 0;
         int number;
         foreach(string duration in durations){
-            if(duration.Contains(MIN) && 
-            int.TryParse(duration.Replace(MIN, ""), out number)){
+            if(duration.Contains(Constants.MIN) && 
+            int.TryParse(duration.Replace(Constants.MIN, ""), out number)){
                 time += number;
             }
-            else if(duration.Contains(HOUR) && 
-            int.TryParse(duration.Replace(HOUR, ""), out number)){
-                time += number * HOUR_TO_MIN;
+            else if(duration.Contains(Constants.HOUR) && 
+            int.TryParse(duration.Replace(Constants.HOUR, ""), out number)){
+                time += number * Constants.HOUR_TO_MIN;
             }
-            else if(duration.Contains(DAY) && 
-            int.TryParse(duration.Replace(DAY, ""), out number)){
-                time += number * DAY_TO_HOUR * HOUR_TO_MIN;
+            else if(duration.Contains(Constants.DAY) && 
+            int.TryParse(duration.Replace(Constants.DAY, ""), out number)){
+                time += number * Constants.DAY_TO_HOUR * Constants.HOUR_TO_MIN;
             }
             else Debug.LogError("'time' tag could not be appropriately parsed");
         }

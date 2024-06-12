@@ -2,6 +2,18 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+public enum CheckLevel{
+    trivial,
+    easy,
+    medium,
+    challenge,
+    formidable,
+    legendary,
+    heroic,
+    godly,
+    impossible,
+}
+
 public class CheckManager : MonoSingleton<CheckManager>{
     private int m_successCount = 0;
     private int m_failCount = 0;

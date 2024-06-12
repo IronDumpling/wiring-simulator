@@ -44,7 +44,7 @@ public class ObjectSlot : MonoBehaviour{
 
         if (!infoCard.activeSelf) infoCard.SetActive(true);
         infoCard.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Object.thumbnail;
-        infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = m_Object.name + m_Object.text;
+        infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = m_Object.name + m_Object.description;
         // infoCard.transform.GetChild(2).gameObject.GetComponent<Button>().clicked = m_Object.useButton;
     }
 }

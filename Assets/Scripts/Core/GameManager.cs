@@ -9,6 +9,7 @@ public class GameManager: MonoSingleton<GameManager>
 {
     public CharacterSetUp characterSetUp;
     public Character character;
+    public Backpack backpack;
     public TimeStatManager m_timeStateManager;
 
     protected override void Init()
@@ -20,6 +21,7 @@ public class GameManager: MonoSingleton<GameManager>
         }
 
         character = new Character(characterSetUp);
+        backpack = new Backpack(characterSetUp);
         m_timeStateManager = new TimeStatManager(character, characterSetUp);
     }
 
