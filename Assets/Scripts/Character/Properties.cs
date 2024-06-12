@@ -150,7 +150,7 @@ namespace CharacterProperties
     }
     #endregion
 
-    #region Equipment properties
+    #region Skill properties
     public class Intelligent: IProperty
     {
         public string name => "Intelligent";

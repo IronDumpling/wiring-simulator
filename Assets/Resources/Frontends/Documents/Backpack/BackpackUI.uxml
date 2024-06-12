@@ -10,9 +10,9 @@
                 <ui:Label tabindex="-1" text="Description content" parse-escape-sequences="true" display-tooltip-when-elided="true" name="description-content" style="font-size: 15px; color: rgb(255, 255, 255);" />
             </ui:ScrollView>
         </ui:VisualElement>
-        <ui:VisualElement name="grids" style="flex-grow: 1; height: 50%;">
-            <ui:VisualElement name="category" style="flex-grow: 1; height: 10%;" />
-            <ui:ScrollView name="gridScroll" style="height: 90%;" />
+        <ui:VisualElement name="grid" style="flex-grow: 1; height: 50%;">
+            <ui:VisualElement name="categories" style="flex-grow: 1; height: 5%;" />
+            <ui:ScrollView name="slots" style="height: 95%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

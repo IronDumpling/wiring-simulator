@@ -42,8 +42,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     [SerializeField] private TextAsset m_defaultInk;
     
     #region Life Cycles
-    private void Awake()
-    {
+    private void Awake(){
         m_root = m_doc.rootVisualElement;
 
         m_panel = m_root.Q<VisualElement>(name: "Panel");
@@ -60,8 +59,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_dialogueVars = new DialogueVar(m_globalnk);
     }
     
-    private void Start()
-    {   
+    private void Start(){   
         OpenExpandPanel();
         PreRegisterCallback();
         BeginDialogue(m_defaultInk);

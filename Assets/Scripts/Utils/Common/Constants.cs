@@ -62,7 +62,7 @@ public static class Constants{
     public const string Illness = "Illness";
     public const string Mood = "Mood";
 
-    // 1.3 Equipment Status
+    // 1.3 Skill Status
     // Majorly use for check, minorly use for Ink event condition
     // Range: 1 - 10
     public const string Intelligent = "Intelligent";

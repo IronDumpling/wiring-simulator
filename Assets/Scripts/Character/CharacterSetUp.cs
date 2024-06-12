@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -31,8 +32,8 @@ public class CharacterSetUp: ScriptableObject
     public int initialMood;
     #endregion Dynamic
     
-    #region Equipment
-    [Header("Equipment")]
+    #region Skill
+    [Header("Skill")]
     public int maxIntelligent;
     public int initialIntelligent;
     
@@ -44,5 +45,16 @@ public class CharacterSetUp: ScriptableObject
     
     public int maxSpeed;
     public int initialSpeed;
+    #endregion
+
+    #region Backpack
+    [Header("Backpack")]
+    public List<Object> objects = new List<Object>();
+    
+    #endregion
+
+    #region Brain
+    // [Header("Brain")]
+
     #endregion
 }
