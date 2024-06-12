@@ -79,7 +79,7 @@ namespace CharacterProperties
             m_speed = new Speed(setup.maxSpeed);
             SetSpeed(setup.initialSpeed);
 
-            m_globalSideEffect = new List<SideEffectBlock>(setup.globalEqipmentSideEffect);
+            m_globalSideEffect = new List<SideEffectBlock>(setup.globalSkillSideEffect);
             m_globalSideEffect.Sort();
 
             int start = 1;
