@@ -52,7 +52,21 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
     }
 
+    private void RegisterCallback(){
+        
+    }
+
     public void OnApplicationQuit(){
+
+    }
+    #endregion
+
+    #region Panel
+    private void OpenPanel(){
+
+    }
+
+    private void ClosePanel(){
 
     }
     #endregion
