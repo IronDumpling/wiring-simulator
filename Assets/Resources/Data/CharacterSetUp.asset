@@ -17,25 +17,26 @@ MonoBehaviour:
   maxSan: 100
   initialSan: 50
   staringYear: 2020
+  timeTriggerInterval: 0
   globalCoreSideEffect:
-  - end: 1
-    effect: -3
-  - end: 3
-    effect: -1
-  - end: 9
-    effect: 0
   - end: 10
+    effect: -3
+  - end: 30
+    effect: -1
+  - end: 90
+    effect: 0
+  - end: 100
     effect: 1
-  maxHunger: 10
-  initialHunger: 5
-  maxThirst: 10
-  initialThirst: 5
-  maxSleep: 10
-  initialSleep: 5
-  maxIllness: 10
-  initialIllness: 5
-  maxMood: 10
-  initialMood: 5
+  maxHunger: 100
+  initialHunger: 50
+  maxThirst: 100
+  initialThirst: 50
+  maxSleep: 100
+  initialSleep: 50
+  maxIllness: 100
+  initialIllness: 50
+  maxMood: 100
+  initialMood: 50
   maxIntelligent: 10
   initialIntelligent: 5
   maxMind: 10
@@ -44,14 +45,31 @@ MonoBehaviour:
   initialStrength: 5
   maxSpeed: 10
   initialSpeed: 5
-  globalEqipmentSideEffect:
-  - end: 1
-    effect: -3
-  - end: 3
-    effect: -1
-  - end: 7
-    effect: 0
-  - end: 9
-    effect: 1
+  globalSkillSideEffect:
   - end: 10
+    effect: -3
+  - end: 30
+    effect: -1
+  - end: 70
+    effect: 0
+  - end: 90
+    effect: 1
+  - end: 100
     effect: 3
+  objects:
+  - m_name: Test1
+    m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
+    m_description: This is test one.
+    m_load: 5
+  - m_name: Test2
+    m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
+    m_description: This is test two.
+    m_load: 3
+  - m_name: Test3
+    m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
+    m_description: This is test three.
+    m_load: 10
+  - m_name: Test4
+    m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
+    m_description: This is test four.
+    m_load: 7

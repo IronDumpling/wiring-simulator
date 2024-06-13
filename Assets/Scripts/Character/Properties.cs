@@ -1,6 +1,3 @@
-
-
-
 using System;
 
 namespace CharacterProperties
@@ -11,6 +8,7 @@ namespace CharacterProperties
     {
         public string name { get; }
     }
+    
     #region core properties
     public class HP: IProperty
     {

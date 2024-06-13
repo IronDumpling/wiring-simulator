@@ -11,18 +11,19 @@ public enum ObjectCategory{
     Items,
 }
 
+[System.Serializable]
 public class Object{
-    private string m_name;
-    private Sprite m_thumbnail;
-    private string m_description;
-    private int m_load;
-    private ObjectSlot m_objectSlot;
+    [SerializeField] private string m_name;
+    [SerializeField] private Sprite m_thumbnail;
+    [SerializeField] private string m_description;
+    [SerializeField] private int m_load;
+    // private ObjectSlot m_objectSlot;
     
     public string name { get { return m_name; } }
     public Sprite thumbnail { get { return m_thumbnail; } }
     public string description { get { return m_description; } }
     public int load { get { return m_load;}}
-    public ObjectSlot itemSlot { get { return m_objectSlot; } }
+    // public ObjectSlot itemSlot { get { return m_objectSlot; } }
 
 
     // Constructor

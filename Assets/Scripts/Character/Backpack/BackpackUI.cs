@@ -53,7 +53,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void RegisterCallback(){
-        
+
     }
 
     public void OnApplicationQuit(){
@@ -91,13 +91,21 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void DisplaySlots(){
-        List<Object> objects = GameManager.Instance.backpack.GetObjects();
+        List<Object> objects = GameManager.Instance.GetBackpack().GetObjects();
         foreach(Object obj in objects){
             VisualElement slot = m_slot.Instantiate();
+        
             Button button = slot.Q<Button>();
             button.clicked += () => {
                 DisplayCard();
             };
+            
+            Label name = slot.Q<Label>(name: "name");
+            name.text = obj.name;
+
+            VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
+            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail.texture);
+
             m_slots.Add(slot);
         }
     }

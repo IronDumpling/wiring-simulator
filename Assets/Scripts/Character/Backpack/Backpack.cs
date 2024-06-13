@@ -28,7 +28,7 @@ public class Backpack{
     }
 
     private void CalculateMaxLoad(){
-        m_maxLoad = GameManager.Instance.character.GetStrength() * Constants.STRENGTH_TO_LOAD;
+        m_maxLoad = GameManager.Instance.GetCharacter().GetStrength() * Constants.STRENGTH_TO_LOAD;
     }
 
     private void CalculateCurrLoad(){
