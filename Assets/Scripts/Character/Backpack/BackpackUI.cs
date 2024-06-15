@@ -17,6 +17,8 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private VisualElement m_description;
     private VisualElement m_slots;
     private VisualElement m_categories;
+    private Button m_openButton;
+    private Button m_closeButton;
 
     private VisualTreeAsset m_slot;
     private VisualTreeAsset m_category; 
@@ -41,9 +43,18 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
+
+        m_openButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
+        m_root.Add(m_openButton);
+        m_openButton.text = "Backpack";
+        m_openButton.style.display = DisplayStyle.None;
+
+        m_closeButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/CloseButton").Instantiate().Q<Button>();
+        m_panel.Add(m_closeButton);
     }
 
     private void Start(){
+        RegisterCallback();
         DisplayCategory();
         DisplaySlots();
     }
@@ -53,7 +64,13 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void RegisterCallback(){
-
+        m_openButton.clicked += () => {
+            OpenPanel();
+        };
+        
+        m_closeButton.clicked += () => {
+            ClosePanel();
+        };
     }
 
     public void OnApplicationQuit(){
@@ -63,11 +80,13 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
     #region Panel
     private void OpenPanel(){
-
+        m_panel.style.display = DisplayStyle.Flex;
+        m_openButton.style.display = DisplayStyle.None;
     }
 
     private void ClosePanel(){
-
+        m_panel.style.display = DisplayStyle.None;
+        m_openButton.style.display = DisplayStyle.Flex;
     }
     #endregion
 
