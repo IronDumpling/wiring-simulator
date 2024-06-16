@@ -11,12 +11,16 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     [SerializeField] private UIDocument m_doc;
     private VisualElement m_root;
     private VisualElement m_panel;
+    
+    private VisualElement m_card;
     private VisualElement m_image;
     private Label m_name;
     private Label m_effect;
-    private VisualElement m_description;
+    private Label m_description;
+    
     private VisualElement m_slots;
     private VisualElement m_categories;
+    
     private Button m_openButton;
     private Button m_closeButton;
 
@@ -33,10 +37,12 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_root = m_doc.rootVisualElement;
         m_panel = m_root.Q<VisualElement>(name: "panel");
         
+        m_card = m_root.Q<VisualElement>(name: "card");
         m_image = m_root.Q<VisualElement>(name: "image");
         m_name = m_root.Q<Label>(name: "name");
         m_effect = m_root.Q<Label>(name: "effect");
-        m_description = m_root.Q<VisualElement>(name: "description");
+        m_description = m_root.Q<Label>(name: "description-content");
+        m_card.style.visibility = Visibility.Hidden;
 
         m_categories = m_root.Q<VisualElement>(name: "categories");
         m_slots = m_root.Q<VisualElement>(name: "slots");
@@ -91,9 +97,12 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #endregion
 
     #region Card
-    private void DisplayCard(){
-        // m_name.text = ;
+    private void DisplayCard(Object obj){
+        m_card.style.visibility = Visibility.Visible;
+        m_image.style.backgroundImage = new StyleBackground(obj.thumbnail.texture);
+        m_name.text = obj.name;
         // m_effect.text = ;
+        m_description.text = obj.description;
     }
     #endregion
 
@@ -116,7 +125,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
             Button button = slot.Q<Button>();
             button.clicked += () => {
-                DisplayCard();
+                DisplayCard(obj);
             };
             
             Label name = slot.Q<Label>(name: "name");
