@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -123,32 +124,34 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void DisplaySlots(){
-        List<Object> objects = GameManager.Instance.GetBackpack().GetObjects();
-        foreach(Object obj in objects){
-            VisualElement slot = m_slot.Instantiate();
-        
-            Button button = slot.Q<Button>();
-            button.clicked += () => {
-                DisplayCard(obj);
-            };
-            
-            Label name = slot.Q<Label>(name: "name");
-            name.text = obj.name;
+        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        PropertyInfo[] properties = typeof(ObjectLists).GetProperties();
 
-            VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
-            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
+        foreach(var property in properties){
+            List<Object> objList = (List<Object>)property.GetValue(objects);
+            foreach(Object obj in objList){
+                VisualElement slot = m_slot.Instantiate();
+                Button button = slot.Q<Button>();
+                button.clicked += () => {
+                    DisplayCard(obj);
+                };
 
-            m_slots.Add(slot);
+                Label name = slot.Q<Label>(name: "name");
+                name.text = obj.name;
+                VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
+                thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
+                m_slots.Add(slot);
+            }
         }
     }
 
     private void Filter(string cg){
         // TODO filter objects based on their class type
-        List<Object> objects = GameManager.Instance.GetBackpack().GetObjects();
-        foreach(Object obj in objects){
+        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        // foreach(Object obj in objects){
             // Example: if obj is instance of cg: obj.style.display = DisplayStyle.Flex;
             // else obj.style.display = DisplayStyle.None;
-        }
+        // }
     }
     #endregion
 }

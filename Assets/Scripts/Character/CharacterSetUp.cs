@@ -59,8 +59,7 @@ namespace CharacterProperties{
 
         #region Backpack
         [Header("Backpack")]
-        public List<Object> objects = new List<Object>();
-
+        public ObjectLists objects;
         #endregion
 
         #region Brain

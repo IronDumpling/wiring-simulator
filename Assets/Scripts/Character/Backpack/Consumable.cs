@@ -11,6 +11,7 @@ public enum ConsumableCategory{
     Money,
 }
 
+[System.Serializable]
 public class Consumable : Object{
     private ConsumableCategory m_category;
 

@@ -11,16 +11,11 @@ public enum ObjectCategory{
     Items,
 }
 
-[System.Serializable]
-public class Object{
+public abstract class Object{
     [SerializeField] private string m_name = "";
     [SerializeField] private Sprite m_thumbnail;
     [SerializeField] private string m_description = "";
     [SerializeField] private int m_load = 0;
-
-    // TODO: temporary metho, need to fix this
-    // input this category in SO, then generate corresponding type of object in Backpack.cs
-    [SerializeField] private ObjectCategory m_setCategory = ObjectCategory.Tools; 
     
     // private ObjectSlot m_objectSlot;
     
@@ -28,7 +23,6 @@ public class Object{
     public Sprite thumbnail { get { return m_thumbnail; } }
     public string description { get { return m_description; } }
     public int load { get { return m_load;}}
-    public ObjectCategory setCategory { get { return m_setCategory;}}
     // public ObjectSlot itemSlot { get { return m_objectSlot; } }
 
 
