@@ -42,41 +42,24 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_name = m_root.Q<Label>(name: "name");
         m_effect = m_root.Q<Label>(name: "effect");
         m_description = m_root.Q<Label>(name: "description-content");
-        m_card.style.visibility = Visibility.Hidden;
-
+        
         m_categories = m_root.Q<VisualElement>(name: "categories");
         m_slots = m_root.Q<VisualElement>(name: "slots");
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
-
-        m_openButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
-        m_root.Add(m_openButton);
-        m_openButton.text = "Backpack";
-        m_openButton.style.display = DisplayStyle.None;
-
-        m_closeButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/CloseButton").Instantiate().Q<Button>();
-        m_panel.Add(m_closeButton);
     }
 
     private void Start(){
-        RegisterCallback();
+        DisplayButtons();
         DisplayCategory();
         DisplaySlots();
+        m_card.style.visibility = Visibility.Hidden;
+        m_openButton.style.display = DisplayStyle.None;
     }
 
     private void Update(){
 
-    }
-
-    private void RegisterCallback(){
-        m_openButton.clicked += () => {
-            OpenPanel();
-        };
-        
-        m_closeButton.clicked += () => {
-            ClosePanel();
-        };
     }
 
     public void OnApplicationQuit(){
@@ -94,6 +77,23 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_panel.style.display = DisplayStyle.None;
         m_openButton.style.display = DisplayStyle.Flex;
     }
+
+    private void DisplayButtons(){
+        m_openButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
+        m_root.Add(m_openButton);
+        m_openButton.text = "Backpack";
+
+        m_openButton.clicked += () => {
+            OpenPanel();
+        };
+
+        m_closeButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/CloseButton").Instantiate().Q<Button>();
+        m_panel.Add(m_closeButton);
+
+        m_closeButton.clicked += () => {
+            ClosePanel();
+        };
+    }
     #endregion
 
     #region Card
@@ -107,12 +107,16 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #endregion
 
     #region Grid
-
     private void DisplayCategory(){
         foreach(string cg in Enum.GetNames(typeof(ObjectCategory))){
             VisualElement category = m_category.Instantiate();
+            
             Button button = category.Q<Button>();
             button.text = cg;
+            button.clicked += () => {
+                Filter(cg);
+            };
+
             m_categories.Add(category);
         }
         
@@ -132,12 +136,20 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             name.text = obj.name;
 
             VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
-            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail.texture);
+            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
 
             m_slots.Add(slot);
         }
     }
 
+    private void Filter(string cg){
+        // TODO filter objects based on their class type
+        List<Object> objects = GameManager.Instance.GetBackpack().GetObjects();
+        foreach(Object obj in objects){
+            // Example: if obj is instance of cg: obj.style.display = DisplayStyle.Flex;
+            // else obj.style.display = DisplayStyle.None;
+        }
+    }
     #endregion
 }
 

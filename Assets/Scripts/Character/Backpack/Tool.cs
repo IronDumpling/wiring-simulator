@@ -4,5 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 public class Tool : Object{
-    
+    public Tool(Object obj){
+        
+    }
 }

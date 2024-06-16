@@ -21,10 +21,31 @@ public class Backpack{
     public BackpackStatus status { get { return m_status;}}
 
     public Backpack(CharacterSetUp setup){
-        m_objects = setup.objects;
+        GenerateObjects(setup.objects);
         CalculateMaxLoad();
         CalculateCurrLoad();
         CalculateStatus();
+    }
+
+    private void GenerateObjects(List<Object> objects){
+        m_objects = objects;
+        // TODO: this is silly, object could not provide enough settings for each different type how to fix this?
+        // foreach (Object obj in objects){
+            // switch(obj.setCategory){
+                // case ObjectCategory.Tools:
+                    // m_objects.Add(new Tool(obj));
+                    // break;
+                // case ObjectCategory.Clothes:
+                    // m_objects.Add(new Clothes(obj));
+                    // break;
+                // case ObjectCategory.Consumables:
+                    // m_objects.Add(new Consumable(obj));
+                    // break;
+                // case ObjectCategory.Items:
+                    // m_objects.Add(new Item(obj));
+                    // break;
+            // }
+        // }
     }
 
     private void CalculateMaxLoad(){

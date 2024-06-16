@@ -13,6 +13,7 @@ public enum ConsumableCategory{
 
 public class Consumable : Object{
     private ConsumableCategory m_category;
+
     // effect
     public delegate void ObjectEffect(float param);
     private ObjectEffect m_effect;
@@ -23,4 +24,8 @@ public class Consumable : Object{
     public ObjectEffect effect { get { return m_effect; } }
     public Button useButton { get { return m_useButton; } }
     public float effectParam { get { return m_effectParam; } }
+
+    public Consumable(Object obj){
+        
+    }
 }
