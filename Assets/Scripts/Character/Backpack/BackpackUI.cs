@@ -19,7 +19,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private Label m_effect;
     private Label m_description;
     
-    private VisualElement m_slots;
+    private ScrollView m_slots;
     private VisualElement m_categories;
     
     private Button m_openButton;
@@ -45,7 +45,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_description = m_root.Q<Label>(name: "description-content");
         
         m_categories = m_root.Q<VisualElement>(name: "categories");
-        m_slots = m_root.Q<VisualElement>(name: "slots");
+        m_slots = m_root.Q<ScrollView>(name: "slots");
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
@@ -54,7 +54,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private void Start(){
         DisplayButtons();
         DisplayCategory();
-        DisplaySlots();
+        FilterSlots(ObjectCategory.Tools);
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
     }
@@ -115,7 +115,8 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             Button button = category.Q<Button>();
             button.text = cg;
             button.clicked += () => {
-                Filter(cg);
+                ObjectCategory name = Utils.StringToObjectCategory(cg);
+                FilterSlots(name);
             };
 
             m_categories.Add(category);
@@ -123,35 +124,46 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
     }
 
-    private void DisplaySlots(){
+    private void DisplayAllSlots(){
         ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
-        PropertyInfo[] properties = typeof(ObjectLists).GetProperties();
+        FieldInfo[] fields = objects.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
-        foreach(var property in properties){
-            List<Object> objList = (List<Object>)property.GetValue(objects);
-            foreach(Object obj in objList){
-                VisualElement slot = m_slot.Instantiate();
-                Button button = slot.Q<Button>();
-                button.clicked += () => {
-                    DisplayCard(obj);
-                };
-
-                Label name = slot.Q<Label>(name: "name");
-                name.text = obj.name;
-                VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
-                thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
-                m_slots.Add(slot);
+        foreach(var field in fields){
+            var objList = field.GetValue(objects);
+            if(objList == null){
+                Debug.LogError("This field does not exist in ObjectLists " + field.Name);
+                return;
             }
+
+            DisplayCategorySlots(objList);
         }
     }
 
-    private void Filter(string cg){
-        // TODO filter objects based on their class type
+    private void FilterSlots(ObjectCategory category){
         ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
-        // foreach(Object obj in objects){
-            // Example: if obj is instance of cg: obj.style.display = DisplayStyle.Flex;
-            // else obj.style.display = DisplayStyle.None;
-        // }
+        m_slots.contentContainer.Clear();
+        DisplayCategorySlots(objects.GetList(category));
+    }
+
+    private void DisplayCategorySlots(object objList){
+        var objs = objList as System.Collections.IList;
+        if(objs == null){
+            Debug.LogError("This field in ObjectLists is not a List " + objList.GetType().Name);
+            return;
+        }
+
+        foreach(Object obj in objs){
+            VisualElement slot = m_slot.Instantiate();
+            Button button = slot.Q<Button>();
+            button.clicked += () => {
+                DisplayCard(obj);
+            };
+            Label name = slot.Q<Label>(name: "name");
+            name.text = obj.name;
+            VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
+            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
+            m_slots.Add(slot);
+        }
     }
     #endregion
 }

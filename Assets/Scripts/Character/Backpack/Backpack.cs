@@ -41,6 +41,16 @@ public class ObjectLists{
         return currLoad;
     }
 
+    public object GetList(ObjectCategory name){
+        return name switch{
+            ObjectCategory.Tools => tools,
+            ObjectCategory.Clothes => clothes,
+            ObjectCategory.Consumables => consumables,
+            ObjectCategory.Items => items,
+            _ => tools,
+        };
+    }
+
     public void Add(Object obj){
         if(obj is Tool) tools.Add((Tool)obj);
         else if(obj is Clothes) clothes.Add((Clothes)obj);
@@ -87,10 +97,12 @@ public class Backpack{
 
     private void CalculateMaxLoad(){
         m_maxLoad = GameManager.Instance.GetCharacter().GetStrength() * Constants.STRENGTH_TO_LOAD;
+        Debug.Log("Backpack max load " + m_maxLoad);
     }
 
     private void CalculateCurrLoad(){
         m_currLoad = m_objects.GetCurrLoad();
+        Debug.Log("Backpack current load " + m_currLoad);
     }
 
     private void AddCurrLoad(int load){
