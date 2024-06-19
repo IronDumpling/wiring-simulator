@@ -5,6 +5,18 @@ public static class Constants{
     public const string CONTINUE = "继续";
     public const string LEAVE = "离开";
 
+    // Backpack
+    public const int SLOW_DOWN_THRESHOLD = 30;
+    public const int BURN_HELATH_THRESHOLD = 50;
+    public const int STRENGTH_TO_LOAD = 100;
+
+    // Time
+    public const string DAY = "d";
+    public const string HOUR = "hr";
+    public const string MIN = "min";
+    public const int DAY_TO_HOUR = 24;
+    public const int HOUR_TO_MIN = 60;
+
     // UI
     public const float TYPE_SPEED = 0.04f;
     public const float SCROLL_SPEED_AMPLIFIER = 50f;
@@ -18,19 +30,16 @@ public static class Constants{
 
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
-        {"trivial", 6},
-        {"easy", 8},
-        {"medium", 10},
-
-        {"challenge", 12},
-        {"formidable", 13},
-        {"legendary", 14},
-
-        {"heroic", 15},
-        {"godly", 16},
-        {"impossible", 18},
+        {CheckLevel.trivial.ToString(), 6},
+        {CheckLevel.easy.ToString(), 8},
+        {CheckLevel.medium.ToString(), 10},
+        {CheckLevel.challenge.ToString(), 12},
+        {CheckLevel.formidable.ToString(), 13},
+        {CheckLevel.legendary.ToString(), 14},
+        {CheckLevel.heroic.ToString(), 15},
+        {CheckLevel.godly.ToString(), 16},
+        {CheckLevel.impossible.ToString(), 18},
     };
-    
     public const float HUGE_RESULT_THRESHOLD = 50f;
 
     // Common Names
@@ -39,23 +48,24 @@ public static class Constants{
     // 1. Character
     // 1.1 Core Status
     // Not use for check, only use for Ink event condition
-    // Range: 1 - 100
-    // Dynamic Status 游戏时间每30min
-        // 1: -3
-        // 2 ~ 3: -1 
-        // 4 ~ 9: 0
-        // 10: +1
+    // Range: 1 ～ 100
     public const string HP = "HP";
     public const string SAN = "SAN";
 
     // 1.2 Dynamic Status
-    // Minorly use for check, majorly use for Ink event condition
-    // Range: 1 - 10
-    // 1: -3
-    // 2 ~ 3: -1 
-    // 4 ~ 7: 0 
-    // 8 ~ 9: +1 
-    // 10: +3
+    // Not use for check, only use for Ink event condition
+    // Range: 1 ～ 100
+    // Affect Dynamic Status 游戏时间每30min
+        // 1 ～ 10: -3
+        // 11 ~ 30: -1 
+        // 31 ~ 90: 0
+        // 91 ~ 100: +1
+    // Affect Skill Status
+        // 1 ～ 10: -3
+        // 11 ~ 30: -1 
+        // 31 ~ 70: 0 
+        // 71 ~ 90: +1 
+        // 91 ～ 100: +3
     public const string Hunger = "Hunger";
     public const string Thirst = "Thirst"; 
     public const string Sleep = "Sleep"; 
@@ -64,7 +74,7 @@ public static class Constants{
 
     // 1.3 Skill Status
     // Majorly use for check, minorly use for Ink event condition
-    // Range: 1 - 10
+    // Range: 1 ～ 10
     public const string Intelligent = "Intelligent";
     public const string Mind = "Mind";
     public const string Strength = "Strength";

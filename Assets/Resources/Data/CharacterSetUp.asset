@@ -17,25 +17,26 @@ MonoBehaviour:
   maxSan: 100
   initialSan: 50
   staringYear: 2020
+  timeTriggerInterval: 0
   globalCoreSideEffect:
-  - end: 1
-    effect: -3
-  - end: 3
-    effect: -1
-  - end: 9
-    effect: 0
   - end: 10
+    effect: -3
+  - end: 30
+    effect: -1
+  - end: 90
+    effect: 0
+  - end: 100
     effect: 1
-  maxHunger: 10
-  initialHunger: 5
-  maxThirst: 10
-  initialThirst: 5
-  maxSleep: 10
-  initialSleep: 5
-  maxIllness: 10
-  initialIllness: 5
-  maxMood: 10
-  initialMood: 5
+  maxHunger: 100
+  initialHunger: 50
+  maxThirst: 100
+  initialThirst: 50
+  maxSleep: 100
+  initialSleep: 50
+  maxIllness: 100
+  initialIllness: 50
+  maxMood: 100
+  initialMood: 50
   maxIntelligent: 10
   initialIntelligent: 5
   maxMind: 10
@@ -44,14 +45,55 @@ MonoBehaviour:
   initialStrength: 5
   maxSpeed: 10
   initialSpeed: 5
-  globalEqipmentSideEffect:
-  - end: 1
-    effect: -3
-  - end: 3
-    effect: -1
-  - end: 7
-    effect: 0
-  - end: 9
-    effect: 1
+  globalSkillSideEffect:
   - end: 10
+    effect: -3
+  - end: 30
+    effect: -1
+  - end: 70
+    effect: 0
+  - end: 90
+    effect: 1
+  - end: 100
     effect: 3
+  objects:
+    tools:
+    - m_name: Test 1
+      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
+      m_description: I am test 1
+      m_load: 20
+    clothes:
+    - m_name: Test 2
+      m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
+      m_description: I am test 2
+      m_load: 5
+    consumables:
+    - m_name: Test 3
+      m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
+      m_description: I am test 3
+      m_load: 1
+    - m_name: Test 4
+      m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
+      m_description: I am test 4
+      m_load: 2
+    - m_name: Test 5
+      m_thumbnail: {fileID: 21300000, guid: 044ce135f63e94a90addea1571271a53, type: 3}
+      m_description: I am test 5
+      m_load: 3
+    - m_name: Test 6
+      m_thumbnail: {fileID: 21300000, guid: 4ef8c0f696b1c486093476df2622c640, type: 3}
+      m_description: I am test 6
+      m_load: 2
+    items:
+    - m_name: Test 7
+      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
+      m_description: I am test 7
+      m_load: 5
+    - m_name: Test 8
+      m_thumbnail: {fileID: 21300000, guid: 07b8f729865864a8382029e615a85b41, type: 3}
+      m_description: I am test 8
+      m_load: 10
+    - m_name: Test 9
+      m_thumbnail: {fileID: 21300000, guid: 381a78f4452bb428aafe1c96957bf1e6, type: 3}
+      m_description: I am test 9
+      m_load: 8

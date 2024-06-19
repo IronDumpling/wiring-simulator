@@ -2,6 +2,18 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+public enum CheckLevel{
+    trivial,
+    easy,
+    medium,
+    challenge,
+    formidable,
+    legendary,
+    heroic,
+    godly,
+    impossible,
+}
+
 public class CheckManager : MonoSingleton<CheckManager>{
     private int m_successCount = 0;
     private int m_failCount = 0;
@@ -26,13 +38,14 @@ public class CheckManager : MonoSingleton<CheckManager>{
             int val = 0;
             
             // 1. dice
-            if(component.Contains("d")) val = DiceCheck(component);
+            if(component.Contains("d")) 
+                val = DiceCheck(component);
             // 2. character
-            else if(Utils.IsCharacterTag(component)) {
-                val = GameManager.Instance.character.GetVal(component);
-            }
+            else if(Utils.IsCharacterTag(component))
+                val = GameManager.Instance.GetCharacter().GetVal(component);
             // 3. correction
-            else if(int.TryParse(component, out int correction)) val = correction;
+            else if(int.TryParse(component, out int correction)) 
+                val = correction;
 
             if(sign == "+") genVal += val;
             else if(sign == "-") genVal -= val;

@@ -30,7 +30,6 @@ namespace CharacterProperties
         private SAN m_san;
         private CharacterProperties.Time m_time;
 
-
         private Hunger m_hunger;
         private Thirst m_thirst;
         private Sleep m_sleep;
@@ -468,15 +467,15 @@ namespace CharacterProperties
             {
                 Constants.HP => GetHP(),
                 Constants.SAN => GetSAN(),
-                "Hunger" => GetHunger(),
-                "Thirst" => GetThirst(),
-                "Sleep" => GetSleep(),
-                "Illness" => GetIllness(),
-                "Mood" => GetMood(),
-                "Intelligent" => GetIntelligent(),
-                "Mind" => GetMind(),
-                "Strength" => GetStrength(),
-                "Speed" => GetSpeed(),
+                Constants.Hunger => GetHunger(),
+                Constants.Thirst => GetThirst(),
+                Constants.Sleep => GetSleep(),
+                Constants.Illness => GetIllness(),
+                Constants.Mood => GetMood(),
+                Constants.Intelligent => GetIntelligent(),
+                Constants.Mind => GetMind(),
+                Constants.Strength => GetStrength(),
+                Constants.Speed => GetSpeed(),
                 Constants.TIME => GetTime(),
                 _ => 0
             };
@@ -540,7 +539,6 @@ namespace CharacterProperties
                     break;
             }
         }
-        
         
         public void IncreaseVal(string name, int delta)
         {
