@@ -5,12 +5,12 @@ using UnityEngine;
 using CharacterProperties;
 using Time = UnityEngine.Time;
 
-public class GameManager: MonoSingleton<GameManager>
-{
-    public CharacterSetUp characterSetUp;
-    public Character character;
-    public Backpack backpack;
-    public TimeStatManager m_timeStateManager;
+public class GameManager: MonoSingleton<GameManager>{
+    [SerializeField] private CharacterSetUp characterSetUp;
+    private Character character;
+    private Backpack backpack;
+    private TimeStatManager m_timeStateManager;
+
 
     protected override void Init()
     {
@@ -25,11 +25,23 @@ public class GameManager: MonoSingleton<GameManager>
         m_timeStateManager = new TimeStatManager(character, characterSetUp);
     }
 
-    private void Update()
-    {
+    private void Update(){
         m_timeStateManager.Update(character.GetTime());
-        
+
         // Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
     }
+
+    public Character GetCharacter(){
+        return character;
+    }
+
+    public Backpack GetBackpack(){
+        return backpack;
+    }
+
+    public TimeStatManager GetTimeStat(){
+        return m_timeStateManager;
+    }
+
+    // TODO
 }
-    

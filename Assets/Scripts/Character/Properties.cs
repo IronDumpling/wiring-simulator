@@ -1,6 +1,3 @@
-
-
-
 using System;
 
 namespace CharacterProperties
@@ -11,11 +8,28 @@ namespace CharacterProperties
     {
         public string name { get; }
     }
+
+    public abstract class CoreProperty : IProperty
+    {
+        private readonly string m_name;
+        public string name => m_name;
+
+        public int current { get; set; }
+
+        public int max { get; set; }
+
+        public CoreProperty(String newName, int max)
+        {
+            this.m_name = newName;
+            this.max = max;
+            this.current = max;
+        }
+    }
     #region core properties
     public class HP: IProperty
     {
         public string name => "HP";
-        
+
         public int currentHP { get; set; }
         public int maxHP { get; set; }
 
@@ -82,7 +96,7 @@ namespace CharacterProperties
             this.maxHunger = maxHunger;
         }
     }
-    
+
     public class Thirst: IProperty
     {
         public string name => "Thirst";

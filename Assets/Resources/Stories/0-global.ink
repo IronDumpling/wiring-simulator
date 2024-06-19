@@ -32,10 +32,34 @@ VAR negative_event_4_complete = false
 VAR translator_you_meet = 0
 VAR translator_you_employ = 0
 
+
+//2-1-tent的初始参数
+
 VAR know_doctor_1_can_speak_Chinese = false
 VAR konw_you_can_buy_EOL = false
 VAR buy_the_EOL = 0
 VAR know_the_tent_post_1 = false
 VAR get_the_aid_1 = false
-VAR meet_shen_2 = false
+
+
+//2-2-grocery的初始参数
+
+VAR recognize_the_thief = false
+VAR attitude_of_shopkeeper = 0
+VAR know_shopkeeper_1_is_Chinese = false
+
+
+
+//2-3-gang的初始参数
+
 VAR know_the_travel_time_1 = false
+
+
+//2-4-restroom的初始参数
+
+VAR meet_shen_2 = false
+
+
+
+
+

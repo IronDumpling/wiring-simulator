@@ -48,23 +48,24 @@ public static class Constants{
     // 1. Character
     // 1.1 Core Status
     // Not use for check, only use for Ink event condition
-    // Range: 1 - 100
-    // Dynamic Status 游戏时间每30min
-        // 1: -3
-        // 2 ~ 3: -1 
-        // 4 ~ 9: 0
-        // 10: +1
+    // Range: 1 ～ 100
     public const string HP = "HP";
     public const string SAN = "SAN";
 
     // 1.2 Dynamic Status
-    // Minorly use for check, majorly use for Ink event condition
-    // Range: 1 - 10
-    // 1: -3
-    // 2 ~ 3: -1 
-    // 4 ~ 7: 0 
-    // 8 ~ 9: +1 
-    // 10: +3
+    // Not use for check, only use for Ink event condition
+    // Range: 1 ～ 100
+    // Affect Dynamic Status 游戏时间每30min
+        // 1 ～ 10: -3
+        // 11 ~ 30: -1 
+        // 31 ~ 90: 0
+        // 91 ~ 100: +1
+    // Affect Skill Status
+        // 1 ～ 10: -3
+        // 11 ~ 30: -1 
+        // 31 ~ 70: 0 
+        // 71 ~ 90: +1 
+        // 91 ～ 100: +3
     public const string Hunger = "Hunger";
     public const string Thirst = "Thirst"; 
     public const string Sleep = "Sleep"; 
@@ -73,11 +74,11 @@ public static class Constants{
 
     // 1.3 Skill Status
     // Majorly use for check, minorly use for Ink event condition
-    // Range: 1 - 10
-    public const string Intelligent = "Intelligent";
-    public const string Mind = "Mind";
-    public const string Strength = "Strength";
-    public const string Speed = "Speed";
+    // Range: 1 ～ 10
+    public const string Intelligent = "INT";
+    public const string Mind = "WIS";
+    public const string Strength = "STR";
+    public const string Speed = "DEX";
 
     // 2. Utils  
     public const string CHECK = "CHECK";
