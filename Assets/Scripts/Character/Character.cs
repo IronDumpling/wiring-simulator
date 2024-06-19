@@ -6,6 +6,7 @@ using CharacterProperties;
 using Ink;
 using Ink.Runtime;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using Time = CharacterProperties.Time;
 
@@ -504,31 +505,31 @@ namespace CharacterProperties
                 case Constants.SAN:
                     SetSAN(val);
                     break;
-                case "Hunger":
+                case Constants.Hunger:
                     SetHunger(val);
                     break;
-                case "Thirst":
+                case Constants.Thirst:
                     SetThirst(val);
                     break;
-                case "Sleep":
+                case Constants.Sleep:
                     SetSleep(val);
                     break;
-                case "Illness":
+                case Constants.Illness:
                     SetIllness(val);
                     break;
-                case "Mood":
+                case Constants.Mood:
                     SetMood(val);
                     break;
-                case "Intelligent":
+                case Constants.Intelligent:
                     SetIntelligent(val);
                     break;
-                case "Mind":
+                case Constants.Mind:
                     SetMind(val);
                     break;
-                case "Strength":
+                case Constants.Strength:
                     SetStrength(val);
                     break;
-                case "Speed":
+                case Constants.Speed:
                     SetSpeed(val);
                     break;
                 case Constants.TIME:
@@ -550,31 +551,31 @@ namespace CharacterProperties
                 case Constants.SAN:
                     IncreaseSAN(delta);
                     break;
-                case "Hunger":
+                case Constants.Hunger:
                     IncreaseHunger(delta);
                     break;
-                case "Thirst":
+                case Constants.Thirst:
                     IncreaseThirst(delta);
                     break;
-                case "Sleep":
+                case Constants.Sleep:
                     IncreaseSleep(delta);
                     break;
-                case "Illness":
+                case Constants.Illness:
                     IncreaseIllness(delta);
                     break;
-                case "Mood":
+                case Constants.Mood:
                     IncreaseMood(delta);
                     break;
-                case "Intelligent":
+                case Constants.Intelligent:
                     IncreaseIntelligent(delta);
                     break;
-                case "Mind":
+                case Constants.Mind:
                     IncreaseMind(delta);
                     break;
-                case "Strength":
+                case Constants.Strength:
                     IncreaseStrength(delta);
                     break;
-                case "Speed":
+                case Constants.Speed:
                     IncreaseSpeed(delta);
                     break;
                 case Constants.TIME:
@@ -596,31 +597,31 @@ namespace CharacterProperties
                 case Constants.SAN:
                     DecreaseSAN(delta);
                     break;
-                case "Hunger":
+                case Constants.Hunger:
                     DecreaseHunger(delta);
                     break;
-                case "Thirst":
+                case Constants.Thirst:
                     DecreaseThirst(delta);
                     break;
-                case "Sleep":
+                case Constants.Sleep:
                     DecreaseSleep(delta);
                     break;
-                case "Illness":
+                case Constants.Illness:
                     DecreaseIllness(delta);
                     break;
-                case "Mood":
+                case Constants.Mood:
                     DecreaseMood(delta);
                     break;
-                case "Intelligent":
+                case Constants.Intelligent:
                     DecreaseIntelligent(delta);
                     break;
-                case "Mind":
+                case Constants.Mind:
                     DecreaseMind(delta);
                     break;
-                case "Strength":
+                case Constants.Strength:
                     DecreaseStrength(delta);
                     break;
-                case "Speed":
+                case Constants.Speed:
                     DecreaseSpeed(delta);
                     break;
                 case Constants.TIME:
