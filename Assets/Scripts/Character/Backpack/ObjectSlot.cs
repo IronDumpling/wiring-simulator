@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
 public class ObjectSlot : MonoBehaviour{
     private int _count;
     public int m_Count{

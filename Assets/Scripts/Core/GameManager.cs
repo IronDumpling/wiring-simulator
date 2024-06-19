@@ -12,7 +12,6 @@ public class GameManager: MonoSingleton<GameManager>
     public Backpack backpack;
     public TimeStatManager m_timeStateManager;
 
-    
     protected override void Init()
     {
         if (characterSetUp == null)
