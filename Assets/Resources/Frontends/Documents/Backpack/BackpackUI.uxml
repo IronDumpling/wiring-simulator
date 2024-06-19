@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="panel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.78); width: 30%;">
-        <ui:VisualElement name="card" style="flex-grow: 1; height: 50%; visibility: visible;">
+        <ui:VisualElement name="card" style="flex-grow: 1; height: 50%;">
             <ui:VisualElement name="image" style="flex-grow: 1; height: 45%; background-image: resource(&apos;Arts/Images/Tests/Placeholder&apos;); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
             <ui:VisualElement name="key" style="flex-grow: 1; flex-direction: row; height: 15%;">
                 <ui:Label tabindex="-1" text="Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="name" style="-unity-text-align: middle-center; font-size: 30px; -unity-font-style: bold; width: 50%; background-color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />

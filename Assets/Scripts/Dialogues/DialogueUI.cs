@@ -360,7 +360,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                 case Constants.TIME:
                     TimeModification(tagValue);
                     break;
-                // 4. GetCharacter() tags
+                // 4. character tags
                 default:
                     if(Utils.IsCharacterTag(tagKey)) CharacterModification(tagKey, tagValue);
                     else Debug.LogWarning("Tag came in but is not being handled: " + tag);
@@ -408,18 +408,20 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
         
-        if(value.StartsWith("+"))
-            GameManager.Instance.GetCharacter().IncreaseVal(key, number);
-        else if(value.StartsWith("-"))
-            GameManager.Instance.GetCharacter().DecreaseVal(key, number);
-        else if(value.StartsWith("="))
-            GameManager.Instance.GetCharacter().SetVal(key, number);
-        else 
-            Debug.LogError(key + " tag could not be appropriately parsed");
+        if(value.StartsWith("+")){
+            GameManager.Instance.character.IncreaseVal(key, number);
+        } 
+        else if(value.StartsWith("-")){
+            GameManager.Instance.character.DecreaseVal(key, number);
+        }
+        else if(value.StartsWith("=")){
+            GameManager.Instance.character.SetVal(key, number);
+        }
+        else Debug.LogError(key + " tag could not be appropriately parsed");
 
-        m_currStory.variablesState[key] = GameManager.Instance.GetCharacter().GetVal(key); // sync
+        m_currStory.variablesState[key] = GameManager.Instance.character.GetVal(key); // sync
         
-        Debug.Log($"{key} now have value {GameManager.Instance.GetCharacter().GetVal(key)}");
+        Debug.Log($"{key} now have value {GameManager.Instance.character.GetVal(key)}");
     }
 
     private void TimeModification(string value){
@@ -431,30 +433,34 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         int number;
         foreach(string duration in durations){
             if(duration.Contains(Constants.MIN) && 
-            int.TryParse(duration.Replace(Constants.MIN, ""), out number))
+            int.TryParse(duration.Replace(Constants.MIN, ""), out number)){
                 time += number;
+            }
             else if(duration.Contains(Constants.HOUR) && 
-            int.TryParse(duration.Replace(Constants.HOUR, ""), out number))
+            int.TryParse(duration.Replace(Constants.HOUR, ""), out number)){
                 time += number * Constants.HOUR_TO_MIN;
+            }
             else if(duration.Contains(Constants.DAY) && 
-            int.TryParse(duration.Replace(Constants.DAY, ""), out number))
+            int.TryParse(duration.Replace(Constants.DAY, ""), out number)){
                 time += number * Constants.DAY_TO_HOUR * Constants.HOUR_TO_MIN;
-            else 
-                Debug.LogError("'time' tag could not be appropriately parsed");
+            }
+            else Debug.LogError("'time' tag could not be appropriately parsed");
         }
         
-        if(value.StartsWith("+"))
-            GameManager.Instance.GetCharacter().IncreaseTime(time);
-        else if(value.StartsWith("-"))
-            GameManager.Instance.GetCharacter().DecreaseTime(time);
-        else if(value.StartsWith("="))
-            GameManager.Instance.GetCharacter().SetTime(time);
-        else 
-            Debug.LogError("'time' tag could not be appropriately parsed");
+        if(value.StartsWith("+")){
+            GameManager.Instance.character.IncreaseTime(time);
+        } 
+        else if(value.StartsWith("-")){
+            GameManager.Instance.character.DecreaseTime(time);
+        }
+        else if(value.StartsWith("=")){
+            GameManager.Instance.character.SetTime(time);
+        }
+        else Debug.LogError("'time' tag could not be appropriately parsed");
 
-        m_currStory.variablesState[Constants.TIME] = GameManager.Instance.GetCharacter().GetTimeString(); // sync
+        m_currStory.variablesState[Constants.TIME] = GameManager.Instance.character.GetTimeString(); // sync
         
-        Debug.Log($"Current Time: {GameManager.Instance.GetCharacter().GetTimeString()}");
+        Debug.Log($"Current Time: {GameManager.Instance.character.GetTimeString()}");
     }
     #endregion
 }

@@ -17,7 +17,6 @@ namespace CharacterProperties{
         public int staringYear;
 
         public int timeTriggerInterval;
-
         public List<SideEffectBlock> globalCoreSideEffect;
         #endregion Core
     
@@ -37,7 +36,6 @@ namespace CharacterProperties{
     
         public int maxMood;
         public int initialMood;
-        
         #endregion Dynamic
     
         #region Skill
@@ -53,17 +51,20 @@ namespace CharacterProperties{
 
         public int maxSpeed;
         public int initialSpeed;
-
-        public List<SideEffectBlock> globalSkillSideEffect;
         #endregion
 
         #region Backpack
         [Header("Backpack")]
-        public ObjectLists objects;
+        public List<Object> objects = new List<Object>();
+
         #endregion
 
         #region Brain
         // [Header("Brain")]
+        #endregion
+
+        #region Others
+        public List<SideEffectBlock> globalSkillSideEffect;
         #endregion
     }
 }
