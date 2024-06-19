@@ -1,6 +1,3 @@
-
-
-
 using System;
 
 namespace CharacterProperties
@@ -18,7 +15,7 @@ namespace CharacterProperties
         public string name => m_name;
 
         public int current { get; set; }
-        
+
         public int max { get; set; }
 
         public CoreProperty(String newName, int max)
@@ -32,7 +29,7 @@ namespace CharacterProperties
     public class HP: IProperty
     {
         public string name => "HP";
-        
+
         public int currentHP { get; set; }
         public int maxHP { get; set; }
 
@@ -99,7 +96,7 @@ namespace CharacterProperties
             this.maxHunger = maxHunger;
         }
     }
-    
+
     public class Thirst: IProperty
     {
         public string name => "Thirst";
