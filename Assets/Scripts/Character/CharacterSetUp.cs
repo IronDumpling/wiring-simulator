@@ -15,7 +15,8 @@ namespace CharacterProperties{
         public int initialSan;
 
         public int staringYear;
-
+        
+        [Min(1)]
         public int timeTriggerInterval;
 
         public List<SideEffectBlock> globalCoreSideEffect;
