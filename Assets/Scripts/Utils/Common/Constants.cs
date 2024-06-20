@@ -77,10 +77,10 @@ public static class Constants{
     // 1.3 Skill Status
     // Majorly use for check, minorly use for Ink event condition
     // Range: 1 ～ 10
-    public const string Intelligent = "Intelligent";
-    public const string Mind = "Mind";
-    public const string Strength = "Strength";
-    public const string Speed = "Speed";
+    public const string Intelligent = "INT";
+    public const string Mind = "WIS";
+    public const string Strength = "STR";
+    public const string Speed = "DEX";
 
     // 2. Utils  
     public const string CHECK = "CHECK";

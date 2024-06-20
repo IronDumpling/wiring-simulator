@@ -49,7 +49,7 @@ VAR correction_test = false
   注：在选择“受事件影响补正的八面骰”之前，应先点击“获得事件补正”一项。
   检定难度标准分级：
     trivial, easy, medium
-    challenge, formidable, ledendary
+    challenge, formidable, legendary
     heroic, godly, impossible
   
    +[投掷八面骰] #dice:2d6>easy
