@@ -40,7 +40,7 @@ namespace CharacterProperties
 
     public class Time: IProperty
     {
-        public string name => "Time";
+        public string name => Constants.TIME;
         public int currentTime { get; set; }
         private DateTime m_startingDate;
 

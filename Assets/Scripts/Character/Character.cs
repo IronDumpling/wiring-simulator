@@ -1,14 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CharacterProperties;
-using Ink;
-using Ink.Runtime;
-using TMPro;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using Time = CharacterProperties.Time;
+
 
 namespace CharacterProperties
 {
