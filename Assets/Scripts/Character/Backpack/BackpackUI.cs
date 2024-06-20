@@ -74,7 +74,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_panel.style.display = DisplayStyle.Flex;
         Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
         m_panel.style.width = new StyleLength(width);
-        width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
+        width = new Length(100 - Constants.PANEL_WIDTH * 2, LengthUnit.Percent);
         m_panel.style.left = new StyleLength(width);
 
         m_openButton.style.display = DisplayStyle.None;
