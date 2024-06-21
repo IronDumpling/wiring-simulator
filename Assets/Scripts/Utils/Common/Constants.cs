@@ -27,6 +27,10 @@ public static class Constants{
     public const float EXIT_LAG_TIME = 0.5f;
     public const int PANEL_WIDTH = 30;
     public const float HIDE_POSITION = 98.5f;
+    public const int BUTTON_WIDTH = 10;
+    public const int BUTTON_HEIGHT = 5;
+    public const int FULL_WIDTH = 100;
+
 
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{

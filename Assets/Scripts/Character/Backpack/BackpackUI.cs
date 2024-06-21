@@ -55,6 +55,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         DisplayButtons();
         DisplayCategory();
         FilterSlots(ObjectCategory.Tools);
+        OpenPanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
     }
@@ -71,12 +72,26 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #region Panel
     private void OpenPanel(){
         m_panel.style.display = DisplayStyle.Flex;
+        Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
+        m_panel.style.width = new StyleLength(width);
+        width = new Length(100 - Constants.PANEL_WIDTH * 2, LengthUnit.Percent);
+        m_panel.style.left = new StyleLength(width);
+
         m_openButton.style.display = DisplayStyle.None;
     }
 
     private void ClosePanel(){
         m_panel.style.display = DisplayStyle.None;
+        
         m_openButton.style.display = DisplayStyle.Flex;
+        Length height = new Length(Constants.BUTTON_HEIGHT, LengthUnit.Percent);
+        m_openButton.style.height = new StyleLength(height);
+        
+        Length width = new Length(100 - Constants.PANEL_WIDTH - Constants.BUTTON_WIDTH, LengthUnit.Percent);
+        m_openButton.style.left = new StyleLength(width);
+
+        height = new Length(100 - Constants.BUTTON_HEIGHT, LengthUnit.Percent);
+        m_openButton.style.top = new StyleLength(height);
     }
 
     private void DisplayButtons(){
@@ -89,7 +104,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         };
 
         m_closeButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/CloseButton").Instantiate().Q<Button>();
-        m_panel.Add(m_closeButton);
+        m_panel.Insert(0, m_closeButton);
 
         m_closeButton.clicked += () => {
             ClosePanel();
