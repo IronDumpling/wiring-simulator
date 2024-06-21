@@ -86,12 +86,15 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_openButton.style.display = DisplayStyle.Flex;
         Length height = new Length(Constants.BUTTON_HEIGHT, LengthUnit.Percent);
         m_openButton.style.height = new StyleLength(height);
-        
-        Length width = new Length(100 - Constants.PANEL_WIDTH - Constants.BUTTON_WIDTH, LengthUnit.Percent);
-        m_openButton.style.left = new StyleLength(width);
 
+        Length width = new Length(Constants.BUTTON_WIDTH, LengthUnit.Percent);
+        m_openButton.style.width = new StyleLength(width);
+        
         height = new Length(100 - Constants.BUTTON_HEIGHT, LengthUnit.Percent);
         m_openButton.style.top = new StyleLength(height);
+
+        width = new Length(100 - Constants.PANEL_WIDTH - Constants.BUTTON_WIDTH, LengthUnit.Percent);
+        m_openButton.style.left = new StyleLength(width);
     }
 
     private void DisplayButtons(){

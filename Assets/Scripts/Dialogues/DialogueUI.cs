@@ -48,8 +48,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_panel = m_root.Q<VisualElement>(name: "Panel");
         m_body = m_root.Q<VisualElement>(name: "Body");
 
-        m_expandButton = m_root.Q<Button>(name: "ExpandButton");
         m_title = m_root.Q<Label>(name: "Title");
+
+        SetSideBar();
         SetScrollView();
 
         choice = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/RealChoice");
@@ -61,7 +62,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     
     private void Start(){   
         OpenExpandPanel();
-        PreRegisterCallback();
         BeginDialogue(m_defaultInk);
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
@@ -78,34 +78,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     public void OnApplicationQuit(){
         m_dialogueVars.SaveVariables();
-    }
-    #endregion
-    
-    #region Panels
-    public void CloseExpandPanel(){
-        m_panel.style.width = Constants.PANEL_WIDTH;
-        Length width = new Length(Constants.HIDE_POSITION, LengthUnit.Percent);
-        m_panel.style.left = new StyleLength(width);
-        m_body.style.display = DisplayStyle.None;
-        m_expandButton.text = "\u2190";
-        m_isPanelExpanded = false;
-    }
-    
-    public void OpenExpandPanel(){
-        Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
-        m_panel.style.width = new StyleLength(width);
-        width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
-        m_panel.style.left = new StyleLength(width);
-        m_body.style.display = DisplayStyle.Flex;
-        m_expandButton.text = "\u2192";
-        m_isPanelExpanded = true;
-    }
-    
-    public void PreRegisterCallback() {
-        m_expandButton.clicked += () => {
-            if(m_isPanelExpanded) CloseExpandPanel();
-            else OpenExpandPanel();
-        };
     }
     #endregion
     
@@ -248,6 +220,36 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #endregion
     
     #region Logics
+    public void CloseExpandPanel(){
+        m_panel.style.width = Constants.PANEL_WIDTH;
+        Length width = new Length(Constants.HIDE_POSITION, LengthUnit.Percent);
+        m_panel.style.left = new StyleLength(width);
+        m_body.style.display = DisplayStyle.None;
+        m_expandButton.text = "\u2190";
+        m_isPanelExpanded = false;
+    }
+
+    public void OpenExpandPanel(){
+        Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
+        m_panel.style.width = new StyleLength(width);
+        width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
+        m_panel.style.left = new StyleLength(width);
+        m_body.style.display = DisplayStyle.Flex;
+        m_expandButton.text = "\u2192";
+        m_isPanelExpanded = true;
+    }
+
+    public void SetSideBar() {
+        m_expandButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
+        Length width = new Length(Constants.MARGIN_WIDTH, LengthUnit.Percent);
+        m_expandButton.style.width = new StyleLength(width);
+        m_root.Q<VisualElement>(name: "SideBar").Add(m_expandButton);
+        m_expandButton.clicked += () => {
+            if(m_isPanelExpanded) CloseExpandPanel();
+            else OpenExpandPanel();
+        };
+    }
+
     private void MakeChoice(Choice choice, List<VisualElement> choices){
         if (!m_canGoToNextLine) return;
         foreach(VisualElement choiceEl in choices){
