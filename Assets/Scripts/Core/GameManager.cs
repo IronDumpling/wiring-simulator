@@ -11,8 +11,11 @@ public class GameManager: MonoSingleton<GameManager>{
     private Backpack backpack;
     private TimeStatManager m_timeStateManager;
 
-    protected override void Init(){
-        if (characterSetUp == null){
+
+    protected override void Init()
+    {
+        if (characterSetUp == null)
+        {
             Debug.LogError("No Set Up File");
             return;
         }
@@ -24,7 +27,7 @@ public class GameManager: MonoSingleton<GameManager>{
 
     private void Update(){
         m_timeStateManager.Update(character.GetTime());
-        
+
         // Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
     }
 
@@ -42,4 +45,3 @@ public class GameManager: MonoSingleton<GameManager>{
 
     // TODO
 }
-    

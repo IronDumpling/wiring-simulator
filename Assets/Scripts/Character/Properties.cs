@@ -38,11 +38,11 @@ namespace CharacterProperties
         Intelligent,
         Invalid
     }
-    
+
     interface IProperty
     {
-        
-        
+
+
         public PropertyCategory category { get; }
     }
 
@@ -61,17 +61,17 @@ namespace CharacterProperties
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public int max
         {
             get => m_max;
             set
-            { 
+            {
                 m_max = Mathf.Min(0, value);
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public CoreType type { get; private set; }
 
         public CoreProperty(CoreType type)
@@ -80,7 +80,7 @@ namespace CharacterProperties
             m_current = 0;
             this.type = type;
         }
-        
+
         public CoreProperty(int max, CoreType type)
         {
             m_max = max;
@@ -114,9 +114,9 @@ namespace CharacterProperties
                 _ => ""
             };
         }
-        
-        
-        
+
+
+
     }
 
     public class DynamicProperty : IProperty
@@ -125,7 +125,7 @@ namespace CharacterProperties
 
         public PropertyCategory category => PropertyCategory.Dynamic;
         public UnityEvent<DynamicType, int, int> onValueChanged = new UnityEvent<DynamicType, int, int>();
-        
+
         public int current
         {
             get => m_current;
@@ -135,7 +135,7 @@ namespace CharacterProperties
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public int max
         {
             get => m_max;
@@ -145,9 +145,9 @@ namespace CharacterProperties
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public DynamicType type { get; private set; }
-        
+
         public DynamicProperty(int max, DynamicType type)
         {
             m_max = max;
@@ -187,7 +187,7 @@ namespace CharacterProperties
                 _ => ""
             };
         }
-        
+
     }
 
     public class SkillProperty : IProperty
@@ -195,9 +195,9 @@ namespace CharacterProperties
         private int m_current, m_max;
 
         public PropertyCategory category => PropertyCategory.Skill;
-        
+
         public UnityEvent<SkillType, int, int> onValueChanged = new UnityEvent<SkillType, int, int>();
-        
+
         public int current
         {
             get => m_current;
@@ -207,19 +207,19 @@ namespace CharacterProperties
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public int max
         {
             get => m_max;
             set
-            { 
+            {
                 m_max = Mathf.Min(0, value);
                 onValueChanged.Invoke(type, m_current, m_max);
             }
         }
-        
+
         public SkillType type { get; private set; }
-        
+
         public SkillProperty(int max, SkillType type)
         {
             m_max = max;
@@ -258,19 +258,35 @@ namespace CharacterProperties
             };
         }
     }
-    
-    
+
+
     interface IPropertyOld
     {
         public string name { get; }
-        
+
     }
-    
+
+    public abstract class CoreProperty : IProperty
+    {
+        private readonly string m_name;
+        public string name => m_name;
+
+        public int current { get; set; }
+
+        public int max { get; set; }
+
+        public CoreProperty(String newName, int max)
+        {
+            this.m_name = newName;
+            this.max = max;
+            this.current = max;
+        }
+    }
     #region core properties
     public class HP: IPropertyOld
     {
         public string name => "HP";
-        
+
         public int currentHP { get; set; }
         public int maxHP { get; set; }
 
@@ -300,9 +316,9 @@ namespace CharacterProperties
         private DateTime m_startingDate;
         public string name => Constants.TIME;
         public PropertyCategory category => PropertyCategory.Time;
-        
+
         public int currentTime { get; set; }
-       
+
 
         public Time()
         {
@@ -340,7 +356,7 @@ namespace CharacterProperties
             this.maxHunger = maxHunger;
         }
     }
-    
+
     public class Thirst: IPropertyOld
     {
         public string name => "Thirst";
