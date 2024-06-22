@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace CharacterProperties
@@ -20,57 +22,39 @@ namespace CharacterProperties
     
     public class Character  
     {
-        private HP m_hp;
-        private SAN m_san;
+        private CoreProperty m_hp, m_san;
         private CharacterProperties.Time m_time;
 
-        private Hunger m_hunger;
-        private Thirst m_thirst;
-        private Sleep m_sleep;
-        private Illness m_illness;
-        private Mood m_mood;
+        private DynamicProperty m_hunger, m_thirst, m_sleep, m_illness, m_mood;
         
-        private Intelligent m_intelligent;
-        private Mind m_mind;
-        private Strength m_strength;
-        private Speed m_speed;
+        private SkillProperty m_intelligent, m_mind, m_strength, m_speed;
+
+        // event that will be called when the plain skill or the modifier is changed
+        private Dictionary<SkillType, UnityEvent<SkillType, int, int>> m_onSkillChanged = new Dictionary<SkillType, UnityEvent<SkillType, int, int>>();
 
         private List<SideEffectBlock> m_globalSideEffect;
         
         public Character(CharacterSetUp setup){
-            m_hp = new HP(setup.maxHp);
-            SetHP(setup.initialHp);
-            
-            m_san = new SAN(setup.maxSan);
-            SetSAN(setup.initialSan);
+            m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
+            m_san = new CoreProperty(setup.maxSan, setup.initialSan, CoreType.SAN);
             m_time = new Time(setup.staringYear);
 
-            m_hunger = new Hunger(setup.maxHunger);
-            SetHunger(setup.initialHunger);
+            m_hunger = new DynamicProperty(setup.maxHunger, setup.initialHunger, DynamicType.Hunger);
+            m_thirst = new DynamicProperty(setup.maxThirst, setup.initialThirst, DynamicType.Thirst);
+            m_sleep = new DynamicProperty(setup.maxSleep, setup.initialSleep, DynamicType.Sleep);
+            m_illness = new DynamicProperty(setup.maxIllness, setup.initialIllness, DynamicType.Illness);
+            m_mood = new DynamicProperty(setup.maxMood, setup.initialMood, DynamicType.Mood);
+
+            m_intelligent = new SkillProperty(setup.maxIntelligent, setup.initialIntelligent, SkillType.Intelligent);
+            m_mind = new SkillProperty(setup.maxMind, setup.initialMind, SkillType.Mind);
+            m_strength = new SkillProperty(setup.maxStrength, setup.initialStrength, SkillType.Strength);
+            m_speed = new SkillProperty(setup.maxSpeed, setup.initialSpeed, SkillType.Speed);
             
-            m_thirst = new Thirst(setup.maxThirst);
-            SetThirst(setup.initialThirst);
-            
-            m_sleep = new Sleep(setup.maxSleep);
-            SetSleep(setup.initialSleep);
-            
-            m_illness = new Illness(setup.maxIllness);
-            SetIllness(setup.initialIllness);
-            
-            m_mood = new Mood(setup.maxMood);
-            SetMood(setup.initialMood);
-            
-            m_intelligent = new Intelligent(setup.maxIntelligent);
-            SetIntelligent(setup.initialIntelligent);
-            
-            m_mind = new Mind(setup.maxMind);
-            SetMind(setup.initialMind);
-            
-            m_strength = new Strength(setup.maxStrength);
-            SetStrength(setup.initialStrength);
-            
-            m_speed = new Speed(setup.maxSpeed);
-            SetSpeed(setup.initialSpeed);
+            m_onSkillChanged.Add(SkillType.Intelligent, new UnityEvent<SkillType, int, int>());
+            m_onSkillChanged.Add(SkillType.Mind, new UnityEvent<SkillType, int, int>());
+            m_onSkillChanged.Add(SkillType.Strength, new UnityEvent<SkillType, int, int>());
+            m_onSkillChanged.Add(SkillType.Speed, new UnityEvent<SkillType, int, int>());
+            //RegisterDynamicSkillEvent();
 
             m_globalSideEffect = new List<SideEffectBlock>(setup.globalSkillSideEffect);
             m_globalSideEffect.Sort();
@@ -85,24 +69,6 @@ namespace CharacterProperties
             }
         }
         
-        public Character(int maxHp, int maxSan, int maxHunger, int maxThirst, int maxSleep, int maxIllness, int maxMood, 
-            int maxIntelligent, int maxMind, int maxStrength, int maxSpeed)
-        {
-            m_hp = new HP(maxHp);
-            m_san = new SAN(maxSan);
-            m_time = new Time();
-
-            m_hunger = new Hunger(maxHunger);
-            m_thirst = new Thirst(maxThirst);
-            m_sleep = new Sleep(maxSleep);
-            m_illness = new Illness(maxIllness);
-            m_mood = new Mood(maxMood);
-
-            m_intelligent = new Intelligent(maxIntelligent);
-            m_mind = new Mind(maxMind);
-            m_strength = new Strength(maxStrength);
-            m_speed = new Speed(maxSpeed);
-        }
 
         private int GetGlobalSideEffect(int val)
         {
@@ -114,35 +80,130 @@ namespace CharacterProperties
             
             return m_globalSideEffect[^1].effect;
         }
+
+        private CoreProperty GetCoreProperty(CoreType type)
+        {
+            return type switch
+            {
+                CoreType.HP => m_hp,
+                CoreType.SAN => m_san,
+                _ => null
+            };
+        }
+
+        private DynamicProperty GetDynamicProperty(DynamicType type)
+        {
+            return type switch
+            {
+                DynamicType.Hunger => m_hunger,
+                DynamicType.Illness => m_illness,
+                DynamicType.Thirst => m_thirst,
+                DynamicType.Mood => m_mood,
+                DynamicType.Sleep => m_sleep,
+                _ => null
+            };
+        }
+
+        private SkillProperty GetSkillProperty(SkillType type)
+        {
+            return type switch
+            {
+                SkillType.Strength => m_strength,
+                SkillType.Intelligent => m_intelligent,
+                SkillType.Mind => m_mind,
+                SkillType.Speed => m_speed,
+                _ => null
+            };
+        }
+
+        private void RegisterDynamicSkillEvent(DynamicType dynamicType, SkillType skillType)
+        {
+            var property = GetDynamicProperty(dynamicType);
+            
+            property.onValueChanged.AddListener((type, current, max) =>
+            {
+                m_onSkillChanged[skillType].Invoke(skillType, GetPlainSkill(skillType), GetModifier(skillType));
+            } );
+        }
+        
+        #region EventRegister
+        public void RegisterCoreEvent(CoreType type, UnityAction<CoreType, int, int> call)
+        {
+            CoreProperty property = GetCoreProperty(type);
+            Debug.Assert(property != null, "Core Type does not exist");
+            
+            property.onValueChanged.AddListener(call);
+            
+            property.onValueChanged.Invoke(property.type, property.current, property.max);
+        }
+        
+        public void UnregisterCoreEvent(CoreType type, UnityAction<CoreType, int, int> call)
+        {
+            CoreProperty property = GetCoreProperty(type);
+            Debug.Assert(property != null, "Core Type does not exist");
+            
+            property.onValueChanged.RemoveListener(call);
+        }
+        
+        public void RegisterDynamicEvent(DynamicType type, UnityAction<DynamicType, int, int> call)
+        {
+            DynamicProperty property = GetDynamicProperty(type);
+            Debug.Assert(property != null, "Dynamic Type does not exist");
+            
+            property.onValueChanged.AddListener(call);
+            property.onValueChanged.Invoke(property.type, property.current, property.max);
+        }
+        
+        public void UnregisterDynamicEvent(DynamicType type, UnityAction<DynamicType, int, int> call)
+        {
+            DynamicProperty property = GetDynamicProperty(type);
+            Debug.Assert(property != null, "Dynamic Type does not exist");
+            
+            property.onValueChanged.RemoveListener(call);
+        }
+        
+        public void RegisterSkillEvent(SkillType type, UnityAction<SkillType, int, int> call)
+        {
+            SkillProperty property = GetSkillProperty(type);
+            Debug.Assert(property != null, "Skill Type does not exist");
+            
+            property.onValueChanged.AddListener(call);
+            property.onValueChanged.Invoke(property.type, property.current, property.max);
+        }
+        
+        public void UnregisterSkillEvent(SkillType type, UnityAction<SkillType, int, int> call)
+        {
+            SkillProperty property = GetSkillProperty(type);
+            Debug.Assert(property != null, "Skill Type does not exist");
+            
+            property.onValueChanged.RemoveListener(call);
+        }
+        #endregion
         
         #region HP
         public int GetHP()
         {
-            return m_hp.currentHP;
+            return m_hp.current;
         }
 
         public void SetHP(int val)
         {
-            m_hp.currentHP = val;
-            m_hp.currentHP = Mathf.Clamp(m_hp.currentHP, 0, m_hp.maxHP);
+            m_hp.current = val;
         }
 
         public void IncreaseHP(int delta)
         {
-            m_hp.currentHP += delta;
-            if (m_hp.currentHP > m_hp.maxHP) m_hp.currentHP = m_hp.maxHP;
+            m_hp.current += delta;
         }
         
         public void DecreaseHP(int delta)
         {
-            m_hp.currentHP -= delta;
-            if (m_hp.currentHP < 0) m_hp.currentHP = 0;
+            m_hp.current -= delta;
         }
 
         public void ChangeHP(int delta)
         {
-            m_hp.currentHP += delta;
-            m_hp.currentHP = Mathf.Clamp(m_hp.currentHP, 0, m_hp.maxHP);
+            m_hp.current += delta;
         }
         
         #endregion HP
@@ -150,38 +211,33 @@ namespace CharacterProperties
         #region SAN
         public int GetSAN()
         {
-            return m_san.currentSAN;
+            return m_san.current;
         }
         
         public void SetSAN(int val)
         {
-            m_san.currentSAN = val;
-            m_san.currentSAN = Mathf.Clamp(m_san.currentSAN, 0, m_san.maxSAN);
+            m_san.current = val;
         }
 
         public void IncreaseSAN(int delta)
         {
-            m_san.currentSAN += delta;
-            if (m_san.currentSAN > m_san.maxSAN) m_san.currentSAN = m_san.maxSAN;
+            m_san.current += delta;
         }
         
         public void DecreaseSAN(int delta)
         {
-            m_san.currentSAN -= delta;
-            if (m_san.currentSAN < 0) m_san.currentSAN = 0;
+            m_san.current -= delta;
         }
 
         public void ChangeSAN(int delta)
         {
-            m_san.currentSAN += delta;
-            m_san.currentSAN = Mathf.Clamp(m_san.currentSAN, 0, m_san.maxSAN);
+            m_san.current += delta;
         }
         
         #endregion SAN
         
         #region Time
-
-        // TODO: Use timestamp?
+        
         public int GetTime()
         {
             return m_time.currentTime;
@@ -212,151 +268,140 @@ namespace CharacterProperties
         #region Hunger
         public int GetHunger()
         {
-            return m_hunger.currentHunger; 
+            return m_hunger.current; 
         }
 
         public void SetHunger(int val)
         {
-            m_hunger.currentHunger = val;
-            m_hunger.currentHunger= Mathf.Clamp(m_hunger.currentHunger, 0, m_hunger.maxHunger);
+            m_hunger.current = val;
         }
 
         public void IncreaseHunger(int delta)
         {
-            m_hunger.currentHunger += delta;
-            if (m_hunger.currentHunger > m_hunger.maxHunger) m_hunger.currentHunger = m_hunger.maxHunger;
+            m_hunger.current += delta;
         }
 
         public void DecreaseHunger(int delta)
         {
-            m_hunger.currentHunger -= delta;
-            if (m_hunger.currentHunger < 0) m_hunger.currentHunger = 0;
+            m_hunger.current -= delta;
         }
 
         public int GetHungerSideEffect()
         {
-            return GetGlobalSideEffect(m_hunger.currentHunger);
+            return GetGlobalSideEffect(m_hunger.current);
         }
         #endregion Hunger
 
         #region Thirst
         public int GetThirst()
         {
-            return m_thirst.currentThirst;
+            return m_thirst.current;
         }
 
         public void SetThirst(int val)
         {
-            m_thirst.currentThirst = val;
-            m_thirst.currentThirst= Mathf.Clamp(m_thirst.currentThirst, 0, m_thirst.maxThirst);
+            m_thirst.current = val;
         }
 
         public void IncreaseThirst(int delta)
         {
-            m_thirst.currentThirst += delta;
-            if (m_thirst.currentThirst > m_thirst.maxThirst) m_thirst.currentThirst = m_thirst.maxThirst;
+            m_thirst.current += delta;
         }
 
         public void DecreaseThirst(int delta)
         {
-            m_thirst.currentThirst -= delta;
-            if (m_thirst.currentThirst < 0) m_thirst.currentThirst = 0;
+            m_thirst.current -= delta;
+            if (m_thirst.current < 0) m_thirst.current = 0;
         }
         
         public int GetThirstSideEffect()
         {
-            return GetGlobalSideEffect(m_thirst.currentThirst);
+            return GetGlobalSideEffect(m_thirst.current);
         }
         #endregion Thirst
         
         #region Sleep
         public int GetSleep()
         {
-            return m_sleep.currentSleep;
+            return m_sleep.current;
         }
 
         public void SetSleep(int val)
         {
-            m_sleep.currentSleep = val;
-            m_sleep.currentSleep = Mathf.Clamp(m_sleep.currentSleep, 0, m_sleep.maxSleep);
+            m_sleep.current = val;
         }
         
 
         public void IncreaseSleep(int delta)
         {
-            m_sleep.currentSleep += delta;
-            if (m_sleep.currentSleep > m_sleep.maxSleep) m_sleep.currentSleep = m_sleep.maxSleep;
+            m_sleep.current += delta;
         }
 
         public void DecreaseSleep(int delta)
         {
-            m_sleep.currentSleep -= delta;
-            if (m_sleep.currentSleep < 0) m_sleep.currentSleep = 0;
+            m_sleep.current -= delta;
+            if (m_sleep.current < 0) m_sleep.current = 0;
         }
         
         public int GetSleepSideEffect()
         {
-            return GetGlobalSideEffect(m_sleep.currentSleep);
+            return GetGlobalSideEffect(m_sleep.current);
         }
         #endregion Sleep
         
         #region Illness
         public int GetIllness()
         {
-            return m_illness.currentIllness;
+            return m_illness.current;
         }
 
         public void SetIllness(int val)
         {
-            m_illness.currentIllness = val;
-            m_illness.currentIllness = Mathf.Clamp(m_illness.currentIllness, 0, m_illness.maxIllness);
+            m_illness.current = val;
         }
 
         public void IncreaseIllness(int delta)
         {
-            m_illness.currentIllness += delta;
-            if (m_illness.currentIllness > m_illness.maxIllness) m_illness.currentIllness = m_illness.maxIllness;
+            m_illness.current += delta;
         }
         
         public void DecreaseIllness(int delta)
         {
-            m_illness.currentIllness -= delta;
-            if (m_illness.currentIllness < 0) m_illness.currentIllness = 0;
+            m_illness.current -= delta;
+            if (m_illness.current < 0) m_illness.current = 0;
         }
         
         public int GetIllnessSideEffect()
         {
-            return GetGlobalSideEffect(m_illness.currentIllness);
+            return GetGlobalSideEffect(m_illness.current);
         }
     #endregion Illness
         
         #region Mood
         public int GetMood()
         {
-            return m_mood.currentMood;
+            return m_mood.current;
         }
 
         public void SetMood(int val)
         {
-            m_mood.currentMood = val;
-            if (m_mood.currentMood > m_mood.maxMood) m_mood.currentMood = m_mood.maxMood;
+            m_mood.current = val;
         }
 
         public void IncreaseMood(int delta)
         {
-            m_mood.currentMood += delta;
-            if (m_mood.currentMood > m_mood.maxMood) m_mood.currentMood = m_mood.maxMood;
+            m_mood.current += delta;
         }
         
         public void DecreaseMood(int delta)
         {
-            m_mood.currentMood -= delta;
-            if (m_mood.currentMood < 0) m_mood.currentMood = 0;
+            m_mood.current -= delta;
+            if (m_mood.current < 0) m_mood.current = 0;
         }
         
         public int GetMoodSideEffect()
         {
-            return GetGlobalSideEffect(m_mood.currentMood);
+            return GetGlobalSideEffect(m_mood.current);
         }
         #endregion Mood
         
@@ -364,95 +409,105 @@ namespace CharacterProperties
         public int GetIntelligent()
         {
             // TODO: correction from dynamic values
-            return m_intelligent.currentIntelligent + GetSleepSideEffect() + GetHungerSideEffect() + GetMoodSideEffect();
+            return m_intelligent.current + GetSleepSideEffect() + GetHungerSideEffect() + GetMoodSideEffect();
         }
+
+        public int GetPlainIntelligent() => m_intelligent.current;
+
+        public int GetIntelligentModifier() => GetSleepSideEffect() + GetHungerSideEffect() + GetMoodSideEffect();
 
         public void SetIntelligent(int val)
         {
-            m_intelligent.currentIntelligent = val;
-            m_intelligent.currentIntelligent =
-                Mathf.Clamp(m_intelligent.currentIntelligent, 0, m_intelligent.maxIntelligent);
+            m_intelligent.current = val;
         }
 
         public void IncreaseIntelligent(int delta)
         {
-            m_intelligent.currentIntelligent += delta;
-            if (m_intelligent.currentIntelligent > m_intelligent.maxIntelligent)
-                m_intelligent.currentIntelligent = m_intelligent.maxIntelligent;
+            m_intelligent.current += delta;
         }
 
         public void DecreaseIntelligent(int delta)
         {
-            m_intelligent.currentIntelligent -= delta;
-            if (m_intelligent.currentIntelligent < 0) m_intelligent.currentIntelligent = 0;
+            m_intelligent.current -= delta;
         }
         #endregion Intelligent
         
         #region Mind
         public int GetMind()
         {
-            return m_mind.currentMind + GetSleepSideEffect() + GetThirstSideEffect() + GetMoodSideEffect();
+            return m_mind.current + GetSleepSideEffect() + GetThirstSideEffect() + GetMoodSideEffect();
         }
+
+        public int GetPlainMind() => m_mind.current;
+        
+        public int GetMindModifier() => GetSleepSideEffect() + GetThirstSideEffect() + GetMoodSideEffect();
 
         public void SetMind(int val)
         {
-            m_mind.currentMind = Mathf.Clamp(val, 0, m_mind.maxMind);
+            m_mind.current = val;
         }
 
         public void IncreaseMind(int delta)
         {
-            m_mind.currentMind = Mathf.Clamp(m_mind.currentMind + delta, 0, m_mind.maxMind);
+            m_mind.current += delta;
         }
         
         public void DecreaseMind(int delta)
         {
-            m_mind.currentMind = Mathf.Clamp(m_mind.currentMind - delta, 0, m_mind.maxMind);
+            m_mind.current -= delta;
         }
     #endregion Mind
 
         #region Strength
         public int GetStrength()
         {
-            return m_strength.currentStrength + GetSleepSideEffect() + GetHungerSideEffect() + GetIllnessSideEffect(); 
+            return m_strength.current + GetSleepSideEffect() + GetHungerSideEffect() + GetIllnessSideEffect(); 
         }
+
+        public int GetPlainStrength() => m_strength.current;
+        
+        public int GetStrengthModifier() => GetSleepSideEffect() + GetHungerSideEffect() + GetIllnessSideEffect(); 
 
         public void SetStrength(int val)
         {
-            m_strength.currentStrength = Mathf.Clamp(val, 0, m_strength.maxStrength);
+            m_strength.current = val;
         }
 
         public void IncreaseStrength(int delta)
         {
-            m_strength.currentStrength = Mathf.Clamp(m_strength.currentStrength + delta, 0, m_strength.maxStrength);
+            m_strength.current += delta;
         }
 
         public void DecreaseStrength(int delta)
         {
-            m_strength.currentStrength = Mathf.Clamp(m_strength.currentStrength - delta, 0, m_strength.maxStrength);
+            m_strength.current -= delta;
         }
         #endregion Strength
         
         #region Speed
         public int GetSpeed()
         {
-            return m_speed.currentSpeed + GetSleepSideEffect() + GetThirstSideEffect() + GetIllnessSideEffect();
+            return m_speed.current + GetSleepSideEffect() + GetThirstSideEffect() + GetIllnessSideEffect();
         }
 
+        public int GetPlainSpeed() => m_speed.current;
+        
+        public int GetSpeedModifier() => GetSleepSideEffect() + GetThirstSideEffect() + GetIllnessSideEffect();
         public void SetSpeed(int val)
         {
-            m_speed.currentSpeed = Mathf.Clamp(val, 0, m_speed.maxSpeed);
+            m_speed.current = val;
         }
         public void IncreaseSpeed(int delta)
         {
-            m_speed.currentSpeed = Mathf.Clamp(m_speed.currentSpeed + delta, 0, m_speed.maxSpeed);
+            m_speed.current += delta;
         }
         
         public void DecreaseSpeed(int delta)
         {
-            m_speed.currentSpeed = Mathf.Clamp(m_speed.currentSpeed - delta, 0, m_speed.maxSpeed);
+            m_speed.current -= delta;
         }
         #endregion Speed
-        
+
         
         // it is not always int
         public int GetVal(string name)
@@ -478,11 +533,11 @@ namespace CharacterProperties
         public List<Tuple<string, int>> GetDynamicStat()
         {
             var list = new List<Tuple<string, int>>();
-            list.Add(new Tuple<string, int>(Constants.Hunger, m_hunger.currentHunger));
-            list.Add(new Tuple<string, int>(Constants.Thirst, m_thirst.currentThirst));
-            list.Add(new Tuple<string, int>(Constants.Sleep, m_sleep.currentSleep));
-            list.Add(new Tuple<string, int>(Constants.Illness, m_illness.currentIllness));
-            list.Add(new Tuple<string, int>(Constants.Mood, m_mood.currentMood));
+            list.Add(new Tuple<string, int>(Constants.Hunger, m_hunger.current));
+            list.Add(new Tuple<string, int>(Constants.Thirst, m_thirst.current));
+            list.Add(new Tuple<string, int>(Constants.Sleep, m_sleep.current));
+            list.Add(new Tuple<string, int>(Constants.Illness, m_illness.current));
+            list.Add(new Tuple<string, int>(Constants.Mood, m_mood.current));
             
             
             return list;
@@ -625,6 +680,31 @@ namespace CharacterProperties
                     break;
             }
         }
+
+        public int GetPlainSkill(SkillType type)
+        {
+            return type switch
+            {
+                SkillType.Intelligent => GetPlainIntelligent(),
+                SkillType.Strength => GetPlainStrength(),
+                SkillType.Mind => GetPlainMind(),
+                SkillType.Speed => GetPlainSpeed(),
+                _ => 0
+            };
+        }
+        
+        public int GetModifier(SkillType type)
+        {
+            return type switch
+            {
+                SkillType.Intelligent => GetIntelligentModifier(),
+                SkillType.Strength => GetStrengthModifier(),
+                SkillType.Mind => GetMindModifier(),
+                SkillType.Speed => GetSpeedModifier(),
+                _ => 0
+            };
+        }
+        
         
     }
 }
