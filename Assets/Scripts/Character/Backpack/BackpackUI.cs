@@ -143,13 +143,13 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void DisplayAllSlots(){
-        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        ObjectDicts objects = GameManager.Instance.GetBackpack().GetObjects();
         FieldInfo[] fields = objects.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
         foreach(var field in fields){
             var objList = field.GetValue(objects);
             if(objList == null){
-                Debug.LogError("This field does not exist in ObjectLists " + field.Name);
+                Debug.LogError("This field does not exist in ObjectDicts " + field.Name);
                 return;
             }
 
@@ -158,7 +158,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void FilterSlots(ObjectCategory category){
-        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        ObjectDicts objects = GameManager.Instance.GetBackpack().GetObjects();
         m_slots.contentContainer.Clear();
         DisplayCategorySlots(objects.GetList(category));
     }
@@ -166,7 +166,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private void DisplayCategorySlots(object objList){
         var objs = objList as System.Collections.IList;
         if(objs == null){
-            Debug.LogError("This field in ObjectLists is not a List " + objList.GetType().Name);
+            Debug.LogError("This field in ObjectDicts is not a List " + objList.GetType().Name);
             return;
         }
 

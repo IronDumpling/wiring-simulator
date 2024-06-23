@@ -12,70 +12,8 @@ public enum BackpackStatus{
     Dead, // burn the entire health bar
 }
 
-[System.Serializable]
-public class ObjectLists{
-    [SerializeField] public List<Tool> tools = new List<Tool>();
-    [SerializeField] public List<Clothes> clothes = new List<Clothes>();
-    [SerializeField] public List<Consumable> consumables = new List<Consumable>();
-    [SerializeField] public List<Item> items = new List<Item>();
-
-    public ObjectLists(ObjectLists obj){
-        tools = obj.tools;
-        clothes = obj.clothes;
-        consumables = obj.consumables;
-        items = obj.items;
-    }
-
-    public int GetCurrLoad(){
-        int currLoad = 0;
-        
-        foreach(Object obj in tools)
-            currLoad += obj.load;
-        foreach(Object obj in clothes)
-            currLoad += obj.load;
-        foreach(Object obj in consumables)
-            currLoad += obj.load;
-        foreach(Object obj in items)
-            currLoad += obj.load;
-
-        return currLoad;
-    }
-
-    public object GetList(ObjectCategory name){
-        return name switch{
-            ObjectCategory.Tools => tools,
-            ObjectCategory.Clothes => clothes,
-            ObjectCategory.Consumables => consumables,
-            ObjectCategory.Items => items,
-            _ => tools,
-        };
-    }
-
-    public void Add(Object obj){
-        if(obj is Tool) tools.Add((Tool)obj);
-        else if(obj is Clothes) clothes.Add((Clothes)obj);
-        else if(obj is Consumable) consumables.Add((Consumable)obj);
-        else if(obj is Item) items.Add((Item)obj);
-        else {
-            Debug.LogError("Current object is unknown type");
-            return;
-        }
-    }
-
-    public void Remove(Object obj){
-        if(obj is Tool) tools.Remove((Tool)obj);
-        else if(obj is Clothes) clothes.Remove((Clothes)obj);
-        else if(obj is Consumable) consumables.Remove((Consumable)obj);
-        else if(obj is Item) items.Remove((Item)obj);
-        else {
-            Debug.LogError("Current object is unknown type");
-            return;
-        } 
-    }
-}
-
 public class Backpack{
-    private ObjectLists m_objects;
+    private ObjectDicts m_objects;
     private int m_maxLoad = 10;
     private int m_currLoad = 0;
     private BackpackStatus m_status = BackpackStatus.Normal;
@@ -91,8 +29,8 @@ public class Backpack{
         CalculateStatus();
     }
 
-    private void GenerateObjects(ObjectLists objects){
-        m_objects = new ObjectLists(objects);
+    private void GenerateObjects(ObjectDicts objects){
+        m_objects = new ObjectDicts(objects);
     }
 
     private void CalculateMaxLoad(){
@@ -124,7 +62,7 @@ public class Backpack{
             m_status = BackpackStatus.Dead;
     }
 
-    public ObjectLists GetObjects(){
+    public ObjectDicts GetObjects(){
         return m_objects;
     }
 

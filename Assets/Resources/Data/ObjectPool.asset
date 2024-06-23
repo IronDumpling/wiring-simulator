@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95c7d88a6b284b1b956142827832050, type: 3}
+  m_Name: ObjectPool
+  m_EditorClassIdentifier: 
+  objects:
+    tools:
+    - m_name: Test1
+      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
+      m_description: I am test 1
+      m_load: 20
+    clothes:
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
+      m_description: 
+      m_load: 0
+    consumables:
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 044ce135f63e94a90addea1571271a53, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 4ef8c0f696b1c486093476df2622c640, type: 3}
+      m_description: 
+      m_load: 0
+    items:
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 07b8f729865864a8382029e615a85b41, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 21300000, guid: 381a78f4452bb428aafe1c96957bf1e6, type: 3}
+      m_description: 
+      m_load: 0
+    - m_name: 
+      m_thumbnail: {fileID: 0}
+      m_description: 
+      m_load: 0

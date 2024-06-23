@@ -362,7 +362,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                 case Constants.TIME:
                     TimeModification(tagValue);
                     break;
-                // 4. GetCharacter() tags
+                // 4. object tags
+                case Constants.GET_OBJECT_TAG:
+                    // TODO
+                    break;
+                case Constants.LOSE_OBJECT_TAG:
+                    // TODO
+                    break;
+                // 5. character tags
                 default:
                     if(Utils.IsCharacterTag(tagKey)) CharacterModification(tagKey, tagValue);
                     else Debug.LogWarning("Tag came in but is not being handled: " + tag);

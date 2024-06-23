@@ -16,7 +16,7 @@ MonoBehaviour:
   initialHp: 50
   maxSan: 100
   initialSan: 50
-  staringYear: 2020
+  startingYear: 2020
   timeTriggerInterval: 30
   globalCoreSideEffect:
   - end: 10

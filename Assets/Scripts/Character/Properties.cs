@@ -50,9 +50,9 @@ namespace CharacterProperties
             this.currentTime = 0;
         }
 
-        public Time(int staringYear)
+        public Time(int startingYear)
         {
-            m_startingDate = new DateTime(staringYear, 1, 1);
+            m_startingDate = new DateTime(startingYear, 1, 1);
             currentTime = 0;
         }
 

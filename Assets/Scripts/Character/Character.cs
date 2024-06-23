@@ -50,7 +50,7 @@ namespace CharacterProperties
             
             m_san = new SAN(setup.maxSan);
             SetSAN(setup.initialSan);
-            m_time = new Time(setup.staringYear);
+            m_time = new Time(setup.startingYear);
 
             m_hunger = new Hunger(setup.maxHunger);
             SetHunger(setup.initialHunger);

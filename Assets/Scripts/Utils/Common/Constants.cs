@@ -32,7 +32,6 @@ public static class Constants{
     public const int MARGIN_WIDTH = 80;
     public const int FULL_WIDTH = 100;
 
-
     // check manager
     public static Dictionary<string, int> checkLevels = new Dictionary<string, int>{
         {CheckLevel.trivial.ToString(), 6},
@@ -97,4 +96,6 @@ public static class Constants{
     public const string PORTRAIT_TAG = "portrait";
     public const string IMG_TAG = "image";
     public const string DICE_TAG = "dice";
+    public const string GET_OBJECT_TAG = "get";
+    public const string LOSE_OBJECT_TAG = "lose";
 }
