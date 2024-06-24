@@ -6,8 +6,8 @@ public static class Constants{
     public const string LEAVE = "离开";
 
     // Backpack
-    public const int SLOW_DOWN_THRESHOLD = 30;
-    public const int BURN_HELATH_THRESHOLD = 50;
+    public const float SLOW_DOWN_THRESHOLD = 0.3f;
+    public const float BURN_HELATH_THRESHOLD = 0.5f;
     public const int STRENGTH_TO_LOAD = 100;
 
     // Time
@@ -44,7 +44,7 @@ public static class Constants{
         {CheckLevel.godly.ToString(), 16},
         {CheckLevel.impossible.ToString(), 18},
     };
-    public const float HUGE_RESULT_THRESHOLD = 50f;
+    public const float HUGE_RESULT_THRESHOLD = 0.5f;
 
     // Common Names
     // global var names in Ink file and tag names

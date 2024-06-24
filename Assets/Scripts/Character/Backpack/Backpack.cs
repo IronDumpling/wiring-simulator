@@ -62,6 +62,7 @@ public class Backpack{
             m_status = BackpackStatus.BurnHealth;
         else
             m_status = BackpackStatus.Dead;
+        
         // BackpackUI.Instance.DisplayStatus();
     }
 
@@ -74,6 +75,7 @@ public class Backpack{
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
         CalculateStatus();
+        BackpackUI.Instance.DisplayStatus(); // TODO: find a method to move it to CalculateStatus()
         BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
@@ -83,6 +85,7 @@ public class Backpack{
         // TODO: if remove operation is refused, revert the entire operation
         RemoveCurrLoad(obj.load);
         CalculateStatus();
+        BackpackUI.Instance.DisplayStatus(); // TODO: find a method to move it to CalculateStatus()
         BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 }
