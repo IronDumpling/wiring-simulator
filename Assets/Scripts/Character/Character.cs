@@ -39,7 +39,7 @@ namespace CharacterProperties
             #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
             m_san = new CoreProperty(setup.maxSan, setup.initialSan, CoreType.SAN);
-            m_time = new Time(setup.staringYear);
+            m_time = new Time(setup.startingYear);
 
             m_hunger = new DynamicProperty(setup.maxHunger, setup.initialHunger, DynamicType.Hunger);
             m_thirst = new DynamicProperty(setup.maxThirst, setup.initialThirst, DynamicType.Thirst);
