@@ -4,33 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[Serializable]
 public class ObjectSlot : MonoBehaviour{
-    private int _count;
-    public int m_Count{
-        get { return _count; }
+    private int m_count;
+    public int count{
+        get { return m_count; }
         set {
-            _count = value;
-            transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = $"{_count}";
+            m_count = value;
+            transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = $"{m_count}";
         }
     }
 
-    private Object _object;
-    public Object m_Object{
-        get { return _object; }
+    private Object m_object;
+    public Object obj{
+        get { return m_object; }
         set {
-            _object = value;
-            transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Object.thumbnail;
+            m_object = value;
+            transform.GetChild(0).gameObject.GetComponent<Image>().sprite = obj.thumbnail;
         }
     }
 
     public ObjectSlot(Object obj, int count){
-        m_Object = obj;
-        m_Count = count;
+        this.obj = obj;
+        this.count = count;
     }
 
     public void Use(){
-        m_Count--;
-        if (m_Count < 0) gameObject.SetActive(false);
+        count--;
+        if (count < 0) gameObject.SetActive(false);
     }
 
     public void ShowInfoCard(){
@@ -43,8 +44,8 @@ public class ObjectSlot : MonoBehaviour{
         }
 
         if (!infoCard.activeSelf) infoCard.SetActive(true);
-        infoCard.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = m_Object.thumbnail;
-        infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = m_Object.name + m_Object.description;
-        // infoCard.transform.GetChild(2).gameObject.GetComponent<Button>().clicked = m_Object.useButton;
+        infoCard.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = obj.thumbnail;
+        infoCard.transform.GetChild(1).gameObject.GetComponent<TMPro.TMP_Text>().text = obj.name + obj.description;
+        // infoCard.transform.GetChild(2).gameObject.GetComponent<Button>().clicked = obj.useButton;
     }
 }

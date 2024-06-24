@@ -6,37 +6,39 @@ using CharacterProperties;
 using Time = UnityEngine.Time;
 
 public class GameManager: MonoSingleton<GameManager>{
-    [SerializeField] private CharacterSetUp characterSetUp;
-    private Character character;
-    private Backpack backpack;
+    [Header("Initial Data")]
+    [SerializeField] private CharacterSetUp m_characterSetUp;
+    [SerializeField] private ObjectPool m_objectPool;
+    private Character m_character;
+    private Backpack m_backpack;
     private TimeStatManager m_timeStateManager;
 
-
-    protected override void Init()
-    {
-        if (characterSetUp == null)
-        {
-            Debug.LogError("No Set Up File");
+    protected override void Init(){
+        if(m_characterSetUp == null){
+            Debug.LogError("No Character Set Up File");
             return;
         }
 
-        character = new Character(characterSetUp);
-        backpack = new Backpack(characterSetUp);
-        m_timeStateManager = new TimeStatManager(character, characterSetUp);
+        if(m_objectPool == null){
+            Debug.LogError("No Object Pool File");
+            return;
+        }
+
+        m_character = new Character(m_characterSetUp);
+        m_backpack = new Backpack(m_characterSetUp, m_objectPool);
+        m_timeStateManager = new TimeStatManager(m_character, m_characterSetUp);
     }
 
     private void Update(){
-        m_timeStateManager.Update(character.GetTime());
-
-        // Debug.Log($"HP: {character.GetHP()}, SAN: {character.GetSAN()}");
+        m_timeStateManager.Update(m_character.GetTime());
     }
 
     public Character GetCharacter(){
-        return character;
+        return m_character;
     }
 
     public Backpack GetBackpack(){
-        return backpack;
+        return m_backpack;
     }
 
     public TimeStatManager GetTimeStat(){
