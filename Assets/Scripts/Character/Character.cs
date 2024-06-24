@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,6 +36,7 @@ namespace CharacterProperties
         private List<SideEffectBlock> m_globalSideEffect;
         
         public Character(CharacterSetUp setup){
+            #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
             m_san = new CoreProperty(setup.maxSan, setup.initialSan, CoreType.SAN);
             m_time = new Time(setup.staringYear);
@@ -49,13 +51,36 @@ namespace CharacterProperties
             m_mind = new SkillProperty(setup.maxMind, setup.initialMind, SkillType.Mind);
             m_strength = new SkillProperty(setup.maxStrength, setup.initialStrength, SkillType.Strength);
             m_speed = new SkillProperty(setup.maxSpeed, setup.initialSpeed, SkillType.Speed);
+            #endregion
             
+            #region SkillEventRegister
             m_onSkillChanged.Add(SkillType.Intelligent, new UnityEvent<SkillType, int, int>());
             m_onSkillChanged.Add(SkillType.Mind, new UnityEvent<SkillType, int, int>());
             m_onSkillChanged.Add(SkillType.Strength, new UnityEvent<SkillType, int, int>());
             m_onSkillChanged.Add(SkillType.Speed, new UnityEvent<SkillType, int, int>());
-            //RegisterDynamicSkillEvent();
-
+            
+            RegisterPlainSkillEvent(m_intelligent);
+            RegisterPlainSkillEvent(m_mind);
+            RegisterPlainSkillEvent(m_strength);
+            RegisterPlainSkillEvent(m_speed);
+            
+            RegisterDynamicSkillEvent(DynamicType.Sleep, SkillType.Intelligent);
+            RegisterDynamicSkillEvent(DynamicType.Hunger, SkillType.Intelligent);
+            RegisterDynamicSkillEvent(DynamicType.Mood, SkillType.Intelligent);
+            
+            RegisterDynamicSkillEvent(DynamicType.Sleep, SkillType.Mind);
+            RegisterDynamicSkillEvent(DynamicType.Thirst, SkillType.Mind);
+            RegisterDynamicSkillEvent(DynamicType.Mood, SkillType.Mind);
+            
+            RegisterDynamicSkillEvent(DynamicType.Sleep, SkillType.Strength);
+            RegisterDynamicSkillEvent(DynamicType.Hunger, SkillType.Strength);
+            RegisterDynamicSkillEvent(DynamicType.Illness, SkillType.Strength);
+            
+            RegisterDynamicSkillEvent(DynamicType.Sleep, SkillType.Speed);
+            RegisterDynamicSkillEvent(DynamicType.Thirst, SkillType.Speed);
+            RegisterDynamicSkillEvent(DynamicType.Illness, SkillType.Speed);
+            #endregion
+            
             m_globalSideEffect = new List<SideEffectBlock>(setup.globalSkillSideEffect);
             m_globalSideEffect.Sort();
 
@@ -125,6 +150,15 @@ namespace CharacterProperties
                 m_onSkillChanged[skillType].Invoke(skillType, GetPlainSkill(skillType), GetModifier(skillType));
             } );
         }
+
+        private void RegisterPlainSkillEvent(SkillProperty property)
+        {
+            property.onValueChanged.AddListener((type, current, max) =>
+                {
+                    m_onSkillChanged[type].Invoke(type,  GetPlainSkill(type), GetModifier(type));
+                }
+            );
+        }
         
         #region EventRegister
         public void RegisterCoreEvent(CoreType type, UnityAction<CoreType, int, int> call)
@@ -164,19 +198,27 @@ namespace CharacterProperties
         
         public void RegisterSkillEvent(SkillType type, UnityAction<SkillType, int, int> call)
         {
-            SkillProperty property = GetSkillProperty(type);
-            Debug.Assert(property != null, "Skill Type does not exist");
+            if (!m_onSkillChanged.TryGetValue(type, out var skillEvent))
+            {
+                Debug.LogError("Event No type match");
+                return;
+            }
             
-            property.onValueChanged.AddListener(call);
-            property.onValueChanged.Invoke(property.type, property.current, property.max);
+            skillEvent.AddListener(call);
+
+            skillEvent.Invoke(type, GetPlainSkill(type), GetModifier(type));
         }
         
         public void UnregisterSkillEvent(SkillType type, UnityAction<SkillType, int, int> call)
         {
-            SkillProperty property = GetSkillProperty(type);
-            Debug.Assert(property != null, "Skill Type does not exist");
+            if (!m_onSkillChanged.TryGetValue(type, out var skillEvent))
+            {
+                Debug.LogError("Event No type match");
+                return;
+            }
             
-            property.onValueChanged.RemoveListener(call);
+            skillEvent.RemoveListener(call);
+
         }
         #endregion
         

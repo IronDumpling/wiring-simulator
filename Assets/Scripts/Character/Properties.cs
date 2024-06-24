@@ -265,23 +265,7 @@ namespace CharacterProperties
         public string name { get; }
 
     }
-
-    public abstract class CoreProperty : IProperty
-    {
-        private readonly string m_name;
-        public string name => m_name;
-
-        public int current { get; set; }
-
-        public int max { get; set; }
-
-        public CoreProperty(String newName, int max)
-        {
-            this.m_name = newName;
-            this.max = max;
-            this.current = max;
-        }
-    }
+    
     #region core properties
     public class HP: IPropertyOld
     {
