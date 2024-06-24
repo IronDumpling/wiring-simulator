@@ -56,10 +56,4 @@ MonoBehaviour:
     effect: 1
   - end: 100
     effect: 3
-  initialObjects:
-  - Test1
-  - Test2
-  - Test3
-  - Test4
-  - Test6
-  - Test9
+  initialObjects: []
