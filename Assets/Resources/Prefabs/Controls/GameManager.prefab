@@ -44,14 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d2f1eea92e442d94e8f951f5c29329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  maxSan: 100
-  maxHunger: 100
-  maxThirst: 100
-  maxSleep: 100
-  maxIllness: 100
-  maxMood: 100
-  maxIntelligent: 100
-  maxMind: 100
-  maxStrength: 100
-  maxSpeed: 100
+  characterSetUp: {fileID: 11400000, guid: aad05ccd19cf8f548aa92f332044cf0b, type: 2}
+  objectPool: {fileID: 11400000, guid: 3e368db4cf0f34500919e0bd32b3a6b2, type: 2}

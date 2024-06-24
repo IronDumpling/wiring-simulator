@@ -13,7 +13,8 @@ public enum BackpackStatus{
 }
 
 public class Backpack{
-    private ObjectDicts m_objects;
+    private ObjectLists m_objects;
+    private ObjectLists m_objectPool;
     private int m_maxLoad = 10;
     private int m_currLoad = 0;
     private BackpackStatus m_status = BackpackStatus.Normal;
@@ -22,15 +23,16 @@ public class Backpack{
     public int currLoad { get { return m_currLoad;}}
     public BackpackStatus status { get { return m_status;}}
 
-    public Backpack(CharacterSetUp setup){
-        GenerateObjects(setup.objects);
+    public Backpack(CharacterSetUp setup, ObjectPool pool){
+        m_objectPool = pool.objects;
+        GenerateObjects(setup.initialObjects);
         CalculateMaxLoad();
         CalculateCurrLoad();
         CalculateStatus();
     }
 
-    private void GenerateObjects(ObjectDicts objects){
-        m_objects = new ObjectDicts(objects);
+    private void GenerateObjects(List<string> initObjs){
+        m_objects = new ObjectLists(initObjs, m_objectPool);
     }
 
     private void CalculateMaxLoad(){
@@ -62,7 +64,7 @@ public class Backpack{
             m_status = BackpackStatus.Dead;
     }
 
-    public ObjectDicts GetObjects(){
+    public ObjectLists GetObjects(){
         return m_objects;
     }
 

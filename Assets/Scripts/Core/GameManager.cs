@@ -6,7 +6,9 @@ using CharacterProperties;
 using Time = UnityEngine.Time;
 
 public class GameManager: MonoSingleton<GameManager>{
+    [Header("Initial Data")]
     [SerializeField] private CharacterSetUp characterSetUp;
+    [SerializeField] private ObjectPool objectPool;
     private Character character;
     private Backpack backpack;
     private TimeStatManager m_timeStateManager;
@@ -18,7 +20,7 @@ public class GameManager: MonoSingleton<GameManager>{
         }
 
         character = new Character(characterSetUp);
-        backpack = new Backpack(characterSetUp);
+        backpack = new Backpack(characterSetUp, objectPool);
         m_timeStateManager = new TimeStatManager(character, characterSetUp);
     }
 

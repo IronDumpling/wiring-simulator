@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace CharacterProperties{
     [CreateAssetMenu]
-    public class CharacterSetUp: ScriptableObject{
+    public class CharacterSetUp : ScriptableObject{
         #region Core
         [Header("Core")]
         public int maxHp;
@@ -60,7 +60,7 @@ namespace CharacterProperties{
 
         #region Backpack
         [Header("Backpack")]
-        public ObjectDicts objects;
+        public List<string> initialObjects;
         #endregion
 
         #region Brain
