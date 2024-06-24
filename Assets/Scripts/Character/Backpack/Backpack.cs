@@ -37,20 +37,20 @@ public class Backpack{
 
     private void CalculateMaxLoad(){
         m_maxLoad = GameManager.Instance.GetCharacter().GetStrength() * Constants.STRENGTH_TO_LOAD;
-        Debug.Log("Backpack max load " + m_maxLoad);
     }
 
     private void CalculateCurrLoad(){
         m_currLoad = m_objects.GetCurrLoad();
-        Debug.Log("Backpack current load " + m_currLoad);
     }
 
     private void AddCurrLoad(int load){
         m_currLoad += load;
+        BackpackUI.Instance.DisplayLoad();
     }
 
     private void RemoveCurrLoad(int load){
         m_currLoad -= load;
+        BackpackUI.Instance.DisplayLoad();
     }
 
     private void CalculateStatus(){
@@ -62,6 +62,7 @@ public class Backpack{
             m_status = BackpackStatus.BurnHealth;
         else
             m_status = BackpackStatus.Dead;
+        // BackpackUI.Instance.DisplayStatus();
     }
 
     public ObjectLists GetObjects(){
@@ -78,7 +79,8 @@ public class Backpack{
 
     public void RemoveObject(string name){
         if(m_objectPool.Get(name) is not Object obj) return;
-        m_objects.Remove(obj);
+        m_objects.Remove(obj); 
+        // TODO: if remove operation is refused, revert the entire operation
         RemoveCurrLoad(obj.load);
         CalculateStatus();
         BackpackUI.Instance.UpdateCurrCategory(obj);

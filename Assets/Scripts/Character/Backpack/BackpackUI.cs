@@ -21,6 +21,9 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     
     private ScrollView m_slots;
     private VisualElement m_categories;
+
+    private Label m_load;
+    private Label m_status;
     
     private Button m_openButton;
     private Button m_closeButton;
@@ -49,6 +52,9 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
         m_categories = m_root.Q<VisualElement>(name: "categories");
         m_slots = m_root.Q<ScrollView>(name: "slots");
+
+        m_load = m_root.Q<Label>(name: "load");
+        m_status = m_root.Q<Label>(name: "status");
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
@@ -58,6 +64,8 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         DisplayButtons();
         DisplayCategoryButtons();
         DisplayOneCategory(ObjectCategory.Tools);
+        DisplayLoad();
+        DisplayStatus();
         OpenPanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
@@ -197,6 +205,19 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
         // if(objs.Contains(obj)) 
         DisplayOneCategory(m_currCategory);
+    }
+    #endregion
+
+    #region Information
+    public void DisplayLoad(){
+        int maxLoad = GameManager.Instance.GetBackpack().maxLoad;
+        int currLoad = GameManager.Instance.GetBackpack().currLoad;
+        m_load.text = "Load: " + currLoad + "/" + maxLoad;
+    }
+
+    public void DisplayStatus(){
+        string currStat = GameManager.Instance.GetBackpack().status.ToString();
+        m_status.text = "Status: " + currStat;
     }
     #endregion
 }

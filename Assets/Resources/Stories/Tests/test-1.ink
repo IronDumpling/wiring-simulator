@@ -64,7 +64,7 @@ VAR correction_test = false
     challenge, formidable, legendary
     heroic, godly, impossible
   
-   +[投掷八面骰] #dice:2d6>easy
+   +[投掷八面骰] #check:2d6>easy
    { CHECK:
     - HUGE_SUCCESS: 这是一次大成功
     - SUCCESS: 这是一次成功
@@ -72,7 +72,7 @@ VAR correction_test = false
     - HUGE_FAIL: 这是一次大失败
     }
    
-   +[投掷两个六面骰] #dice:2d6>medium
+   +[投掷两个六面骰] #check:2d6>medium
    { CHECK:
     - HUGE_SUCCESS: 这是一次大成功
     - SUCCESS: 这是一次成功
@@ -80,7 +80,7 @@ VAR correction_test = false
     - HUGE_FAIL: 这是一次大失败
     }
    
-   +[在血量基础上，投掷一个八面骰] #dice:HP+2d6>godly
+   +[在血量基础上，投掷一个八面骰] #check:HP+2d6>godly
    { CHECK:
     - HUGE_SUCCESS: 这是一次大成功
     - SUCCESS: 这是一次成功
@@ -89,8 +89,8 @@ VAR correction_test = false
     }
    
    +[投掷两个受事件影响补正的八面骰] 
-    {correction_test} #dice:2d6+2>formidable
-    {not correction_test} #dice:2d6-2>formidable
+    {correction_test} #check:2d6+2>formidable
+    {not correction_test} #check:2d6-2>formidable
    +{not correction_test}[获得事件补正+2]
     ~correction_test = true
     
@@ -101,14 +101,14 @@ VAR correction_test = false
    -->check_test
   
 =object_test
-    +[获得物品Test5] #get:Test5
-    +[获得2个物品Test7] #get:Test7*2
-    +[获得5个物品Test8] #get:Test8*5
-    +[获得10个物品Test10，失去1个物品Test3] #get:Test10*10 #lose:Test3
-    +[失去物品Test1] #lose:Test1
-    +[失去物品Test3] #lose:Test3
-    +[失去2个物品Test7] #lose:Test7*2
-    +[失去3个物品Test8] #lose:Test8*3
+    +[获得物品Test5] #object:+Test5
+    +[获得2个物品Test7] #object:+Test7*2
+    +[获得5个物品Test8，1个物品Test3] #object:+Test8*5+Test3
+    +[获得10个物品Test10，失去1个物品Test3] #object:+Test10*10-Test3
+    +[失去物品Test1] #object:-Test1
+    +[失去1个物品Test3，1个物品Test9] #object:-Test3-Test9
+    +[失去2个物品Test7] #object:-Test7*2
+    +[失去3个物品Test8，获得1个物品2，以及2个物品1] #object:-Test8*3+Test2+Test1*2
     +[退出物品测试]->test
 -->object_test
 

@@ -91,6 +91,7 @@ public class ObjectLists{
 
     #region Remove
     public void Remove(Object obj){
+        // TODO: check if objList has the obj, if not, refuse the operation
         if(obj is Tool tool) tools.Remove(tool);
         else if(obj is Clothes clothes1) clothes.Remove(clothes1);
         else if(obj is Consumable consumable) consumables.Remove(consumable);

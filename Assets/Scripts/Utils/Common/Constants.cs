@@ -95,7 +95,6 @@ public static class Constants{
     public const string TITLE_TAG = "title";
     public const string PORTRAIT_TAG = "portrait";
     public const string IMG_TAG = "image";
-    public const string DICE_TAG = "dice";
-    public const string GET_OBJECT_TAG = "get";
-    public const string LOSE_OBJECT_TAG = "lose";
+    public const string CHECK_TAG = "check";
+    public const string OBJECT_TAG = "object";
 }
