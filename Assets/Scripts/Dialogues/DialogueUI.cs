@@ -364,10 +364,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
                     break;
                 // 4. object tags
                 case Constants.GET_OBJECT_TAG:
-                    // TODO
+                    GetObject(tagValue);
                     break;
                 case Constants.LOSE_OBJECT_TAG:
-                    // TODO
+                    LoseObject(tagValue);
                     break;
                 // 5. character tags
                 default:
@@ -464,6 +464,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_currStory.variablesState[Constants.TIME] = GameManager.Instance.GetCharacter().GetTimeString(); // sync
         
         Debug.Log($"Current Time: {GameManager.Instance.GetCharacter().GetTimeString()}");
+    }
+    
+    private void GetObject(string value){
+        GameManager.Instance.GetBackpack().AddObject(value);
+    }
+
+    private void LoseObject(string value){
+        GameManager.Instance.GetBackpack().RemoveObject(value);
     }
     #endregion
 }

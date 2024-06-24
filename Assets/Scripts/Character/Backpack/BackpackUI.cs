@@ -26,7 +26,10 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private Button m_closeButton;
 
     private VisualTreeAsset m_slot;
-    private VisualTreeAsset m_category; 
+    private VisualTreeAsset m_category;
+
+    [Header("Logic")]
+    private ObjectCategory m_currCategory = ObjectCategory.Tools;
 
     #region Life Cycle
     private void Awake(){
@@ -53,8 +56,8 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
     private void Start(){
         DisplayButtons();
-        DisplayCategory();
-        FilterSlots(ObjectCategory.Tools);
+        DisplayCategoryButtons();
+        DisplayOneCategory(ObjectCategory.Tools);
         OpenPanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
@@ -126,7 +129,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #endregion
 
     #region Grid
-    private void DisplayCategory(){
+    private void DisplayCategoryButtons(){
         foreach(string cg in Enum.GetNames(typeof(ObjectCategory))){
             VisualElement category = m_category.Instantiate();
             
@@ -134,15 +137,15 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             button.text = cg;
             button.clicked += () => {
                 ObjectCategory name = Utils.StringToObjectCategory(cg);
-                FilterSlots(name);
+                m_currCategory = name;
+                DisplayOneCategory(name);
             };
 
             m_categories.Add(category);
         }
-        
     }
 
-    private void DisplayAllSlots(){
+    private void DisplayAllCategories(){
         ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
         FieldInfo[] fields = objects.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
@@ -153,17 +156,17 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
                 return;
             }
 
-            DisplayCategorySlots(objList);
+            DisplaySlots(objList);
         }
     }
 
-    private void FilterSlots(ObjectCategory category){
+    private void DisplayOneCategory(ObjectCategory category){
         ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
         m_slots.contentContainer.Clear();
-        DisplayCategorySlots(objects.GetList(category));
+        DisplaySlots(objects.GetList(category));
     }
 
-    private void DisplayCategorySlots(object objList){
+    private void DisplaySlots(object objList){
         var objs = objList as System.Collections.IList;
         if(objs == null){
             Debug.LogError("This field in ObjectLists is not a Dict " + objList.GetType().Name);
@@ -182,6 +185,18 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
             m_slots.Add(slot);
         }
+    }
+    
+    public void UpdateCurrCategory(Object obj){
+        // ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        // var objs = objects.GetList(m_currCategory) as System.Collections.IList;
+        // if(objs == null){
+            // Debug.LogError("This field in ObjectLists is not a Dict " + m_currCategory.ToString());
+            // return;
+        // }
+
+        // if(objs.Contains(obj)) 
+        DisplayOneCategory(m_currCategory);
     }
     #endregion
 }

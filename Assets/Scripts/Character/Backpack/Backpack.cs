@@ -68,15 +68,19 @@ public class Backpack{
         return m_objects;
     }
 
-    public void AddObject(Object obj){
+    public void AddObject(string name){
+        if(m_objectPool.Get(name) is not Object obj) return;
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
-        CalculateStatus(); 
+        CalculateStatus();
+        BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
-    public void RemoveObject(Object obj){
+    public void RemoveObject(string name){
+        if(m_objectPool.Get(name) is not Object obj) return;
         m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
-        CalculateStatus(); 
+        CalculateStatus();
+        BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 }
