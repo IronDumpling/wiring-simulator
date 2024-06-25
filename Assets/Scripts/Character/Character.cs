@@ -35,6 +35,8 @@ namespace CharacterProperties
 
         private List<SideEffectBlock> m_globalSideEffect;
 
+        private Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>> m_dynamicSkillEffects = new Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>>();
+
         public Character(CharacterSetUp setup){
             #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
@@ -92,6 +94,25 @@ namespace CharacterProperties
 
                 start = m_globalSideEffect[i].end + 1;
             }
+            
+            #region DynamicSkillRelation
+            AddDynamicSkillRelation(DynamicType.Sleep, SkillType.Intelligent, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Hunger, SkillType.Intelligent, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Mood, SkillType.Intelligent, new List<SideEffectBlock>(m_globalSideEffect));
+            
+            AddDynamicSkillRelation(DynamicType.Sleep, SkillType.Mind, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Thirst, SkillType.Mind, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Mood, SkillType.Mind, new List<SideEffectBlock>(m_globalSideEffect));
+            
+            AddDynamicSkillRelation(DynamicType.Sleep, SkillType.Strength, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Hunger, SkillType.Strength, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Illness, SkillType.Strength, new List<SideEffectBlock>(m_globalSideEffect));
+            
+            AddDynamicSkillRelation(DynamicType.Sleep, SkillType.Speed, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Thirst, SkillType.Speed, new List<SideEffectBlock>(m_globalSideEffect));
+            AddDynamicSkillRelation(DynamicType.Illness, SkillType.Speed, new List<SideEffectBlock>(m_globalSideEffect));
+            #endregion
+            
         }
 
 
@@ -106,6 +127,18 @@ namespace CharacterProperties
             return m_globalSideEffect[^1].effect;
         }
 
+        private int GetEffect(int val, List<SideEffectBlock> effects)
+        {
+            if (effects.Count == 0) return 0;
+            for (int i = 0; i < effects.Count; i++)
+            {
+                if (val <= effects[i].end) return effects[i].effect;
+            }
+
+            return effects[^1].effect;
+        }
+        
+        #region PrivatePropertyAccessor
         private CoreProperty GetCoreProperty(CoreType type)
         {
             return type switch
@@ -140,7 +173,45 @@ namespace CharacterProperties
                 _ => null
             };
         }
+        #endregion
+        
+        #region DyanamicSkillRelation
+        private void AddDynamicSkillRelation(DynamicType dynamicType, SkillType skillType, List<SideEffectBlock> effects)
+        {
+            var tuple = new Tuple<DynamicType, SkillType>(dynamicType, skillType);
+            m_dynamicSkillEffects[tuple] = effects;
+        }
 
+        private int GetDynamicSkillModifier(DynamicType dynamicType, SkillType skillType)
+        {
+            var tuple = new Tuple<DynamicType, SkillType>(dynamicType, skillType);
+            if (m_dynamicSkillEffects.ContainsKey(tuple))
+            {
+                var dynamicProperty = GetDynamicProperty(dynamicType);
+                return GetEffect(dynamicProperty.current, m_dynamicSkillEffects[tuple]);
+
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private int GetSkillModifier(SkillType skillType)
+        {
+            int modifier = 0;
+
+            var dynamicTypes = DynamicProperty.GetAllType();
+            foreach (DynamicType dynamicType in dynamicTypes)
+            {
+                modifier += GetDynamicSkillModifier(dynamicType, skillType);
+            }
+            return modifier;
+            
+        }
+        #endregion
+        
+        #region LocalEventRegister
         private void RegisterDynamicSkillEvent(DynamicType dynamicType, SkillType skillType)
         {
             var property = GetDynamicProperty(dynamicType);
@@ -159,6 +230,7 @@ namespace CharacterProperties
                 }
             );
         }
+        #endregion
 
         #region EventRegister
         public void RegisterCoreEvent(CoreType type, UnityAction<CoreType, int, int> call)
@@ -451,12 +523,12 @@ namespace CharacterProperties
         public int GetIntelligent()
         {
             // TODO: correction from dynamic values
-            return m_intelligent.current + GetSleepSideEffect() + GetHungerSideEffect() + GetMoodSideEffect();
+            return m_intelligent.current + GetSkillModifier(SkillType.Intelligent);
         }
 
         public int GetPlainIntelligent() => m_intelligent.current;
 
-        public int GetIntelligentModifier() => GetSleepSideEffect() + GetHungerSideEffect() + GetMoodSideEffect();
+        public int GetIntelligentModifier() => GetSkillModifier(SkillType.Intelligent);
 
         public void SetIntelligent(int val)
         {
@@ -477,12 +549,12 @@ namespace CharacterProperties
         #region Mind
         public int GetMind()
         {
-            return m_mind.current + GetSleepSideEffect() + GetThirstSideEffect() + GetMoodSideEffect();
+            return m_mind.current + GetSkillModifier(SkillType.Mind);
         }
 
         public int GetPlainMind() => m_mind.current;
 
-        public int GetMindModifier() => GetSleepSideEffect() + GetThirstSideEffect() + GetMoodSideEffect();
+        public int GetMindModifier() => GetSkillModifier(SkillType.Mind);
 
         public void SetMind(int val)
         {
@@ -503,12 +575,12 @@ namespace CharacterProperties
         #region Strength
         public int GetStrength()
         {
-            return m_strength.current + GetSleepSideEffect() + GetHungerSideEffect() + GetIllnessSideEffect();
+            return m_strength.current + GetSkillModifier(SkillType.Strength);
         }
 
         public int GetPlainStrength() => m_strength.current;
 
-        public int GetStrengthModifier() => GetSleepSideEffect() + GetHungerSideEffect() + GetIllnessSideEffect();
+        public int GetStrengthModifier() => GetSkillModifier(SkillType.Strength);
 
         public void SetStrength(int val)
         {
@@ -529,12 +601,12 @@ namespace CharacterProperties
         #region Speed
         public int GetSpeed()
         {
-            return m_speed.current + GetSleepSideEffect() + GetThirstSideEffect() + GetIllnessSideEffect();
+            return m_speed.current + GetSkillModifier(SkillType.Speed);
         }
 
         public int GetPlainSpeed() => m_speed.current;
 
-        public int GetSpeedModifier() => GetSleepSideEffect() + GetThirstSideEffect() + GetIllnessSideEffect();
+        public int GetSpeedModifier() => GetSkillModifier(SkillType.Speed);
         public void SetSpeed(int val)
         {
             m_speed.current = val;
