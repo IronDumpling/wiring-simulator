@@ -57,9 +57,15 @@ MonoBehaviour:
   - end: 100
     effect: 3
   initialObjects:
-  - Test1
-  - Test2
-  - Test3
-  - Test4
-  - Test6
-  - Test9
+  - name: Test1
+    count: 1
+  - name: Test2
+    count: 5
+  - name: Test3
+    count: 2
+  - name: Test4
+    count: 1
+  - name: Test6
+    count: 1
+  - name: Test9
+    count: 4
