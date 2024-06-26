@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_characterSetUp: {fileID: 11400000, guid: aad05ccd19cf8f548aa92f332044cf0b, type: 2}
-  m_objectPool: {fileID: 11400000, guid: 3e368db4cf0f34500919e0bd32b3a6b2, type: 2}
+  m_objectPool: {fileID: 11400000, guid: 06ee53fe398e14cb3920bf96c1b8ecbb, type: 2}
