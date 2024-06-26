@@ -26,18 +26,28 @@ namespace CharacterProperties{
         [Header("Dynamic")]
         public int maxHunger;
         public int initialHunger;
-    
+        [Min(0)]
+        public int hungerDropRate;
+
         public int maxThirst;
         public int initialThirst;
-    
+        [Min(0)]
+        public int thirstDropRate;
+
         public int maxSleep;
         public int initialSleep;
+        [Min(0)]
+        public int sleepDropRate;
     
         public int maxIllness;
         public int initialIllness;
+        [Min(0)]
+        public int illnessDropRate;
     
         public int maxMood;
         public int initialMood;
+        [Min(0)]
+        public int moodDropRate;
         
         #endregion Dynamic
     

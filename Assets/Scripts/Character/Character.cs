@@ -21,6 +21,19 @@ namespace CharacterProperties
         }
     }
 
+    [System.Serializable]
+    public struct DynamicDropRateBlock
+    {
+        public int dropRate;
+        public int timeInterval;
+
+        public DynamicDropRateBlock(int dropRate, int timeInterval)
+        {
+            this.dropRate = dropRate;
+            this.timeInterval = timeInterval;
+        }
+    }
+
     public class Character
     {
         private CoreProperty m_hp, m_san;
@@ -37,6 +50,7 @@ namespace CharacterProperties
 
         private Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>> m_dynamicSkillEffects = new Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>>();
 
+        private Dictionary<DynamicType, DynamicDropRateBlock> m_dynamicTimeEffects = new Dictionary<DynamicType, DynamicDropRateBlock>();
         public Character(CharacterSetUp setup){
             #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
@@ -113,6 +127,14 @@ namespace CharacterProperties
             AddDynamicSkillRelation(DynamicType.Illness, SkillType.Speed, new List<SideEffectBlock>(m_globalSideEffect));
             #endregion
             
+            #region DynamicTimeEffect
+            m_dynamicTimeEffects.Add(DynamicType.Hunger, new DynamicDropRateBlock(setup.hungerDropRate, 30));
+            m_dynamicTimeEffects.Add(DynamicType.Thirst, new DynamicDropRateBlock(setup.thirstDropRate, 30));
+            m_dynamicTimeEffects.Add(DynamicType.Mood, new DynamicDropRateBlock(setup.moodDropRate, 30));
+            m_dynamicTimeEffects.Add(DynamicType.Illness, new DynamicDropRateBlock(setup.illnessDropRate, 30));
+            m_dynamicTimeEffects.Add(DynamicType.Sleep, new DynamicDropRateBlock(setup.sleepDropRate, 30));
+
+            #endregion
         }
 
 
@@ -817,6 +839,22 @@ namespace CharacterProperties
                 SkillType.Speed => GetSpeedModifier(),
                 _ => 0
             };
+        }
+
+        public void RegisterDynamicTimeEffect(TimeStatManager timeStatManager)
+        {
+            foreach (var dropEffect in m_dynamicTimeEffects)
+            {
+                var type = dropEffect.Key;
+                var block = dropEffect.Value;
+
+                timeStatManager.AddTimeEffect(-1, block.timeInterval, (currentTime =>
+                {
+                    var dynamicProperty = GetDynamicProperty(type);
+                    dynamicProperty.current -= m_dynamicTimeEffects[type].dropRate;
+                    
+                }));
+            }
         }
 
 
