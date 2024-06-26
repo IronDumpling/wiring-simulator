@@ -31,7 +31,7 @@ public class Backpack{
         CalculateStatus();
     }
 
-    private void GenerateObjects(List<ObjectPair> initObjs){
+    private void GenerateObjects(List<ObjectSnapshot> initObjs){
         m_objects = new ObjectLists(initObjs, m_objectPool);
     }
 

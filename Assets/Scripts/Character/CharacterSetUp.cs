@@ -60,7 +60,7 @@ namespace CharacterProperties{
 
         #region Backpack
         [Header("Backpack")]
-        public List<ObjectPair> initialObjects;
+        public List<ObjectSnapshot> initialObjects;
         #endregion
 
         #region Brain

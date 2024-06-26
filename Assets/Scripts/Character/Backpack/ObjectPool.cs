@@ -10,17 +10,6 @@ public class ObjectPool : ScriptableObject{
 }
 
 [Serializable]
-public class ObjectPair{
-    public string name;
-    public int count = 1;
-
-    public ObjectPair(string name, int count) { 
-        this.name = name;
-        this.count = count;
-    }
-}
-
-[Serializable]
 public class ObjectLists{
     [SerializeField] public List<Tool> tools = new List<Tool>();
     [SerializeField] public List<Clothes> clothes = new List<Clothes>();
@@ -34,7 +23,7 @@ public class ObjectLists{
         items = obj.items;
     }
 
-    public ObjectLists(List<ObjectPair> initObjs, ObjectLists allObjs){
+    public ObjectLists(List<ObjectSnapshot> initObjs, ObjectLists allObjs){
         for(int i = 0; i < initObjs.Count; i++){
             for(int j = 0; j < initObjs[i].count; j++){
                 var obj = allObjs.Get(initObjs[i].name) as Object;
@@ -56,7 +45,6 @@ public class ObjectLists{
 
     public int GetCurrLoad(){
         int currLoad = 0;
-
         foreach(Object obj in tools)
             currLoad += obj.load;
         foreach(Object obj in clothes)
@@ -120,3 +108,4 @@ public class ObjectLists{
     }
     #endregion
 }
+
