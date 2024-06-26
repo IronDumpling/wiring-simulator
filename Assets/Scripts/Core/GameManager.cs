@@ -8,7 +8,7 @@ using Time = UnityEngine.Time;
 public class GameManager: MonoSingleton<GameManager>{
     [Header("Initial Data")]
     [SerializeField] private CharacterSetUp m_characterSetUp;
-    [SerializeField] private ObjectPool m_objectPool;
+    [SerializeField] private ObjectPoolSO m_objectPool;
     private Character m_character;
     private Backpack m_backpack;
     private TimeStatManager m_timeStateManager;

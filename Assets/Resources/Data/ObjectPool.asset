@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95c7d88a6b284b1b956142827832050, type: 3}
+  m_Script: {fileID: 0}
   m_Name: ObjectPool
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolSO
   objects:
     tools:
     - m_name: Test1
@@ -26,37 +26,33 @@ MonoBehaviour:
     - m_name: Test3
       m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
       m_description: I am test 3
-      m_load: 5
+      m_load: 8
     consumables:
     - m_name: Test4
       m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
       m_description: I am test 4
       m_load: 2
       m_category: 0
-      m_effectParam: 15
+      m_effectParam: 0
     - m_name: Test5
       m_thumbnail: {fileID: 21300000, guid: 044ce135f63e94a90addea1571271a53, type: 3}
       m_description: I am test 5
       m_load: 3
       m_category: 1
-      m_effectParam: 20
+      m_effectParam: 0
     - m_name: Test6
       m_thumbnail: {fileID: 21300000, guid: 4ef8c0f696b1c486093476df2622c640, type: 3}
       m_description: I am test 6
-      m_load: 2
-      m_category: 2
-      m_effectParam: 10
-    - m_name: Test10
-      m_thumbnail: {fileID: 21300000, guid: 1b266c51c37b7483c8fc8d8bee9f188c, type: 3}
-      m_description: I am test 10
       m_load: 1
-      m_category: 3
-      m_effectParam: 50
-    items:
+      m_category: 2
+      m_effectParam: 0
     - m_name: Test7
       m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
       m_description: I am test 7
-      m_load: 10
+      m_load: 1
+      m_category: 3
+      m_effectParam: 0
+    items:
     - m_name: Test8
       m_thumbnail: {fileID: 21300000, guid: 07b8f729865864a8382029e615a85b41, type: 3}
       m_description: I am test 8
@@ -64,4 +60,8 @@ MonoBehaviour:
     - m_name: Test9
       m_thumbnail: {fileID: 21300000, guid: 381a78f4452bb428aafe1c96957bf1e6, type: 3}
       m_description: I am test 9
+      m_load: 15
+    - m_name: Test10
+      m_thumbnail: {fileID: 21300000, guid: 1b266c51c37b7483c8fc8d8bee9f188c, type: 3}
+      m_description: I am test 10
       m_load: 12
