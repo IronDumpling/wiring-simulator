@@ -115,7 +115,8 @@ namespace CharacterProperties
                 _ => ""
             };
         }
-
+        
+        // To Do: instead of creating a new list everytime save this list at beginning
         public static List<CoreType> GetAllType()
         {
             return new List<CoreType> { CoreType.HP , CoreType.SAN};
@@ -202,7 +203,7 @@ namespace CharacterProperties
                 DynamicType.Thirst, 
                 DynamicType.Mood, 
                 DynamicType.Sleep,
-                DynamicType.Thirst
+                DynamicType.Illness
             };
         }
 

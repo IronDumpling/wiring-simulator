@@ -38,10 +38,10 @@ MonoBehaviour:
   sleepDropRate: 3
   maxIllness: 100
   initialIllness: 50
-  illnessDropRate: 3
+  illnessDropRate: 0
   maxMood: 100
   initialMood: 50
-  moodDropRate: 3
+  moodDropRate: 0
   maxIntelligent: 10
   initialIntelligent: 5
   maxMind: 10

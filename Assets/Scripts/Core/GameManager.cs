@@ -28,6 +28,7 @@ public class GameManager: MonoSingleton<GameManager>{
         m_backpack = new Backpack(m_characterSetUp, m_objectPool);
         m_timeStateManager = new TimeStatManager(m_character, m_characterSetUp);
         m_character.RegisterDynamicTimeEffect(m_timeStateManager);
+        m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);
     }
 
     private void Update(){

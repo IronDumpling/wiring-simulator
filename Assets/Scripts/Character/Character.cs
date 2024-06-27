@@ -20,8 +20,7 @@ namespace CharacterProperties
             return end.CompareTo(other.end);
         }
     }
-
-    [System.Serializable]
+    
     public struct DynamicDropRateBlock
     {
         public int dropRate;
@@ -31,6 +30,18 @@ namespace CharacterProperties
         {
             this.dropRate = dropRate;
             this.timeInterval = timeInterval;
+        }
+    }
+    
+    public struct DynamicCoreTimeEffectBlock
+    {
+        public List<SideEffectBlock> effects;
+        public int timeInterval;
+
+        public DynamicCoreTimeEffectBlock(List<SideEffectBlock> effects, int interval)
+        {
+            this.effects = new List<SideEffectBlock>(effects);
+            this.timeInterval = interval;
         }
     }
 
@@ -51,6 +62,9 @@ namespace CharacterProperties
         private Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>> m_dynamicSkillEffects = new Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>>();
 
         private Dictionary<DynamicType, DynamicDropRateBlock> m_dynamicTimeEffects = new Dictionary<DynamicType, DynamicDropRateBlock>();
+
+        private Dictionary<Tuple<DynamicType, CoreType>, DynamicCoreTimeEffectBlock> m_dynamicCoreTimeEffects =
+            new Dictionary<Tuple<DynamicType, CoreType>, DynamicCoreTimeEffectBlock>();
         public Character(CharacterSetUp setup){
             #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
@@ -127,6 +141,19 @@ namespace CharacterProperties
             AddDynamicSkillRelation(DynamicType.Illness, SkillType.Speed, new List<SideEffectBlock>(m_globalSideEffect));
             #endregion
             
+            #region DynamicCoreTimeEffect
+
+            foreach (var dynamicType in DynamicProperty.GetAllType())
+            {
+                foreach (var coreType in CoreProperty.GetAllType())
+                {
+                    AddDynamicCoreTimeRelations(dynamicType, coreType, setup.globalCoreSideEffect, 30);
+                }
+            }
+            #endregion
+            
+            
+            // TODO: change the interval to be configurable
             #region DynamicTimeEffect
             m_dynamicTimeEffects.Add(DynamicType.Hunger, new DynamicDropRateBlock(setup.hungerDropRate, 30));
             m_dynamicTimeEffects.Add(DynamicType.Thirst, new DynamicDropRateBlock(setup.thirstDropRate, 30));
@@ -233,6 +260,42 @@ namespace CharacterProperties
         }
         #endregion
         
+        #region DynamicCoreTimeRelation
+
+        private void AddDynamicCoreTimeRelations(DynamicType dynamicType, CoreType coreType, List<SideEffectBlock> effects, int interval)
+        {
+            var tuple = new Tuple<DynamicType, CoreType>(dynamicType, coreType);
+            m_dynamicCoreTimeEffects[tuple] = new DynamicCoreTimeEffectBlock(effects, interval);
+        }
+
+        private int GetDynamicCoreEffect(DynamicType dynamicType, CoreType coreType, int val)
+        {
+            var tuple = new Tuple<DynamicType, CoreType>(dynamicType, coreType);
+
+            if (m_dynamicCoreTimeEffects.TryGetValue(tuple, out var blk))
+            {
+                return GetEffect(val, blk.effects);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        private int GetTotalDynamicCoreEffect(CoreType coreType)
+        {
+            int effect = 0;
+            var dynamicTypes = DynamicProperty.GetAllType();
+            foreach (var dynamicType in dynamicTypes)
+            {
+                var dynamicProperty = GetDynamicProperty(dynamicType);
+                effect += GetDynamicCoreEffect(dynamicType, coreType, dynamicProperty.current);
+            }
+
+            return effect;
+        }
+        #endregion
+        
         #region LocalEventRegister
         private void RegisterDynamicSkillEvent(DynamicType dynamicType, SkillType skillType)
         {
@@ -243,6 +306,7 @@ namespace CharacterProperties
                 m_onSkillChanged[skillType].Invoke(skillType, GetPlainSkill(skillType), GetModifier(skillType));
             } );
         }
+        
 
         private void RegisterPlainSkillEvent(SkillProperty property)
         {
@@ -854,6 +918,23 @@ namespace CharacterProperties
                     dynamicProperty.current -= m_dynamicTimeEffects[type].dropRate;
                     
                 }));
+            }
+        }
+
+        public void RegisterDynamicCoreTimeEffect(TimeStatManager timeStatManager)
+        {
+            foreach (var dynamicCoreEffect in m_dynamicCoreTimeEffects)
+            {
+                var dynamicType = dynamicCoreEffect.Key.Item1;
+                var coreType = dynamicCoreEffect.Key.Item2;
+                var blk = dynamicCoreEffect.Value;
+
+                timeStatManager.AddTimeEffect(-1, blk.timeInterval, currentTime =>
+                {
+                    var coreProperty = GetCoreProperty(coreType);
+                    var dynamicProperty = GetDynamicProperty(dynamicType);
+                    coreProperty.current += GetDynamicCoreEffect(dynamicType, coreType, dynamicProperty.current);
+                });
             }
         }
 
