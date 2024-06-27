@@ -51,13 +51,13 @@ public class CheckManager : MonoSingleton<CheckManager>{
             else if(sign == "-") genVal -= val;
         }
 
-        if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD / 100f)){
+        if(genVal >= checkVal * (1 + Constants.HUGE_RESULT_THRESHOLD)){
             result = CheckResult.HugeSuccess;
             m_successCount++;
         }else if (genVal >= checkVal){
             result = CheckResult.Success;
             m_successCount++;
-        }else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD / 100f)){
+        }else if (genVal >= checkVal * (1 - Constants.HUGE_RESULT_THRESHOLD)){
             result = CheckResult.Fail;
             m_failCount++;
         }else{

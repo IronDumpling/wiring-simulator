@@ -9,9 +9,14 @@ public class DialogueTriggers : MonoBehaviour{
     private VisualElement root;
     private VisualElement contents;
     private List<Button> buttons = new List<Button>();
+    private VisualTreeAsset m_button;
 
     [Header("Stories")]
     [SerializeField] private List<TextAsset> texts;
+
+    void Awake(){
+        m_button = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton");
+    }
     
     void Start(){
         InitButtons();
@@ -20,9 +25,11 @@ public class DialogueTriggers : MonoBehaviour{
 
     void InitButtons(){
         foreach(TextAsset txt in texts){
-            Button button = new Button{
-                text = txt.name
-            };
+            Button button = m_button.Instantiate().Q<Button>();
+            Length width = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
+            button.style.width = new StyleLength(width);
+
+            button.text = txt.name;
             button.clicked += () => {
                 DialogueUI.Instance.BeginDialogue(txt);
             };

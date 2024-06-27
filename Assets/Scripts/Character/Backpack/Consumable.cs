@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public enum ConsumableCategory{
     Food,
@@ -11,22 +9,20 @@ public enum ConsumableCategory{
     Money,
 }
 
-[System.Serializable]
+[Serializable]
 public class Consumable : Object{
-    private ConsumableCategory m_category;
-
-    // effect
-    public delegate void ObjectEffect(float param);
+    [SerializeField] private ConsumableCategory m_category;
     private ObjectEffect m_effect;
-    private Button m_useButton;
-    private float m_effectParam;
+    [SerializeField] private float m_effectParam;
 
+    public delegate void ObjectEffect(float param);
     public ConsumableCategory category { get { return m_category; } }
     public ObjectEffect effect { get { return m_effect; } }
-    public Button useButton { get { return m_useButton; } }
     public float effectParam { get { return m_effectParam; } }
 
-    public Consumable(Object obj){
-        
-    }
+    // m_UseButton = new Button();
+    // m_UseButton.clicked += () => {
+        // if(m_Effect != null) m_Effect(m_EffectParam);
+        // m_ObjectSlot.Use();
+    // };
 }

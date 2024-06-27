@@ -13,7 +13,7 @@ INCLUDE ../0-global.ink
    你准备着挑选东西，一个熟悉的身影又闯进你的视野。
    
    
-   [智力检定]#dice:INT+1d8>easy
+   [智力检定]#check:INT+1d8>easy
    
    {CHECK:
     - FAIL: 那是个矮个子黑人。他在货架后盯着你。 
@@ -51,7 +51,7 @@ INCLUDE ../0-global.ink
     
     ~temp quick_time = false
     
-    [智力检定]#dice:INT+1d8>challenge
+    [智力检定]#check:INT+1d8>challenge
     // 临时使用这个方法
     
     // 方法一： if else
@@ -102,9 +102,9 @@ INCLUDE ../0-global.ink
             --你下意识地冲出大门。
             **[（尝试找寻那名小偷的踪迹）] 
             {quick_time:
-            [灵巧检定]#dice:DEX+1d8>challenge
+            [灵巧检定]#check:DEX+1d8>challenge
             -else:
-            [灵巧检定]#dice:DEX+1d8+2>challenge
+            [灵巧检定]#check:DEX+1d8+2>challenge
             }
             
             {CHECK:
@@ -141,9 +141,9 @@ INCLUDE ../0-global.ink
     -你下意识地冲出大门。
     *[（尝试找寻那名小偷的踪迹）] 
     {quick_time:
-    [灵巧检定]#dice:DEX+1d8>challenge
+    [灵巧检定]#check:DEX+1d8>challenge
     -else:
-    [灵巧检定]#dice:DEX+1d8+2>challenge
+    [灵巧检定]#check:DEX+1d8+2>challenge
     }
     
     {CHECK:
@@ -178,7 +178,7 @@ INCLUDE ../0-global.ink
     他们最喜欢的就是中国人，身价高，还好赎。
     说着，他点了支烟。#speaker:
     
-    [感知检定]#dice:WIS+1d8>trivial
+    [感知检定]#check:WIS+1d8>trivial
     {CHECK:
     - SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
     - HUGE_SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
@@ -201,7 +201,7 @@ INCLUDE ../0-global.ink
     ~attitude_of_shopkeeper ++
     ~know_shopkeeper_1_is_Chinese = true
     
-    [感知检定]#dice:WIS+1d8>easy
+    [感知检定]#check:WIS+1d8>easy
     {CHECK:
     - SUCCESS:你察觉到老板脸上止不住的笑意。
     - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
@@ -218,7 +218,7 @@ INCLUDE ../0-global.ink
         他装模作样地叹了口气。#speaker:
         这里也没监控，难办哦。#speaker:老板
         
-        [智力检定]#dice:INT+1d8>medium
+        [智力检定]#check:INT+1d8>medium
         {CHECK:
         - SUCCESS:你忽然意识到，这个便利店与其他救济站有本质区别——它是通过货架售卖的。#speaker:
         而为了防止偷窃，大部分商铺都该是窗口取货才对。
@@ -231,7 +231,7 @@ INCLUDE ../0-global.ink
         他指了指你身后。#speaker:
         这里不是休息站，只是一个聚落里的前哨。这里没什么人，我也赚不到什么钱，这小房间用一只眼睛就能看过来。#speaker:老板
         
-            [智力检定]#dice:INT+1d8>medium
+            [智力检定]#check:INT+1d8>medium
             ***{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[那就对了。]
             
             什么？#speaker:老板
@@ -262,7 +262,7 @@ INCLUDE ../0-global.ink
         别问我，我没走过线。#speaker:老板
         你们都是有去无回，我哪知道死了多少？
         
-        [感知检定]#dice:WIS+1d8>medium
+        [感知检定]#check:WIS+1d8>medium
         
         {CHECK:
         - SUCCESS:他说得很难听，但你知道他只是在吓唬你。#speaker:
@@ -291,7 +291,7 @@ INCLUDE ../0-global.ink
     你也可以自己学。只要有闲心。
     }
        
-    [感知检定]#dice:WIS+1d8>formidable
+    [感知检定]#check:WIS+1d8>formidable
     {CHECK:
     - SUCCESS:显然，他在拿你打趣。#speaker:
     - HUGE_SUCCESS:显然，他在拿你打趣。这似乎是他一贯的做法。#speaker:

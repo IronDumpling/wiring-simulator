@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace CharacterProperties{
     [CreateAssetMenu]
-    public class CharacterSetUp: ScriptableObject{
+    public class CharacterSetUp : ScriptableObject{
         #region Core
         [Header("Core")]
         public int maxHp;
@@ -14,8 +14,9 @@ namespace CharacterProperties{
         public int maxSan;
         public int initialSan;
 
-        public int staringYear;
-
+        public int startingYear;
+        
+        [Min(1)]
         public int timeTriggerInterval;
 
         public List<SideEffectBlock> globalCoreSideEffect;
@@ -59,7 +60,7 @@ namespace CharacterProperties{
 
         #region Backpack
         [Header("Backpack")]
-        public ObjectLists objects;
+        public List<ObjectSnapshot> initialObjects;
         #endregion
 
         #region Brain

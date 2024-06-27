@@ -1,0 +1,58 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/Frontends/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=5bacdb72f10d6ce4ba10e539ea67c164&amp;type=3#MainMenuStyle" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; width: 40%; height: 0;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; width: 33%; height: 100%; top: auto; align-items: stretch; align-self: auto; opacity: 1; justify-content: flex-start; flex-wrap: wrap; margin-top: 764px;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="HP" parse-escape-sequences="true" display-tooltip-when-elided="true" focusable="false" name="HPLabel" style="height: 31px; width: 56px;" />
+                <ui:ProgressBar value="33.9" title="55/100" name="HPProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; height: 5%;">
+                <ui:Label tabindex="-1" text="SAN" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SANLabel" style="height: 31px; width: 56px;" />
+                <ui:ProgressBar value="33.9" title="55/100" name="SANProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; width: 100%; height: 90%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; width: 33%; height: 100%; top: auto; align-items: stretch; align-self: auto; opacity: 1; justify-content: flex-start; flex-wrap: wrap; margin-top: 764px;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="Hunger" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HungerLabel" style="height: 31px; width: 56px;" />
+                <ui:ProgressBar value="33.9" title="55/100" name="HungerProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="Thirst" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ThirstLabel" style="width: 56px; height: 29px;" />
+                <ui:ProgressBar value="22" title="my-progress" name="ThirstProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="Mood" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MoodLabel" style="width: 56px; height: 29px;" />
+                <ui:ProgressBar value="22" title="my-progress" name="MoodProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="Sleep" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SleepLabel" style="width: 56px; height: 29px;" />
+                <ui:ProgressBar value="22" title="my-progress" name="SleepProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="Illness" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IllnessLabel" style="width: 56px; height: 29px;" />
+                <ui:ProgressBar value="22" title="my-progress" name="IllnessProgressBar" style="width: 132px; height: 22px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; width: 100%; height: 75%;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; width: 33%; height: 100%; top: auto; align-items: stretch; align-self: auto; opacity: 1; justify-content: flex-start; flex-wrap: wrap; margin-top: 764px;">
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="INT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IntelligentLabel" style="width: 56px; height: 29px;" />
+                <ui:Label tabindex="-1" text="5(+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="IntelligentValue" style="width: 131px; height: 29px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; height: 5%; width: 100%;">
+                <ui:Label tabindex="-1" text="DEX" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SpeedLabel" style="width: 56px; height: 29px;" />
+                <ui:Label tabindex="-1" text="5(+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SpeedValue" style="width: 131px; height: 29px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="WIS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MindLabel" style="width: 56px; height: 29px;" />
+                <ui:Label tabindex="-1" text="5(+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MindValue" style="width: 131px; height: 29px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">
+                <ui:Label tabindex="-1" text="STR" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StrengthLabel" style="width: 56px; height: 29px;" />
+                <ui:Label tabindex="-1" text="5(+2)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StrengthValue" style="width: 131px; height: 29px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; width: 100%; height: 80%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

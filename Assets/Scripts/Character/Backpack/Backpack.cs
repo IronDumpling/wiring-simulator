@@ -12,36 +12,59 @@ public enum BackpackStatus{
     Dead, // burn the entire health bar
 }
 
-[System.Serializable]
-public class ObjectLists{
-    [SerializeField] public List<Tool> tools = new List<Tool>();
-    [SerializeField] public List<Clothes> clothes = new List<Clothes>();
-    [SerializeField] public List<Consumable> consumables = new List<Consumable>();
-    [SerializeField] public List<Item> items = new List<Item>();
+public class ObjectDict : Dictionary<string, ObjectSlot>{
+    public void Add(Object obj){
+        if(base.ContainsKey(obj.name)){
+            this[obj.name].AddObject(1);
+            return;
+        }
+         
+        this[obj.name] = new ObjectSlot(obj);
+    }
 
-    public ObjectLists(ObjectLists obj){
+    public void Remove(Object obj){
+        if(base.ContainsKey(obj.name)){
+            this[obj.name].RemoveObject(1);
+            if(this[obj.name].count <= 0)
+                this.Remove(obj.name);
+        }else{
+            Debug.LogWarning("Can't be removed, " + obj.name + " doesn't exist in backpack!");
+        }
+    }
+
+    public int GetLoad(){
+        int load = 0;
+        foreach(var kvp in this){
+            load += kvp.Value.obj.load;
+        }
+        return load;
+    }
+}
+
+public class ObjectDicts{
+    public ObjectDict tools = new();
+    public ObjectDict clothes = new();
+    public ObjectDict consumables = new();
+    public ObjectDict items = new();
+
+    public ObjectDicts(ObjectDicts obj){
         tools = obj.tools;
         clothes = obj.clothes;
         consumables = obj.consumables;
         items = obj.items;
     }
 
-    public int GetCurrLoad(){
-        int currLoad = 0;
-        
-        foreach(Object obj in tools)
-            currLoad += obj.load;
-        foreach(Object obj in clothes)
-            currLoad += obj.load;
-        foreach(Object obj in consumables)
-            currLoad += obj.load;
-        foreach(Object obj in items)
-            currLoad += obj.load;
-
-        return currLoad;
+    public ObjectDicts(List<ObjectSnapshot> initObjs, ObjectPool allObjs){
+        for(int i = 0; i < initObjs.Count; i++){
+            for(int j = 0; j < initObjs[i].count; j++){
+                var obj = allObjs.Get(initObjs[i].name) as Object;
+                this.Add(obj);
+            }
+        }
     }
 
-    public object GetList(ObjectCategory name){
+    #region Get
+    public ObjectDict GetList(ObjectCategory name){
         return name switch{
             ObjectCategory.Tools => tools,
             ObjectCategory.Clothes => clothes,
@@ -51,31 +74,47 @@ public class ObjectLists{
         };
     }
 
+    public int GetLoad(){
+        int currLoad = 0;
+        currLoad += tools.GetLoad();
+        currLoad += clothes.GetLoad();
+        currLoad += consumables.GetLoad();
+        currLoad += items.GetLoad();
+        return currLoad;
+    }
+    #endregion 
+
+    #region Add
     public void Add(Object obj){
-        if(obj is Tool) tools.Add((Tool)obj);
-        else if(obj is Clothes) clothes.Add((Clothes)obj);
-        else if(obj is Consumable) consumables.Add((Consumable)obj);
-        else if(obj is Item) items.Add((Item)obj);
+        if(obj is Tool tool) tools.Add(tool);
+        else if(obj is Clothes clothes1) clothes.Add(clothes1);
+        else if(obj is Consumable consumable) consumables.Add(consumable);
+        else if(obj is Item item) items.Add(item);
         else {
             Debug.LogError("Current object is unknown type");
             return;
         }
     }
+    #endregion
 
+    #region Remove
     public void Remove(Object obj){
-        if(obj is Tool) tools.Remove((Tool)obj);
-        else if(obj is Clothes) clothes.Remove((Clothes)obj);
-        else if(obj is Consumable) consumables.Remove((Consumable)obj);
-        else if(obj is Item) items.Remove((Item)obj);
+        // TODO: check if objList has the obj, if not, refuse the operation
+        if(obj is Tool tool) tools.Remove(tool);
+        else if(obj is Clothes clothes1) clothes.Remove(clothes1);
+        else if(obj is Consumable consumable) consumables.Remove(consumable);
+        else if(obj is Item item) items.Remove(item);
         else {
             Debug.LogError("Current object is unknown type");
             return;
         } 
     }
+    #endregion
 }
 
 public class Backpack{
-    private ObjectLists m_objects;
+    private ObjectDicts m_objects;
+    private ObjectPool m_objectPool;
     private int m_maxLoad = 10;
     private int m_currLoad = 0;
     private BackpackStatus m_status = BackpackStatus.Normal;
@@ -84,33 +123,34 @@ public class Backpack{
     public int currLoad { get { return m_currLoad;}}
     public BackpackStatus status { get { return m_status;}}
 
-    public Backpack(CharacterSetUp setup){
-        GenerateObjects(setup.objects);
+    public Backpack(CharacterSetUp setup, ObjectPoolSO pool){
+        m_objectPool = pool.objects;
+        GenerateObjects(setup.initialObjects);
         CalculateMaxLoad();
         CalculateCurrLoad();
         CalculateStatus();
     }
 
-    private void GenerateObjects(ObjectLists objects){
-        m_objects = new ObjectLists(objects);
+    private void GenerateObjects(List<ObjectSnapshot> initObjs){
+        m_objects = new ObjectDicts(initObjs, m_objectPool);
     }
 
     private void CalculateMaxLoad(){
         m_maxLoad = GameManager.Instance.GetCharacter().GetStrength() * Constants.STRENGTH_TO_LOAD;
-        Debug.Log("Backpack max load " + m_maxLoad);
     }
 
     private void CalculateCurrLoad(){
-        m_currLoad = m_objects.GetCurrLoad();
-        Debug.Log("Backpack current load " + m_currLoad);
+        m_currLoad = m_objects.GetLoad();
     }
 
     private void AddCurrLoad(int load){
         m_currLoad += load;
+        BackpackUI.Instance.DisplayLoad();
     }
 
     private void RemoveCurrLoad(int load){
         m_currLoad -= load;
+        BackpackUI.Instance.DisplayLoad();
     }
 
     private void CalculateStatus(){
@@ -124,19 +164,29 @@ public class Backpack{
             m_status = BackpackStatus.Dead;
     }
 
-    public ObjectLists GetObjects(){
+    public ObjectDicts GetObjects(){
         return m_objects;
     }
 
-    public void AddObject(Object obj){
+    // TODO: Write functions to allow others register and unregister add & remove events
+    // three subscribers: status, load, ui refresh
+
+    public void AddObject(string name){
+        if(m_objectPool.Get(name) is not Object obj) return;
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
-        CalculateStatus(); 
+        CalculateStatus();
+        BackpackUI.Instance.DisplayStatus();
+        BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
-    public void RemoveObject(Object obj){
-        m_objects.Remove(obj);
+    public void RemoveObject(string name){
+        if(m_objectPool.Get(name) is not Object obj) return;
+        m_objects.Remove(obj); 
+        // TODO: if remove operation is refused, revert the entire operation
         RemoveCurrLoad(obj.load);
-        CalculateStatus(); 
+        CalculateStatus();
+        BackpackUI.Instance.DisplayStatus();
+        BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 }
