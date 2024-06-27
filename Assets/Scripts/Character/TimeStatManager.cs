@@ -61,7 +61,7 @@ public class TimeStatManager
             while (effect.usage != 0 && effect.accumulatedTime >= effect.triggerInterval)
             {
                 effect.accumulatedTime -= effect.triggerInterval;
-                effect.usage -= 1;
+                if (effect.usage > 0) effect.usage -= 1;
                 effect.action.Invoke(newTime);
             }
 
