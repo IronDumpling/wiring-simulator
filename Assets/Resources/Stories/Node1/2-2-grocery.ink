@@ -73,7 +73,7 @@ INCLUDE ../0-global.ink
     }
     
     
-    *{translator_you_employ > 0}{CHECK == FAIL || CHECK == HUGE_FAIL} [（向翻译询问）他说什么？]#speaker: 
+    *{translator_you_employ > 0}{CHECK == FAIL || CHECK == HUGE_FAIL}[（向翻译询问）他说什么？]#speaker: 
         俚语，意思是“傻瓜”。#speaker:翻译
     
         {translator_you_employ == 1 || translator_you_employ == 2 :
@@ -182,16 +182,16 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
     - HUGE_SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
+    - FAIL:
+    - HUGE_FAIL:
     }
     
     
-    *{CHECK == FAIL || CHECK == HUGE_FAIL}
-    
-    **[你说话一定要这么别扭吗？]#speaker:
+    *{CHECK == FAIL || CHECK == HUGE_FAIL}[你说话一定要这么别扭吗？]#speaker:
         只是过来人的忠告，朋友。#speaker:老板
         他说着，一边翘了翘眉毛。#speaker:
      
-    **[（瞪着他）]#speaker:
+    *[（瞪着他）]#speaker:
     哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
     他的语气里带着嘲讽。#speaker:
     说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
@@ -205,6 +205,8 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:你察觉到老板脸上止不住的笑意。
     - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
+    - FAIL:
+    - HUGE_FAIL:
     }
     
     
@@ -265,7 +267,8 @@ INCLUDE ../0-global.ink
         {CHECK:
         - SUCCESS:他说得很难听，但你知道他只是在吓唬你。#speaker:
         - HUGE_SUCCESS:他说得很难听，但你知道他只是在吓唬你。就像随口讲个茶余饭后的笑话。#speaker:
-        - else:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
+        - FAIL:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
+        - HUGE_FAIL:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
         }   
         
         **{attitude_of_shopkeeper > 0 }[那你能介绍安全路径吗？]#speaker:
@@ -292,6 +295,8 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:显然，他在拿你打趣。#speaker:
     - HUGE_SUCCESS:显然，他在拿你打趣。这似乎是他一贯的做法。#speaker:
+    - FAIL:
+    - HUGE_FAIL:
     }
     
 
