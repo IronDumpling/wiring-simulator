@@ -185,6 +185,17 @@ INCLUDE ../0-global.ink
     }
     
     
+    *{CHECK == FAIL || CHECK == HUGE_FAIL}
+    
+    **[你说话一定要这么别扭吗？]#speaker:
+        只是过来人的忠告，朋友。#speaker:老板
+        他说着，一边翘了翘眉毛。#speaker:
+     
+    **[（瞪着他）]#speaker:
+    哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
+    他的语气里带着嘲讽。#speaker:
+    说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
+    
     *{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[你是中国人吧。]
     在这地方说中文的黄皮肤，还能是什么人呢，老乡？#speaker:老板
     ~attitude_of_shopkeeper ++
@@ -196,14 +207,7 @@ INCLUDE ../0-global.ink
     - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
     }
     
-    *[你说话一定要这么别扭吗？]#speaker:
-        只是过来人的忠告，朋友。#speaker:老板
-        他说着，一边翘了翘眉毛。#speaker:
-     
-    *[（瞪着他）]#speaker:
-    哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
-    他的语气里带着嘲讽。#speaker:
-    说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
+    
     
     -
     *[他偷了我的充电器。]#speaker:
