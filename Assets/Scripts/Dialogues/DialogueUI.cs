@@ -44,10 +44,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #region Life Cycles
     private void Awake(){
         m_root = m_doc.rootVisualElement;
-
         m_panel = m_root.Q<VisualElement>(name: "Panel");
         m_body = m_root.Q<VisualElement>(name: "Body");
-
         m_title = m_root.Q<Label>(name: "Title");
 
         SetSideBar();
@@ -57,6 +55,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_sectionButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
         m_textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
         m_imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
+
         m_dialogueVars = new DialogueVar(m_globalnk);
     }
     
@@ -92,6 +91,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_title.text = "???";
         m_displaySpeakerName = "???";
         m_content.contentContainer.Clear();
+        
         DisplaySpacer();
         OpenExpandPanel();
         ContinueStory();
@@ -134,10 +134,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        VisualElement textLine = m_textArea.Instantiate();
-        Label label = textLine.Q<Label>();
-        label.text = m_displaySpeakerName + "-";
-        m_content.Add(textLine);
+        Label label = DisplayTextArea(m_displaySpeakerName + "-").Q<Label>();
         m_canGoToNextLine = false;
         foreach (char letter in line.ToCharArray()){
             if (IsUserInput()) {
@@ -149,6 +146,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         DisplayChoices();
         m_canGoToNextLine = true;
+    }
+
+    private VisualElement DisplayTextArea(string content){
+        VisualElement textLine = m_textArea.Instantiate();
+        Label label = textLine.Q<Label>();
+        label.text = content;
+        m_content.Add(textLine);
+        return textLine;
     }
     
     private void DisplayChoices(){
@@ -255,9 +260,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         foreach(VisualElement choiceEl in choices){
             m_content.Remove(choiceEl);
         }
-        VisualElement textLine = m_textArea.Instantiate();
-        textLine.Q<Label>().text = "你-\"" + choice.text + "\"";
-        m_content.Add(textLine);
+        DisplayTextArea("你-\"" + choice.text + "\"");
         m_currStory.ChooseChoiceIndex(choice.index);
         ContinueStory();
     }
@@ -383,7 +386,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
 
-        string[] subStrings = tokens[0].Split(new char[] { '+', '-' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] subStrings = tokens[0].Split(new char[] { '+', '-' }, 
+                                            StringSplitOptions.RemoveEmptyEntries);
         string level = tokens[1];
 
         List<(string, string)> components = new List<(string, string)>();
@@ -397,13 +401,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
-        
-        m_currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // sync
-        
-        VisualElement textLine = m_textArea.Instantiate();
-        Label label = textLine.Q<Label>();
-        label.text = result.PrintResult();
-        m_content.Add(textLine);
+        m_currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // ink var sync
+        DisplayTextArea(result.PrintResult());
     }
 
     private void CharacterModification(string key, string value){
@@ -463,30 +462,28 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void ObjectModification(string value){
-        string[] subStrings = value.Split(new char[] { '+', '-' }, StringSplitOptions.RemoveEmptyEntries);
-        List<(string, string)> components = new List<(string, string)>();
+        string[] subStrings = value.Split(new char[] { '+', '-' }, 
+                                        StringSplitOptions.RemoveEmptyEntries);
+        
+        List<(string, string, int)> components = new();
         foreach(string subString in subStrings){
             string sign = "+";
             if (value.IndexOf(subString) > 0){
                 char prevChar = value[value.IndexOf(subString) - 1];
                 if (prevChar == '-') sign = "-";
             }
-            components.Add((subString, sign));
-        }
 
-        foreach(var pair in components){
-            string[] tokens = pair.Item1.Split('*');
-            string sign = pair.Item2;
-
+            string[] tokens = subString.Split('*');
             string obj = tokens[0];
             int count = 1;
             if(tokens.Length > 1 && int.TryParse(tokens[1], out count)){}
 
-            for(int i = 0; i < count; i++){
-                if(sign == "+") GameManager.Instance.GetBackpack().AddObject(obj);
-                else if(sign == "-") GameManager.Instance.GetBackpack().RemoveObject(obj);
-            }
+            components.Add((obj, sign, count));
         }
+
+        bool isAccepted = GameManager.Instance.GetBackpack().ObjectModification(components);
+        if(isAccepted) DisplayTextArea("[操作成功]");
+        else DisplayTextArea("[无法进行此操作]");
     }
     #endregion
 }

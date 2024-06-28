@@ -82,9 +82,18 @@ public class ObjectDicts{
         currLoad += items.GetLoad();
         return currLoad;
     }
+
+    public int GetCount(string name){
+        int count = 0;
+        if(tools.ContainsKey(name)) count = tools[name].count;
+        else if(clothes.ContainsKey(name)) count = clothes[name].count;
+        else if(consumables.ContainsKey(name)) count = consumables[name].count;
+        else if(items.ContainsKey(name)) count = items[name].count;
+        return count;
+    }
     #endregion 
 
-    #region Add
+    #region Set
     public void Add(Object obj){
         if(obj is Tool tool) tools.Add(tool);
         else if(obj is Clothes clothes1) clothes.Add(clothes1);
@@ -95,11 +104,8 @@ public class ObjectDicts{
             return;
         }
     }
-    #endregion
 
-    #region Remove
     public void Remove(Object obj){
-        // TODO: check if objList has the obj, if not, refuse the operation
         if(obj is Tool tool) tools.Remove(tool);
         else if(obj is Clothes clothes1) clothes.Remove(clothes1);
         else if(obj is Consumable consumable) consumables.Remove(consumable);
@@ -182,11 +188,39 @@ public class Backpack{
 
     public void RemoveObject(string name){
         if(m_objectPool.Get(name) is not Object obj) return;
-        m_objects.Remove(obj); 
-        // TODO: if remove operation is refused, revert the entire operation
+        m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
         CalculateStatus();
         BackpackUI.Instance.DisplayStatus();
         BackpackUI.Instance.UpdateCurrCategory(obj);
+    }
+
+    public bool ObjectModification(List<(string, string, int)> components){
+        string obj = "";
+        string sign = "";
+        int count = 0;
+        
+        foreach(var pair in components){
+            obj = pair.Item1;
+            sign = pair.Item2;
+            count = pair.Item3;
+            if(sign == "-" && m_objects.GetCount(obj) < count){
+                Debug.LogWarning("No " + count + " " + obj + " in the backpack, the operatation is refused!");
+                return false;
+            }
+        }
+
+        foreach(var pair in components){
+            obj = pair.Item1;
+            sign = pair.Item2;
+            count = pair.Item3;
+            for(int i = 0; i < count; i++){
+                if(sign == "+") this.AddObject(obj);
+                else if(sign == "-") this.RemoveObject(obj);
+                else Debug.LogWarning("Sign " + sign + " is not recognized!");
+            }
+        }
+
+        return true;
     }
 }
