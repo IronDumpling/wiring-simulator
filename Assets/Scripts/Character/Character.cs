@@ -48,7 +48,6 @@ namespace CharacterProperties
     public class Character
     {
         private CoreProperty m_hp, m_san;
-        private CharacterProperties.Time m_time;
 
         private DynamicProperty m_hunger, m_thirst, m_sleep, m_illness, m_mood;
 
@@ -69,7 +68,6 @@ namespace CharacterProperties
             #region PropertyInitialization
             m_hp = new CoreProperty(setup.maxHp, setup.initialHp, CoreType.HP);
             m_san = new CoreProperty(setup.maxSan, setup.initialSan, CoreType.SAN);
-            m_time = new Time(setup.startingYear);
 
             m_hunger = new DynamicProperty(setup.maxHunger, setup.initialHunger, DynamicType.Hunger);
             m_thirst = new DynamicProperty(setup.maxThirst, setup.initialThirst, DynamicType.Thirst);
@@ -436,35 +434,6 @@ namespace CharacterProperties
 
         #endregion SAN
 
-        #region Time
-
-        public int GetTime()
-        {
-            return m_time.currentTime;
-        }
-
-        public void SetTime(int newTime)
-        {
-            m_time.currentTime = newTime;
-        }
-
-        public void IncreaseTime(int delta)
-        {
-            m_time.currentTime += delta;
-        }
-
-        public void DecreaseTime(int delta)
-        {
-            m_time.currentTime -= delta;
-            if (m_time.currentTime < 0) m_time.currentTime = 0;
-        }
-
-        public string GetTimeString()
-        {
-            return m_time.ToString();
-        }
-        #endregion Time
-
         #region Hunger
         public int GetHunger()
         {
@@ -725,7 +694,6 @@ namespace CharacterProperties
                 Constants.Mind => GetMind(),
                 Constants.Strength => GetStrength(),
                 Constants.Speed => GetSpeed(),
-                Constants.TIME => GetTime(),
                 _ => 0
             };
         }
@@ -780,9 +748,6 @@ namespace CharacterProperties
                 case Constants.Speed:
                     SetSpeed(val);
                     break;
-                case Constants.TIME:
-                    SetTime(val);
-                    break;
                 default:
                     Debug.Log("Unknown Properties");
                     break;
@@ -826,9 +791,6 @@ namespace CharacterProperties
                 case Constants.Speed:
                     IncreaseSpeed(delta);
                     break;
-                case Constants.TIME:
-                    IncreaseTime(delta);
-                    break;
                 default:
                     Debug.Log("Unknown Properties");
                     break;
@@ -871,9 +833,6 @@ namespace CharacterProperties
                     break;
                 case Constants.Speed:
                     DecreaseSpeed(delta);
-                    break;
-                case Constants.TIME:
-                    DecreaseTime(delta);
                     break;
                 default:
                     Debug.Log("Unknown Properties");
