@@ -154,13 +154,13 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void DisplayAllCategories(){
-        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        ObjectDicts objects = GameManager.Instance.GetBackpack().GetObjects();
         FieldInfo[] fields = objects.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
         foreach(var field in fields){
-            var objList = field.GetValue(objects);
+            ObjectDict objList = field.GetValue(objects) as ObjectDict;
             if(objList == null){
-                Debug.LogError("This field does not exist in ObjectLists " + field.Name);
+                Debug.LogError("This field does not exist in ObjectDicts " + field.Name);
                 return;
             }
 
@@ -169,37 +169,42 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     }
 
     private void DisplayOneCategory(ObjectCategory category){
-        ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        ObjectDicts objects = GameManager.Instance.GetBackpack().GetObjects();
         m_slots.contentContainer.Clear();
         DisplaySlots(objects.GetList(category));
     }
 
-    private void DisplaySlots(object objList){
-        var objs = objList as System.Collections.IList;
-        if(objs == null){
-            Debug.LogError("This field in ObjectLists is not a Dict " + objList.GetType().Name);
+    private void DisplaySlots(ObjectDict objList){
+        if(objList == null){
+            Debug.LogError("This field in ObjectDicts is not a Dict " + objList.GetType().Name);
             return;
         }
 
-        foreach(Object obj in objs){
+        foreach(var kvpair in objList){
+            ObjectSlot objSlot = kvpair.Value;
+            
             VisualElement slot = m_slot.Instantiate();
             Button button = slot.Q<Button>();
             button.clicked += () => {
-                DisplayCard(obj);
+                DisplayCard(objSlot.obj);
             };
+            
             Label name = slot.Q<Label>(name: "name");
-            name.text = obj.name;
+            name.text = objSlot.obj.name;
+            Label count = slot.Q<Label>(name: "count");
+            count.text = objSlot.count.ToString();
+
             VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
-            thumbnail.style.backgroundImage = new StyleBackground(obj.thumbnail?.texture);
+            thumbnail.style.backgroundImage = new StyleBackground(objSlot.obj.thumbnail?.texture);
             m_slots.Add(slot);
         }
     }
     
     public void UpdateCurrCategory(Object obj){
-        // ObjectLists objects = GameManager.Instance.GetBackpack().GetObjects();
+        // ObjectDicts objects = GameManager.Instance.GetBackpack().GetObjects();
         // var objs = objects.GetList(m_currCategory) as System.Collections.IList;
         // if(objs == null){
-            // Debug.LogError("This field in ObjectLists is not a Dict " + m_currCategory.ToString());
+            // Debug.LogError("This field in ObjectDicts is not a Dict " + m_currCategory.ToString());
             // return;
         // }
 

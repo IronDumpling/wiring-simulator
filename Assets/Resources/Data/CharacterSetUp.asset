@@ -61,4 +61,12 @@ MonoBehaviour:
     effect: 1
   - end: 100
     effect: 3
-  initialObjects: []
+  initialObjects:
+  - m_name: Test1
+    m_count: 1
+  - m_name: Test2
+    m_count: 1
+  - m_name: Test4
+    m_count: 4
+  - m_name: Test8
+    m_count: 2
