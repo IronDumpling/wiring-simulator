@@ -40,6 +40,7 @@ INCLUDE ../0-global.ink
  
  莘先生…… #speaker:翻译
  翻译也嘀咕着他的名字。#speaker:
+ //翻译认出他似乎不是第一次来此处。
  
  }
  

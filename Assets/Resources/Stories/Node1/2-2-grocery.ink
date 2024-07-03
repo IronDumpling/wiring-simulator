@@ -179,11 +179,11 @@ INCLUDE ../0-global.ink
     说着，他点了支烟。#speaker:
     
     [感知检定]#check:WIS+1d8>trivial
+    
     {CHECK:
     - SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
     - HUGE_SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
-    - FAIL:
-    - HUGE_FAIL:
+    - else:他用着调侃的语气。
     }
     
     
@@ -205,8 +205,7 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:你察觉到老板脸上止不住的笑意。
     - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
-    - FAIL:
-    - HUGE_FAIL:
+    - else:他看着你。
     }
     
     
