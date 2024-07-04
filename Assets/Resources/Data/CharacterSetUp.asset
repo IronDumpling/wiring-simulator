@@ -29,14 +29,19 @@ MonoBehaviour:
     effect: 1
   maxHunger: 100
   initialHunger: 50
+  hungerDropRate: 3
   maxThirst: 100
   initialThirst: 50
+  thirstDropRate: 3
   maxSleep: 100
   initialSleep: 50
+  sleepDropRate: 3
   maxIllness: 100
   initialIllness: 50
+  illnessDropRate: 0
   maxMood: 100
   initialMood: 50
+  moodDropRate: 0
   maxIntelligent: 10
   initialIntelligent: 5
   maxMind: 10
