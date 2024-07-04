@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -114,6 +115,12 @@ namespace CharacterProperties
                 _ => ""
             };
         }
+        
+        // To Do: instead of creating a new list everytime save this list at beginning
+        public static List<CoreType> GetAllType()
+        {
+            return new List<CoreType> { CoreType.HP , CoreType.SAN};
+        }
 
 
 
@@ -187,6 +194,18 @@ namespace CharacterProperties
                 _ => ""
             };
         }
+        
+        public static List<DynamicType> GetAllType()
+        {
+            return new List<DynamicType>
+            {
+                DynamicType.Hunger, 
+                DynamicType.Thirst, 
+                DynamicType.Mood, 
+                DynamicType.Sleep,
+                DynamicType.Illness
+            };
+        }
 
     }
 
@@ -255,6 +274,17 @@ namespace CharacterProperties
                 SkillType.Intelligent => Constants.Intelligent,
                 SkillType.Mind => Constants.Mind,
                 _ => ""
+            };
+        }
+        
+        public static List<SkillType> GetAllType()
+        {
+            return new List<SkillType>
+            {
+                SkillType.Intelligent, 
+                SkillType.Mind,
+                SkillType.Speed,
+                SkillType.Strength
             };
         }
     }
