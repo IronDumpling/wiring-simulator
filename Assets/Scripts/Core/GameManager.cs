@@ -3,7 +3,8 @@ using System;
 using UnityEngine;
 
 using CharacterProperties;
-using Time = UnityEngine.Time;
+using Time = CharacterProperties.Time;
+
 
 public class GameManager: MonoSingleton<GameManager>{
     [Header("Initial Data")]
@@ -13,6 +14,7 @@ public class GameManager: MonoSingleton<GameManager>{
     private Character m_character;
     private Backpack m_backpack;
     private TimeStatManager m_timeStateManager;
+    private Time m_time;
 
     protected override void Init(){
         if(m_characterSetUp == null){
@@ -25,13 +27,16 @@ public class GameManager: MonoSingleton<GameManager>{
             return;
         }
 
+        m_time = new Time(m_characterSetUp.startingYear);
         m_character = new Character(m_characterSetUp);
         m_backpack = new Backpack(m_characterSetUp, m_objectPool);
         m_timeStateManager = new TimeStatManager(m_character, m_characterSetUp);
+        m_character.RegisterDynamicTimeEffect(m_timeStateManager);
+        m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);
     }
 
     private void Update(){
-        m_timeStateManager.Update(m_character.GetTime());
+        m_timeStateManager.Update(GetTime());
     }
 
     public Character GetCharacter(){
@@ -45,4 +50,27 @@ public class GameManager: MonoSingleton<GameManager>{
     public TimeStatManager GetTimeStat(){
         return m_timeStateManager;
     }
+    
+    #region Time
+    public int GetTime(){
+        return m_time.currentTime;
+    }
+
+    public void SetTime(int newTime){
+        m_time.currentTime = newTime;
+    }
+
+    public void IncreaseTime(int delta){
+        m_time.currentTime += delta;
+    }
+
+    public void DecreaseTime(int delta){
+        m_time.currentTime -= delta;
+        if (m_time.currentTime < 0) m_time.currentTime = 0;
+    }
+
+    public string GetTimeString(){
+        return m_time.ToString();
+    }
+    #endregion
 }

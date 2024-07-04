@@ -448,17 +448,17 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
         
         if(value.StartsWith("+"))
-            GameManager.Instance.GetCharacter().IncreaseTime(time);
+            GameManager.Instance.IncreaseTime(time);
         else if(value.StartsWith("-"))
-            GameManager.Instance.GetCharacter().DecreaseTime(time);
+            GameManager.Instance.DecreaseTime(time);
         else if(value.StartsWith("="))
-            GameManager.Instance.GetCharacter().SetTime(time);
+            GameManager.Instance.SetTime(time);
         else 
             Debug.LogError("'time' tag could not be appropriately parsed");
 
-        m_currStory.variablesState[Constants.TIME] = GameManager.Instance.GetCharacter().GetTimeString(); // sync
+        m_currStory.variablesState[Constants.TIME] = GameManager.Instance.GetTimeString(); // sync
         
-        Debug.Log($"Current Time: {GameManager.Instance.GetCharacter().GetTimeString()}");
+        Debug.Log($"Current Time: {GameManager.Instance.GetTimeString()}");
     }
     
     private void ObjectModification(string value){

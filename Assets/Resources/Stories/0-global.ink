@@ -1,5 +1,17 @@
 VAR HP = 1
 VAR SAN = 2
+
+VAR Hunger_VAR = 50
+VAR Thirst_VAR = 50
+VAR Mood_VAR = 50
+VAR Sleep_VAR = 50
+VAR Illness_VAR = 50
+
+VAR STR_VAR = 5
+VAR INT_VAR = 5
+VAR DEX_VAR = 5
+VAR WIS_VAR = 5
+
 VAR HUN = 5
 VAR MON = 0
 
