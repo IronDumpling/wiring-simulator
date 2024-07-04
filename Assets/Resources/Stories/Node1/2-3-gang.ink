@@ -1,5 +1,7 @@
 INCLUDE ../0-global.ink
 
+#title:帮会
+
 ->position_smuggler_1
 
 === position_smuggler_1 ===

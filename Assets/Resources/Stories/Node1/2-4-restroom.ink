@@ -1,5 +1,7 @@
 INCLUDE ../0-global.ink
 
+#title:休息站
+
 ->position_restroom_1
 
 === position_restroom_1 ===

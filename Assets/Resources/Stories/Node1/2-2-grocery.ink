@@ -1,7 +1,6 @@
 INCLUDE ../0-global.ink
 
-// 目标：合理的把判定和剧情结合在一起，让游玩这个story充满乐趣
-// 打架，偷东西，赖着睡觉，抢东西，etc
+#title:杂货店
 
 -> position_shop_1
 
