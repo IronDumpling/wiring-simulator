@@ -169,7 +169,7 @@ INCLUDE ../0-global.ink
    
 =talk_shopkeeper_1
 
-// 3. 三个检定，如果都成功，则送一件关键物品
+    // 3. 三个检定，如果都成功，则送一件关键物品
    
     招惹本地人了？ #speaker:老板
     老板忽然向你发话。他扶了扶自己的墨镜，你能感受到那张干巴面孔上的笑意。#speaker:
@@ -244,7 +244,7 @@ INCLUDE ../0-global.ink
             你应该觉得自己运气好，老乡。我要是真和那人一伙，那你这辈子都得蒙在鼓里。#speaker:老板
             ~attitude_of_shopkeeper ++
         
-        **[（沉默）]#speaker:
+        **[（沉默）] #speaker:
         也别灰心，老乡。走线的路子多了去了，只要命还在，没什么东西是丢不得的。#speaker:老板
         充电设备嘛，找找人共用，总能度过去的。
         
@@ -260,7 +260,7 @@ INCLUDE ../0-global.ink
         别问我，我没走过线。#speaker:老板
         你们都是有去无回，我哪知道死了多少？
         
-        [感知检定]#check:WIS+1d8>medium
+        [感知检定] #check:WIS+1d8>medium
         
         {CHECK:
         - SUCCESS:他说得很难听，但你知道他只是在吓唬你。#speaker:
@@ -269,7 +269,7 @@ INCLUDE ../0-global.ink
         - HUGE_FAIL:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
         }   
         
-        **{attitude_of_shopkeeper > 0 }[那你能介绍安全路径吗？]#speaker:
+        **{attitude_of_shopkeeper > 0 }[那你能介绍安全路径吗？] #speaker:
         
         我没走过线。但要说安全，建议去人多的队伍。#speaker:老板
         也就收费高些、协调麻烦些，但花钱消灾，懂吧？
@@ -298,11 +298,9 @@ INCLUDE ../0-global.ink
     }
     
 
-      {translator_you_employ == 2:
-    
-      你注意到，便利店老板似乎一直盯着你和你的翻译。但他一直保持着那张笑脸，很难判断用意。#speaker:
-    
-      }
+   {translator_you_employ == 2:
+   你注意到，便利店老板似乎一直盯着你和你的翻译。但他一直保持着那张笑脸，很难判断用意。#speaker:
+   }
     
     
     
@@ -322,9 +320,8 @@ INCLUDE ../0-global.ink
     
     }
        
-       ~negative_event_1_complete = true //被动事件1结束
+    ~negative_event_1_complete = true //被动事件1结束
     
-     ->position_shop_1
-     
+    ->position_shop_1
      
     -> END
