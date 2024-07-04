@@ -1,5 +1,7 @@
 INCLUDE ../0-global.ink
 
+#title:聚落
+
 ->ShoreVillage
 
 === ShoreVillage ===

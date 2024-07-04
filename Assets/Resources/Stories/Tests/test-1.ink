@@ -122,14 +122,14 @@ VAR correction_test = false
    -->check_test
   
 =object_test
-    +[获得物品Test5] #object:+Test5
-    +[获得2个物品Test7] #object:+Test7*2
-    +[获得5个物品Test8，1个物品Test3] #object:+Test8*5+Test3
+    +[获得物品“瓶装水”] #object:+瓶装水
+    +[获得2个物品“人民币”] #object:+人民币*2
+    +[获得5个物品“石灰包”，和1个物品Test3] #object:+石灰包*5+Test3
     +[获得10个物品Test10，失去1个物品Test3] #object:+Test10*10-Test3
     +[失去物品Test1] #object:-Test1
-    +[失去1个物品Test3，1个物品Test9] #object:-Test3-Test9
-    +[失去2个物品Test7] #object:-Test7*2
-    +[失去3个物品Test8，获得1个物品2，以及2个物品1] #object:-Test8*3+Test2+Test1*2
+    +[失去1个物品Test3，和1个物品“塑料瓶”] #object:-Test3-塑料瓶
+    +[失去2个物品“人民币”] #object:-人民币*2
+    +[失去3个物品“石灰包”，获得1个物品Test2，和2个物品Test1] #object:-石灰包*3+Test2+Test1*2
     +[退出物品测试]->test
 -->object_test
 

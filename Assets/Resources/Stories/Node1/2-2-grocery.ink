@@ -1,7 +1,6 @@
 INCLUDE ../0-global.ink
 
-// 目标：合理的把判定和剧情结合在一起，让游玩这个story充满乐趣
-// 打架，偷东西，赖着睡觉，抢东西，etc
+#title:杂货店
 
 -> position_shop_1
 
@@ -73,7 +72,7 @@ INCLUDE ../0-global.ink
     }
     
     
-    *{translator_you_employ > 0}{CHECK == FAIL || CHECK == HUGE_FAIL} [（向翻译询问）他说什么？]#speaker: 
+    *{translator_you_employ > 0}{CHECK == FAIL || CHECK == HUGE_FAIL}[（向翻译询问）他说什么？]#speaker: 
         俚语，意思是“傻瓜”。#speaker:翻译
     
         {translator_you_employ == 1 || translator_you_employ == 2 :
@@ -170,7 +169,7 @@ INCLUDE ../0-global.ink
    
 =talk_shopkeeper_1
 
-// 3. 三个检定，如果都成功，则送一件关键物品
+    // 3. 三个检定，如果都成功，则送一件关键物品
    
     招惹本地人了？ #speaker:老板
     老板忽然向你发话。他扶了扶自己的墨镜，你能感受到那张干巴面孔上的笑意。#speaker:
@@ -179,11 +178,22 @@ INCLUDE ../0-global.ink
     说着，他点了支烟。#speaker:
     
     [感知检定]#check:WIS+1d8>trivial
+    
     {CHECK:
     - SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
     - HUGE_SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
+    - else:他用着调侃的语气。
     }
     
+    
+    *{CHECK == FAIL || CHECK == HUGE_FAIL}[你说话一定要这么别扭吗？]#speaker:
+        只是过来人的忠告，朋友。#speaker:老板
+        他说着，一边翘了翘眉毛。#speaker:
+     
+    *[（瞪着他）]#speaker:
+    哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
+    他的语气里带着嘲讽。#speaker:
+    说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
     
     *{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[你是中国人吧。]
     在这地方说中文的黄皮肤，还能是什么人呢，老乡？#speaker:老板
@@ -194,16 +204,10 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:你察觉到老板脸上止不住的笑意。
     - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
+    - else:他看着你。
     }
     
-    *[你说话一定要这么别扭吗？]#speaker:
-        只是过来人的忠告，朋友。#speaker:老板
-        他说着，一边翘了翘眉毛。#speaker:
-     
-    *[（瞪着他）]#speaker:
-    哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
-    他的语气里带着嘲讽。#speaker:
-    说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
+    
     
     -
     *[他偷了我的充电器。]#speaker:
@@ -240,7 +244,7 @@ INCLUDE ../0-global.ink
             你应该觉得自己运气好，老乡。我要是真和那人一伙，那你这辈子都得蒙在鼓里。#speaker:老板
             ~attitude_of_shopkeeper ++
         
-        **[（沉默）]#speaker:
+        **[（沉默）] #speaker:
         也别灰心，老乡。走线的路子多了去了，只要命还在，没什么东西是丢不得的。#speaker:老板
         充电设备嘛，找找人共用，总能度过去的。
         
@@ -256,15 +260,16 @@ INCLUDE ../0-global.ink
         别问我，我没走过线。#speaker:老板
         你们都是有去无回，我哪知道死了多少？
         
-        [感知检定]#check:WIS+1d8>medium
+        [感知检定] #check:WIS+1d8>medium
         
         {CHECK:
         - SUCCESS:他说得很难听，但你知道他只是在吓唬你。#speaker:
         - HUGE_SUCCESS:他说得很难听，但你知道他只是在吓唬你。就像随口讲个茶余饭后的笑话。#speaker:
-        - else:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
+        - FAIL:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
+        - HUGE_FAIL:他仍是那副皮笑肉不笑的表情。你感觉脊骨发麻。#speaker:
         }   
         
-        **{attitude_of_shopkeeper > 0 }[那你能介绍安全路径吗？]#speaker:
+        **{attitude_of_shopkeeper > 0 }[那你能介绍安全路径吗？] #speaker:
         
         我没走过线。但要说安全，建议去人多的队伍。#speaker:老板
         也就收费高些、协调麻烦些，但花钱消灾，懂吧？
@@ -288,14 +293,14 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:显然，他在拿你打趣。#speaker:
     - HUGE_SUCCESS:显然，他在拿你打趣。这似乎是他一贯的做法。#speaker:
+    - FAIL:
+    - HUGE_FAIL:
     }
     
 
-      {translator_you_employ == 2:
-    
-      你注意到，便利店老板似乎一直盯着你和你的翻译。但他一直保持着那张笑脸，很难判断用意。#speaker:
-    
-      }
+   {translator_you_employ == 2:
+   你注意到，便利店老板似乎一直盯着你和你的翻译。但他一直保持着那张笑脸，很难判断用意。#speaker:
+   }
     
     
     
@@ -315,9 +320,8 @@ INCLUDE ../0-global.ink
     
     }
        
-       ~negative_event_1_complete = true //被动事件1结束
+    ~negative_event_1_complete = true //被动事件1结束
     
-     ->position_shop_1
-     
+    ->position_shop_1
      
     -> END

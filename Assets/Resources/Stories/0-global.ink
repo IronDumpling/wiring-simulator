@@ -71,6 +71,10 @@ VAR know_the_travel_time_1 = false
 
 VAR meet_shen_2 = false
 
+//Thunderbolt的初始参数
+
+VAR know_the_sleep_skill_1 = false
+VAR know_the_rob = false
 
 
 

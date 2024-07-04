@@ -1,5 +1,7 @@
 INCLUDE ../0-global.ink
 
+#title:帐篷
+
 ->position_tent_1
 
 === position_tent_1 ===
