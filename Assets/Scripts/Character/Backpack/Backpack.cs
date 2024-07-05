@@ -6,9 +6,9 @@ using UnityEngine;
 using CharacterProperties;
 
 public enum BackpackStatus{
-    Normal, 
+    Normal,
     SlowDown, // move and complete events slower
-    BurnHealth, // still act slowly, and start to burn health 
+    BurnHealth, // still act slowly, and start to burn health
     Dead, // burn the entire health bar
 }
 
@@ -18,7 +18,7 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
             this[obj.name].AddObject(1);
             return;
         }
-         
+
         this[obj.name] = new ObjectSlot(obj);
     }
 
@@ -99,7 +99,7 @@ public class ObjectDicts{
         else if(consumables.ContainsKey(name)) result = ObjectCategory.Consumables;
         return result;
     }
-    #endregion 
+    #endregion
 
     #region Set
     public void Add(Object obj){
@@ -121,7 +121,7 @@ public class ObjectDicts{
         else {
             Debug.LogError("Current object is unknown type");
             return;
-        } 
+        }
     }
     #endregion
 }
@@ -170,7 +170,7 @@ public class Backpack{
     private void CalculateStatus(){
         if(m_currLoad < m_maxLoad)
             m_status = BackpackStatus.Normal;
-        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD)) 
+        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD))
             m_status = BackpackStatus.SlowDown;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.BURN_HELATH_THRESHOLD))
             m_status = BackpackStatus.BurnHealth;
@@ -185,7 +185,7 @@ public class Backpack{
     // TODO: Write functions to allow others register and unregister add & remove events
     // three subscribers: status, load, ui refresh
 
-    private void AddObject(string name){
+    public void AddObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
 
@@ -196,7 +196,7 @@ public class Backpack{
         BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
-    private void RemoveObject(string name){
+    public void RemoveObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
 
@@ -223,7 +223,7 @@ public class Backpack{
         string obj = "";
         string sign = "";
         int count = 0;
-        
+
         foreach(var pair in components){
             obj = pair.Item1;
             sign = pair.Item2;
