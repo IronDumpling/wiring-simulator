@@ -30,6 +30,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private bool m_isPlaying = false;
     private bool m_canGoToNextLine = false;
     private bool m_isMouseOverElement = false;
+    private bool m_isObjInk = false;
 
     [Header("Dialogue")]
     private Story m_currStory;
@@ -130,6 +131,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         m_currStory = null;
 
+        m_isObjInk = false;
+
         CloseExpandPanel();
     }
     #endregion
@@ -146,7 +149,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             label.text += letter;
             yield return new WaitForSeconds(Constants.TYPE_SPEED);
         }
-        DisplayChoices();
+        
+        if(!m_isObjInk) DisplayChoices();
+        else DisplayObjChoices();
+
         m_canGoToNextLine = true;
     }
 
@@ -156,18 +162,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         label.text = content;
         m_content.Add(textLine);
         return textLine;
-    }
-
-    private void DisplayChoice(int index, string text, string result) {
-        VisualElement choiceUI = choice.Instantiate();
-        m_content.Add(choiceUI);
-        
-        Button button = choiceUI.Q<Button>();
-        button.text = index + ".-" + text;
-        button.clicked += () => {
-            // 删除原本的选项ui
-            DisplayTextArea(result);
-        };
     }
     
     private void DisplayChoices(){
@@ -196,6 +190,39 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             };
             index++;
         }
+    }
+
+    private void DisplayObjChoices(){
+        List<Choice> currChoices = m_currStory.currentChoices;
+        List<VisualElement> choices = new();
+        foreach(Choice chc in currChoices) {   
+            VisualElement choiceElement = choice.Instantiate();
+            choices.Add(choiceElement);
+            m_content.Add(choiceElement);
+        }
+
+        if(currChoices.Count < 3) return;
+
+        Button button1 = choices[0].Q<Button>();
+        button1.text = "1.-" + currChoices[0].text;
+        button1.clicked += () => {
+            MakeChoice(currChoices[0], choices);
+            Debug.Log("Use");
+        };
+
+        Button button2 = choices[1].Q<Button>();
+        button2.text = "2.-" + currChoices[1].text;
+        button2.clicked += () => {
+            MakeChoice(currChoices[1], choices);
+            Debug.Log("Remove");
+        };
+        
+        Button button3 = choices[2].Q<Button>();
+        button3.text = "3.-" + currChoices[2].text;
+        button3.clicked += () => {
+            MakeChoice(currChoices[2], choices);
+            Debug.Log("Do nothing");
+        };   
     }
 
     private void DisplaySectionButton(Choice chc){
@@ -237,18 +264,14 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_content.Add(m_spacer);
     }
     
-    public void DisplayClickObject(string name){
-        // clear story
-        DisplayTextArea("你拿出了" + name + "，接下来你想要做什么？");
-        DisplayChoice(1, "吃掉它", "你吃掉了" + name + "，感觉好多了。");
-        DisplayChoice(2, "丢弃它", "你丢弃了" + name + "，背包更轻了。");
-        DisplayChoice(3, "放回去", "你想了想，还是把" + name + "放回了背包里。");
-        ScrollToBottom();
+    public void DisplayClickObject(string objName, string inkName){
+        TextAsset objInkJson = Resources.Load<TextAsset>("Stories/Backpack/" + inkName);
+        this.BeginDialogue(objInkJson);
+        m_isObjInk = true;
+        m_title.text = objName;
+        m_currStory.variablesState["name"] = objName;
     }
     
-    public void DisplayGetObject(){
-    
-    }
     #endregion
     
     #region Logics

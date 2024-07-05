@@ -6,9 +6,9 @@ using UnityEngine;
 using CharacterProperties;
 
 public enum BackpackStatus{
-    Normal, 
+    Normal,
     SlowDown, // move and complete events slower
-    BurnHealth, // still act slowly, and start to burn health 
+    BurnHealth, // still act slowly, and start to burn health
     Dead, // burn the entire health bar
 }
 
@@ -18,7 +18,7 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
             this[obj.name].AddObject(1);
             return;
         }
-         
+
         this[obj.name] = new ObjectSlot(obj);
     }
 
@@ -91,7 +91,15 @@ public class ObjectDicts{
         else if(items.ContainsKey(name)) count = items[name].count;
         return count;
     }
-    #endregion 
+
+    public ObjectCategory GetCategory(string name){
+        ObjectCategory result = ObjectCategory.Items;
+        if(tools.ContainsKey(name)) result = ObjectCategory.Tools;
+        else if(clothes.ContainsKey(name)) result = ObjectCategory.Clothes;
+        else if(consumables.ContainsKey(name)) result = ObjectCategory.Consumables;
+        return result;
+    }
+    #endregion
 
     #region Set
     public void Add(Object obj){
@@ -113,7 +121,7 @@ public class ObjectDicts{
         else {
             Debug.LogError("Current object is unknown type");
             return;
-        } 
+        }
     }
     #endregion
 }
@@ -160,9 +168,9 @@ public class Backpack{
     }
 
     private void CalculateStatus(){
-        if(m_currLoad < m_maxLoad) 
+        if(m_currLoad < m_maxLoad)
             m_status = BackpackStatus.Normal;
-        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD)) 
+        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD))
             m_status = BackpackStatus.SlowDown;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.BURN_HELATH_THRESHOLD))
             m_status = BackpackStatus.BurnHealth;
@@ -178,7 +186,9 @@ public class Backpack{
     // three subscribers: status, load, ui refresh
 
     public void AddObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
         CalculateStatus();
@@ -187,7 +197,9 @@ public class Backpack{
     }
 
     public void RemoveObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
         m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
         CalculateStatus();
@@ -196,16 +208,22 @@ public class Backpack{
     }
 
     public void ClickObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
-        DialogueUI.Instance.DisplayClickObject(name);
-        
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
+        ObjectCategory category = m_objects.GetCategory(name);
+        string inkName = "object";
+        if(category == ObjectCategory.Consumables){
+            inkName = ((Consumable)obj).category.ToString().ToLower();
+        }
+        DialogueUI.Instance.DisplayClickObject(name, inkName);
     }
 
     public bool ObjectModification(List<(string, string, int)> components){
         string obj = "";
         string sign = "";
         int count = 0;
-        
+
         foreach(var pair in components){
             obj = pair.Item1;
             sign = pair.Item2;

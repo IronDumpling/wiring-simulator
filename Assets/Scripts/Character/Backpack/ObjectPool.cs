@@ -11,7 +11,7 @@ public class ObjectPool{
     [SerializeField] public List<Consumable> consumables = new List<Consumable>();
     [SerializeField] public List<Item> items = new List<Item>();
 
-    public object Get(string name){
+    public Object Get(string name){
         Object obj = null;
 
         obj = tools.FirstOrDefault(tool => tool.name == name);
