@@ -91,6 +91,14 @@ public class ObjectDicts{
         else if(items.ContainsKey(name)) count = items[name].count;
         return count;
     }
+
+    public ObjectCategory GetCategory(string name){
+        ObjectCategory result = ObjectCategory.Items;
+        if(tools.ContainsKey(name)) result = ObjectCategory.Tools;
+        else if(clothes.ContainsKey(name)) result = ObjectCategory.Clothes;
+        else if(consumables.ContainsKey(name)) result = ObjectCategory.Consumables;
+        return result;
+    }
     #endregion 
 
     #region Set
@@ -178,7 +186,9 @@ public class Backpack{
     // three subscribers: status, load, ui refresh
 
     private void AddObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+        
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
         CalculateStatus();
@@ -187,7 +197,9 @@ public class Backpack{
     }
 
     private void RemoveObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
         m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
         CalculateStatus();
@@ -196,9 +208,15 @@ public class Backpack{
     }
 
     public void ClickObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
-        DialogueUI.Instance.DisplayClickObject(name);
-        
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
+        ObjectCategory category = m_objects.GetCategory(name);
+        string inkName = "object";
+        if(category == ObjectCategory.Consumables){
+            inkName = ((Consumable)obj).category.ToString().ToLower();
+        }
+        DialogueUI.Instance.DisplayClickObject(name, inkName);
     }
 
     public bool ObjectModification(List<(string, string, int)> components){
