@@ -1,7 +1,7 @@
 VAR food_name = ""
 你拿出了{food_name} ，你接下来想要做什么？
 +[吃掉它]
-    你吃掉了{food_name}，感觉好多了。 #time:+30min #Hunger:+15
+    你吃掉了{food_name}，感觉好多了。
 +[丢弃它]
     你丢弃了{food_name}，背包更轻了。
 +[放回去]

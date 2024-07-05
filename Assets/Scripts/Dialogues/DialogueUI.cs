@@ -116,7 +116,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         if(m_displayLine != null) StopCoroutine(m_displayLine); 
         m_displayLine = StartCoroutine(DisplayLine(m_currStory.currentText));
 
-        MoveSpacerToEnd();
         ScrollToBottom();
     }
     
@@ -154,6 +153,18 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         label.text = content;
         m_content.Add(textLine);
         return textLine;
+    }
+
+    private void DisplayChoice(int index, string text, string result) {
+        VisualElement choiceUI = choice.Instantiate();
+        m_content.Add(choiceUI);
+        
+        Button button = choiceUI.Q<Button>();
+        button.text = index + ".-" + text;
+        button.clicked += () => {
+            // 删除原本的选项ui
+            DisplayTextArea(result);
+        };
     }
     
     private void DisplayChoices(){
@@ -222,6 +233,18 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_spacer.style.height = Constants.SPACER_HEIGHT;
         m_content.Add(m_spacer);
     }
+    
+    public void DisplayClickObject(string name){
+        DisplayTextArea("你拿出了" + name + "，接下来你想要做什么？");
+        DisplayChoice(1, "吃掉它", "你吃掉了" + name + "，感觉好多了。");
+        DisplayChoice(2, "丢弃它", "你丢弃了" + name + "，背包更轻了。");
+        DisplayChoice(3, "放回去", "你想了想，还是把" + name + "放回了背包里。");
+        ScrollToBottom();
+    }
+    
+    public void DisplayGetObject(){
+    
+    }
     #endregion
     
     #region Logics
@@ -272,13 +295,13 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         ContinueStory();
     }
     
-    private void MoveSpacerToEnd(){
+    private void ScrollToBottom(){
+        // move spacer to the bottom
         float m_contentHeight = m_content.contentContainer.layout.height;
         float bottomOffset = Mathf.Max(0, m_contentHeight + m_spacer.layout.height/2f);
         m_spacer.style.top = bottomOffset;
-    }
-    
-    private void ScrollToBottom(){
+
+        // scroll to the bottom
         float targetValue = m_scroller.highValue > 0 ? m_scroller.highValue + Constants.SCROLL_OFFSET : 0;
         DOTween.To(()=>m_scroller.value, x=> m_scroller.value = x, targetValue, Constants.EXIT_LAG_TIME);
     }
@@ -425,7 +448,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_currStory.variablesState[key] = GameManager.Instance.GetCharacter().GetVal(key); // sync
         Debug.Log($"{key} now have value {GameManager.Instance.GetCharacter().GetVal(key)}");
     }
-
+    
     private void TimeModification(string value){
         // format: +1d,1hr,10min
         const int INIT_IDX = 1;

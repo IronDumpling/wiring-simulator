@@ -187,6 +187,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             Button button = slot.Q<Button>();
             button.clicked += () => {
                 DisplayCard(objSlot.obj);
+                GameManager.Instance.GetBackpack().ClickObject(objSlot.obj.name);
             };
             
             Label name = slot.Q<Label>(name: "name");
