@@ -127,6 +127,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         m_isPlaying = false;
         m_displaySpeakerName = "";
+
+        m_currStory = null;
+
         CloseExpandPanel();
     }
     #endregion
@@ -235,6 +238,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     public void DisplayClickObject(string name){
+        // clear story
         DisplayTextArea("你拿出了" + name + "，接下来你想要做什么？");
         DisplayChoice(1, "吃掉它", "你吃掉了" + name + "，感觉好多了。");
         DisplayChoice(2, "丢弃它", "你丢弃了" + name + "，背包更轻了。");
