@@ -33,6 +33,7 @@ CONST HUGE_SUCCESS = "HugeSuccess"
 
 ~temp ShoreVillageTurn_1 = 0
 ~ShoreVillageTurn_1 ++
+VAR been_village_1 = false
 VAR been_tent_1 = 0
 VAR been_shop_1 = 0
 VAR been_smuggler_1 = 0

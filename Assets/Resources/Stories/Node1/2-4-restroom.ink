@@ -24,11 +24,7 @@ INCLUDE ../0-global.ink
 你瞧见了那顶熟悉的帽子。#speaker:
 ->negative_event_3
 
-
- 
-*[离开]
-
-->END
+*[离开]->END
 
 = negative_event_3
 
@@ -67,8 +63,6 @@ INCLUDE ../0-global.ink
  
  那正好。我打算明天或者后天动身。
  
- 
- 
  -方便的话，我们可以组个队，免得在路上遇到麻烦。听说有人烟的地方劫匪和小偷也多。
  你觉得如何？
  
@@ -81,6 +75,6 @@ INCLUDE ../0-global.ink
  我明天中午走，你随时可以来找我。
  
  -
- *[再见。]
-
---> END
+ *[再见。]#speaker:
+ -
+ +[继续]-> END

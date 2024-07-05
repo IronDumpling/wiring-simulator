@@ -19,7 +19,7 @@ INCLUDE ../0-global.ink
     
     }
     
-    *[找团队大一点的蛇头。] #time:10min
+    *[（找团队大一点的蛇头）] #time:10min
     一个接近二十人的团队吸引了你的注意。队伍闹哄哄的，显然是推搡着蛇头赶快出发；但他还想再揽些客源。就在此时，他也瞧见了你。
     
     要加入吗？马上，就出发了。#speaker:蛇头
@@ -57,7 +57,7 @@ INCLUDE ../0-global.ink
     你忽然明白，加入这种队伍无疑是安全的——但是会多花不少时间。
      ->position_smuggler_1
     
-    +[找人少的蛇头。]#speaker: #time:20min
+    +[（找人少的蛇头）]#speaker: #time:20min
     
     {not negative_event_3_complete:
      你忽然想起那个戴鸭舌帽的男人——你还没和莘先生联系。#speaker:
@@ -79,16 +79,14 @@ INCLUDE ../0-global.ink
     
     ->position_smuggler_1
     
-    +[雇佣一名翻译。] #time:10min
+    +[（雇佣一名翻译）] #time:10min
     ->employ_translator
     
     
-    +[离开。]#continue
-    ->END
+    +[（离开）]
     
-
-->END
-
+    你径直抛下身后的喧闹——它们不属于你。
+    ++[继续]->END
 
   = employ_translator
   
