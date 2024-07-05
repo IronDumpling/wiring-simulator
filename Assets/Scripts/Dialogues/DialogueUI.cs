@@ -208,6 +208,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button1.clicked += () => {
             MakeChoice(currChoices[0], choices);
             Debug.Log("Use");
+            
         };
 
         Button button2 = choices[1].Q<Button>();

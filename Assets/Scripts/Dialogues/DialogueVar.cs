@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
-public class DialogueVar
-{
+public class DialogueVar{
     public Dictionary<string, Ink.Runtime.Object> variables { get; private set; }
     private Story globalVariablesStory;
     private const string SAVE_VAR_KEY = "INK_VARIABLES";

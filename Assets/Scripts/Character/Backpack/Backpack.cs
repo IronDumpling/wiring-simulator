@@ -168,7 +168,7 @@ public class Backpack{
     }
 
     private void CalculateStatus(){
-        if(m_currLoad < m_maxLoad) 
+        if(m_currLoad < m_maxLoad)
             m_status = BackpackStatus.Normal;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD)) 
             m_status = BackpackStatus.SlowDown;
@@ -188,7 +188,7 @@ public class Backpack{
     private void AddObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
-        
+
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
         CalculateStatus();
