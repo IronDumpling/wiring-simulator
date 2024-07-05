@@ -177,7 +177,7 @@ public class Backpack{
     // TODO: Write functions to allow others register and unregister add & remove events
     // three subscribers: status, load, ui refresh
 
-    private void AddObject(string name){
+    public void AddObject(string name){
         if(m_objectPool.Get(name) is not Object obj) return;
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
@@ -186,7 +186,7 @@ public class Backpack{
         BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
-    private void RemoveObject(string name){
+    public void RemoveObject(string name){
         if(m_objectPool.Get(name) is not Object obj) return;
         m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
