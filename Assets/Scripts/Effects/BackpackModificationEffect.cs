@@ -24,7 +24,7 @@ namespace Effects
             {
                 for (int i = 0; i > m_count; i--) GameManager.Instance.GetBackpack().RemoveObject(m_name);
             }
-                
+            
         }
 
         public static BackpackModificationEffect CreateEffect(string name, int count)

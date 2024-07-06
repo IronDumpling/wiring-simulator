@@ -273,7 +273,7 @@ namespace CharacterProperties
             return m_otherSkillModifier[type];
         }
 
-        private void ChangeSkillOtherModifier(SkillType type, int delta)
+        public void ChangeSkillOtherModifier(SkillType type, int delta)
         {
             m_otherSkillModifier[type] += delta;
             m_onSkillChanged[type].Invoke(type, GetPlainSkill(type), GetSkillModifier(type));

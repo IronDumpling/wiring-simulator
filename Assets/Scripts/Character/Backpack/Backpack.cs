@@ -57,7 +57,7 @@ public class ObjectDicts{
     public ObjectDicts(List<ObjectSnapshot> initObjs, ObjectPool allObjs){
         for(int i = 0; i < initObjs.Count; i++){
             for(int j = 0; j < initObjs[i].count; j++){
-                var obj = allObjs.Get(initObjs[i].name) as Object;
+                Object obj = allObjs.Get(initObjs[i].name);
                 this.Add(obj);
             }
         }
@@ -81,6 +81,15 @@ public class ObjectDicts{
         currLoad += consumables.GetLoad();
         currLoad += items.GetLoad();
         return currLoad;
+    }
+
+    public Object GetObject(string name){
+        Object result = null;
+        if(tools.ContainsKey(name)) result = tools[name].obj;
+        else if(clothes.ContainsKey(name)) result = clothes[name].obj;
+        else if(consumables.ContainsKey(name)) result = consumables[name].obj;
+        else if(items.ContainsKey(name)) result = items[name].obj;
+        return result;
     }
 
     public int GetCount(string name){
@@ -132,6 +141,9 @@ public class Backpack{
     private int m_maxLoad = 10;
     private int m_currLoad = 0;
     private BackpackStatus m_status = BackpackStatus.Normal;
+    private TimeEffect m_timeEffect;
+    private int m_speedEffect = 1;
+    private int m_hpEffect = 1;
 
     public int maxLoad { get { return m_maxLoad;}}
     public int currLoad { get { return m_currLoad;}}
@@ -168,18 +180,51 @@ public class Backpack{
     }
 
     private void CalculateStatus(){
+        BackpackStatus newStatus;
+        
         if(m_currLoad < m_maxLoad)
-            m_status = BackpackStatus.Normal;
+            newStatus = BackpackStatus.Normal;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD))
-            m_status = BackpackStatus.SlowDown;
+            newStatus = BackpackStatus.SlowDown;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.BURN_HELATH_THRESHOLD))
-            m_status = BackpackStatus.BurnHealth;
+            newStatus = BackpackStatus.BurnHealth;
         else
-            m_status = BackpackStatus.Dead;
+            newStatus = BackpackStatus.Dead;
+        
+        if(m_status != newStatus) BackpackEffect(newStatus);
+        m_status = newStatus;
+    }
+
+    private void BackpackEffect(BackpackStatus status){
+        if(m_status == BackpackStatus.SlowDown) 
+            GameManager.Instance.GetCharacter().ChangeSkillOtherModifier(SkillType.Speed, -1 * m_speedEffect);
+        else if(m_status == BackpackStatus.BurnHealth && m_timeEffect != null)
+            GameManager.Instance.GetTimeStat().RemoveTimeEffect(m_timeEffect);
+        
+        switch(status){
+            case BackpackStatus.SlowDown:
+                GameManager.Instance.GetCharacter().ChangeSkillOtherModifier(SkillType.Speed, m_speedEffect);
+                Debug.LogWarning("Slow down " + m_speedEffect);
+                break;
+            case BackpackStatus.BurnHealth:
+                m_timeEffect = GameManager.Instance.GetTimeStat().
+                    AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
+                    GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
+                    Debug.LogWarning("Burn health " + m_hpEffect);
+                });
+                break;
+            case BackpackStatus.Dead:
+                GameManager.Instance.GetCharacter().SetHP(0);
+                break;
+        }
     }
 
     public ObjectDicts GetObjects(){
         return m_objects;
+    }
+
+    public Object GetObject(string name){
+        return m_objects.GetObject(name);
     }
 
     // TODO: Write functions to allow others register and unregister add & remove events
@@ -217,6 +262,8 @@ public class Backpack{
             inkName = ((Consumable)obj).category.ToString().ToLower();
         }
         DialogueUI.Instance.DisplayClickObject(name, inkName);
+
+        // obj.Use();
     }
 
     public bool ObjectModification(List<(string, string, int)> components){
