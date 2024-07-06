@@ -227,6 +227,7 @@ INCLUDE ../0-global.ink
 === night ===
 
 +[独白] ->dialoge
+//+[道具制作]
 //+[偷窃]
 //+[袭击]
 

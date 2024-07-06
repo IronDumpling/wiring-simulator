@@ -29,7 +29,7 @@ INCLUDE ../0-global.ink
      ->negative_event_1
    
    -else:
-   空旷的货架——还有戴着墨镜的便利店老板。
+   空旷的货架——还有戴着墨镜的便利店老板。#speaker:
    
   }
     
@@ -42,9 +42,7 @@ INCLUDE ../0-global.ink
     ->position_shop_1
     +[离开吧。]#speaker:
     你走出这栋破旧的木屋。等候设备充电的人们瞥了你一下，随即又垂下眼眸。你同他们一样疲惫。
-        ++[继续]
-    
-    ->END
+        ++[继续]->END
 
   = negative_event_1
     
@@ -171,6 +169,7 @@ INCLUDE ../0-global.ink
 
     // 3. 三个检定，如果都成功，则送一件关键物品
    
+    你再次走进屋。其他人似乎毫不在意方才的骚动。#speaker:
     招惹本地人了？ #speaker:老板
     老板忽然向你发话。他扶了扶自己的墨镜，你能感受到那张干巴面孔上的笑意。#speaker:
     那你得注意点，指不定哪天就被介绍到某个黑蛇头那边，然后把你卖了。#speaker:老板
@@ -182,32 +181,32 @@ INCLUDE ../0-global.ink
     {CHECK:
     - SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
     - HUGE_SUCCESS:不会错的。你看着眼前的便利店老板。无论是神态、动作，还是语言的抑扬顿挫——他都熟悉到令你感到异样。
-    - else:他用着调侃的语气。
+    - FAIL:他用着调侃的语气。
+    - HUGE_FAIL:他用着调侃的语气。
     }
     
     
     *{CHECK == FAIL || CHECK == HUGE_FAIL}[你说话一定要这么别扭吗？]#speaker:
-        只是过来人的忠告，朋友。#speaker:老板
-        他说着，一边翘了翘眉毛。#speaker:
+    只是过来人的忠告，朋友。#speaker:老板
+    他说着，一边翘了翘眉毛。#speaker:
+     
+    *{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[你是中国人吧。]
+    在这地方说中文的黄皮肤，还能是什么人呢，老乡？#speaker:老板
+    ~attitude_of_shopkeeper ++ //老板好感度+1
+    ~know_shopkeeper_1_is_Chinese = true
+    
+    [感知检定]#check:WIS+1d8>easy
+    {CHECK:
+    - SUCCESS:你察觉到老板脸上止不住的笑意。#speaker:
+    - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。#speaker:
+    - FAIL:他看着你。#speaker:
+    - HUGE_FAIL:他看着你。#speaker:
+    }
      
     *[（瞪着他）]#speaker:
     哦，哦！别急，我可没看到作案过程，也懒得做那些同流合污的事情。#speaker:老板
     他的语气里带着嘲讽。#speaker:
     说不定那东西其实早被偷了，只是现在才发现。别误会，我是同情你的。#speaker:老板
-    
-    *{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[你是中国人吧。]
-    在这地方说中文的黄皮肤，还能是什么人呢，老乡？#speaker:老板
-    ~attitude_of_shopkeeper ++
-    ~know_shopkeeper_1_is_Chinese = true
-    
-    [感知检定]#check:WIS+1d8>easy
-    {CHECK:
-    - SUCCESS:你察觉到老板脸上止不住的笑意。
-    - HUGE_SUCCESS:你察觉到老板脸上止不住的笑意——他似乎来了兴致。
-    - else:他看着你。
-    }
-    
-    
     
     -
     *[他偷了我的充电器。]#speaker:
@@ -216,41 +215,57 @@ INCLUDE ../0-global.ink
         他装模作样地叹了口气。#speaker:
         这里也没监控，难办哦。#speaker:老板
         
-        [智力检定]#check:INT+1d8>medium
+        [智力检定]#check:INT+1d8>medium #speaker:
         {CHECK:
         - SUCCESS:你忽然意识到，这个便利店与其他救济站有本质区别——它是通过货架售卖的。#speaker:
         而为了防止偷窃，大部分商铺都该是窗口取货才对。
         - HUGE_SUCCESS:你忽然意识到，这个便利店与其他救济站有本质区别——它是通过货架售卖的。#speaker:
         而为了防止偷窃，大部分商铺都该是窗口取货才对。
+        - FAIL:当然不可能有监控。他不过在嘲讽你。
+        - HUGE_FAIL:当然不可能有监控。他不过在嘲讽你。
         }
         
-        **{CHECK == SUCCESS|| CHECK == HUGE_SUCCESS}[你就不担心商品被偷窃？]#speaker:
-        哈，好问题。我也想过要不要装监控。但事实证明并不需要。#speaker:老板
+        **{CHECK == SUCCESS|| CHECK == HUGE_SUCCESS}[你就不担心有人偷东西？]#speaker:
+        哈，好问题。#speaker:老板
         他指了指你身后。#speaker:
         这里不是休息站，只是一个聚落里的前哨。这里没什么人，我也赚不到什么钱，这小房间用一只眼睛就能看过来。#speaker:老板
+        说着，他指了指自己的眼睛。#speaker:
         
             [智力检定]#check:INT+1d8>medium
+            {CHECK:
+            - SUCCESS:那他当然一直盯着——包括偷窃。
+            - HUGE_SUCCESS:那他当然一直盯着——包括偷窃。
+            - FAIL:这属于最常见的胡诌。你不止一次听过这种大话。
+            - HUGE_FAIL:这属于最常见的胡诌。你不止一次听过这种大话。
+            }
+            
             ***{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[那就对了。]
             
-            什么？#speaker:老板
+            什么对了？#speaker:老板
             
-            ****{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[既然这样，你应该看得一清二楚。]
+                ****{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[你应该把偷窃过程看得一清二楚。]
             
-            你瞧见便利店老板咧开笑。#speaker:
-            你真是个聪明人，朋友，那你应该也能想清楚。#speaker:老板
-            能从你的拉链背包里捞东西，那必须得贴着你好一阵，总不能一个错身就把东西拿走了。
-            直说吧——我确实没看到他偷东西。如果有，那至少没发生在我的店里。
-            他把两只胳膊都放到了桌面上，显然比方才更认真些。#speaker:
-            你应该觉得自己运气好，老乡。我要是真和那人一伙，那你这辈子都得蒙在鼓里。#speaker:老板
-            ~attitude_of_shopkeeper ++
+                你瞧见便利店老板咧开笑。#speaker:
+                你真是个聪明人，朋友，那你应该也能想清楚。#speaker:老板
+                能从你的拉链背包里捞东西，那必须得贴着你好一阵，总不能一个错身就把东西拿走了。
+                直说吧——我确实没看到他偷东西。如果有，那至少没发生在我的店里。
+                他把两只胳膊都放到了桌面上，显然比方才更认真些。#speaker:
+                你应该觉得自己运气好，老乡。我要是真和那人一伙，那你这辈子都得蒙在鼓里。#speaker:老板
+                ~attitude_of_shopkeeper ++ //老板好感度+1
+            
+            *** ->talk_shopkeeper_1_1 //跳过选项的一个典型
         
-        **[（沉默）] #speaker:
-        也别灰心，老乡。走线的路子多了去了，只要命还在，没什么东西是丢不得的。#speaker:老板
-        充电设备嘛，找找人共用，总能度过去的。
+        ** ->talk_shopkeeper_1_1 //也是跳过选项的一个典型
         
-     -
+        
+    -(talk_shopkeeper_1_1)
+     
+    他摸了摸自己反着油光的脸颊。#speaker:
+    别灰心嘛。走线的路子多了去了，只要命还在，没什么东西是丢不得的。#speaker:老板
+    至于充电设备，找找人共用，总能度过去。
+
     *{know_shopkeeper_1_is_Chinese == false}[……你是中国人？]#speaker:
-      我一直在说中文，还是黄皮肤——你觉得呢？#speaker:老板
+      哦，现在才发现？我一直在说中文，还是黄皮肤——是不是太自然了？#speaker:老板
       他向后躺到了椅子上。#speaker:
       ~know_shopkeeper_1_is_Chinese = true
       
@@ -275,7 +290,7 @@ INCLUDE ../0-global.ink
         也就收费高些、协调麻烦些，但花钱消灾，懂吧？
         他得意地挥了挥手里的烟。#speaker:
        
-    *{know_shopkeeper_1_is_Chinese == true}[看在老乡的份上，你能介绍安全路径吗？]
+    *{know_shopkeeper_1_is_Chinese == true}[看在老乡的份上，能介绍安全路径吗？]
     
         我没走过线。但要说安全，建议去人多的队伍。#speaker:老板
         也就收费高些、协调麻烦些，但花钱消灾，懂吧？
@@ -284,17 +299,17 @@ INCLUDE ../0-global.ink
     
     -{translator_you_employ == 0:
     我建议你到一个新地方就先找翻译。蛇头那儿就能叫几个。#speaker:老板
-    他点了根烟，一边朝门外指指。#speaker:
-    不包安全，有的是马货，但至少遇到本地人不会什么都不懂。#speaker:老板
-    你也可以自己学。只要有闲心。
+    他一边朝门外指指。#speaker:
+    不包安全，有的是马货，但至少遇到本地人不会什么都不懂，被拐走了都晓不得。#speaker:老板
+    哦——你也可以自己学。只要有闲心。
     }
        
     [感知检定]#check:WIS+1d8>formidable
     {CHECK:
     - SUCCESS:显然，他在拿你打趣。#speaker:
     - HUGE_SUCCESS:显然，他在拿你打趣。这似乎是他一贯的做法。#speaker:
-    - FAIL:
-    - HUGE_FAIL:
+    - FAIL:当然，你不太可能去学。#speaker:
+    - HUGE_FAIL:当然，你不太可能去学。#speaker:
     }
     
 
@@ -313,7 +328,7 @@ INCLUDE ../0-global.ink
     你有打算就和我说一声。
     说完，他开始招呼一名刚进门的客人了。#speaker:
     
-    -else:你还真是有趣朋友，我聊得很开心。
+    -else:你还真是有趣,朋友，我聊得很开心。
     这样——我这里有一个备用的充电器。你可以花大价钱买下它，但我也可以借给你，就在我的店铺门口充电。我只收充电的费用。
     随时找我吧，老乡。
     说完，他开始招呼一名刚进门的客人了。#speaker:
