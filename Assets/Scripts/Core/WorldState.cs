@@ -38,6 +38,7 @@ namespace Core
             if (state != null)
             {
                 m_gameStateMachine.isLocked = true;
+                Debug.Log("Ehhh");
                 state.Update();
                 m_gameStateMachine.isLocked = false;
             }
