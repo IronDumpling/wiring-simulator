@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using CharacterProperties;
+using Core;
 
 public enum BackpackStatus{
     Normal,
@@ -150,6 +151,7 @@ public class Backpack{
     public BackpackStatus status { get { return m_status;}}
 
     public Backpack(CharacterSetUp setup, ObjectPoolSO pool){
+        Debug.Log(pool.objects.consumables[0].GetEffects().Count);
         m_objectPool = pool.objects;
         GenerateObjects(setup.initialObjects);
         CalculateMaxLoad();
