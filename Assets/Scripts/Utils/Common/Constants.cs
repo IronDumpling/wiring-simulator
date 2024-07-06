@@ -16,6 +16,7 @@ public static class Constants{
     public const string MIN = "min";
     public const int DAY_TO_HOUR = 24;
     public const int HOUR_TO_MIN = 60;
+    public const int TIME_UNIT = 30;
 
     // UI
     public const float TYPE_SPEED = 0.04f;

@@ -30,7 +30,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private bool m_isPlaying = false;
     private bool m_canGoToNextLine = false;
     private bool m_isMouseOverElement = false;
-    private bool m_isObjInk = false;
+    private string m_objName = "";
 
     [Header("Dialogue")]
     private Story m_currStory;
@@ -131,7 +131,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         m_currStory = null;
 
-        m_isObjInk = false;
+        m_objName = "";
 
         CloseExpandPanel();
     }
@@ -150,7 +150,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             yield return new WaitForSeconds(Constants.TYPE_SPEED);
         }
         
-        if(!m_isObjInk) DisplayChoices();
+        if(m_objName == "") DisplayChoices();
         else DisplayObjChoices();
 
         m_canGoToNextLine = true;
@@ -208,7 +208,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button1.clicked += () => {
             MakeChoice(currChoices[0], choices);
             Debug.Log("Use");
-            
+            GameManager.Instance.GetBackpack().GetObject(m_objName).Use();
         };
 
         Button button2 = choices[1].Q<Button>();
@@ -216,6 +216,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button2.clicked += () => {
             MakeChoice(currChoices[1], choices);
             Debug.Log("Remove");
+            GameManager.Instance.GetBackpack().RemoveObject(m_objName);
         };
         
         Button button3 = choices[2].Q<Button>();
@@ -268,7 +269,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     public void DisplayClickObject(string objName, string inkName){
         TextAsset objInkJson = Resources.Load<TextAsset>("Stories/Backpack/" + inkName);
         this.BeginDialogue(objInkJson);
-        m_isObjInk = true;
+        m_objName = objName;
         m_title.text = objName;
         m_currStory.variablesState["name"] = objName;
     }
