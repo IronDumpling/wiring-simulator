@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 using DG.Tweening;
 
+using Core;
+
 public class BackpackUI : MonoSingleton<BackpackUI>{
     [Header("UI")]
     [SerializeField] private UIDocument m_doc;
@@ -187,6 +189,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             Button button = slot.Q<Button>();
             button.clicked += () => {
                 DisplayCard(objSlot.obj);
+                GameManager.Instance.GetBackpack().ClickObject(objSlot.obj.name);
             };
             
             Label name = slot.Q<Label>(name: "name");

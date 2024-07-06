@@ -9,65 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c95c7d88a6b284b1b956142827832050, type: 3}
   m_Name: ObjectPool
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolSO
+  m_EditorClassIdentifier: 
   objects:
-    tools:
-    - m_name: Test1
-      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
-      m_description: I am test 1
-      m_load: 20
-    clothes:
-    - m_name: Test2
-      m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
-      m_description: I am test 2
-      m_load: 5
-    - m_name: Test3
-      m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
-      m_description: I am test 3
-      m_load: 7
+    tools: []
+    clothes: []
     consumables:
     - m_name: "\u888B\u88C5\u6CE1\u9762"
-      m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
-      m_description: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\u3002\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
-      m_load: 2
-      m_category: 0
-      m_effectParam: 0
-    - m_name: "\u74F6\u88C5\u6C34"
-      m_thumbnail: {fileID: 21300000, guid: 044ce135f63e94a90addea1571271a53, type: 3}
-      m_description: "\u74F6\u88C5\u7684\u77FF\u6CC9\u6C34\uFF0C\u91CE\u5916\u751F\u5B58\u7684\u91CD\u8981\u7269\u8D44\uFF0C\u74F6\u8EAB\u53EF\u4EE5\u7528\u4F5C\u5236\u9020\u4F17\u591A\u5DE5\u5177\u7684\u539F\u6750\u6599\u3002"
+      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
+      m_description: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\uFF0C\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u7684\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\uFF0C\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
       m_load: 3
-      m_category: 1
-      m_effectParam: 0
-    - m_name: "\u963F\u83AB\u897F\u6797"
-      m_thumbnail: {fileID: 21300000, guid: 4ef8c0f696b1c486093476df2622c640, type: 3}
-      m_description: "\u6700\u5E38\u7528\u7684\u6297\u751F\u7D20\u836F\u7269\u4E4B\u4E00\uFF0C\u53EF\u4EE5\u6CBB\u7597\u7EC6\u83CC\u5F15\u8D77\u7684\u8BF8\u591A\u75BE\u75C5\uFF0C\u5305\u62EC\u90E8\u5206\u611F\u5192\u4E0E\u708E\u75C7\u3002"
-      m_load: 2
-      m_category: 2
-      m_effectParam: 0
-    - m_name: "\u4EBA\u6C11\u5E01"
-      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
-      m_description: "\u4F60\u539F\u672C\u56FD\u5BB6\u7684\u8D27\u5E01\u3002\u6D41\u901A\u6027\u5DEE\uFF0C\u4F46\u5728\u6C11\u95F4\u975E\u5E38\u65B9\u4FBF\u5151\u6362\u3002\u8BB8\u591A\u5C45\u6C11\u90FD\u5C06\u4F7F\u7528\u4EBA\u6C11\u5E01\u7684\u4EBA\u89C6\u4E3A\u6447\u94B1\u6811\u3002"
-      m_load: 1
-      m_category: 3
-      m_effectParam: 0
-    - m_name: "\u901F\u70ED\u7C73\u996D"
-      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
-      m_description: "\u52A0\u5165\u6E05\u6C34\uFF0C\u5E76\u7528\u77F3\u7070\u5C0F\u5305\u52A0\u70ED\u540E\u5373\u53EF\u98DF\u7528\u7684\u7279\u5236\u7C73\u996D\u3002\u91CF\u4E0D\u7B97\u5927\uFF0C\u4F46\u80FD\u5728\u5F02\u4E61\u5403\u5230\u7C73\u996D\u5DF2\u7ECF\u662F\u4E00\u79CD\u5962\u4F88\u3002"
-      m_load: 1
+      m_useEffects:
+      - rid: 8366252284044902400
       m_category: 0
-      m_effectParam: 0
     items:
-    - m_name: "\u77F3\u7070\u5305"
-      m_thumbnail: {fileID: 21300000, guid: 07b8f729865864a8382029e615a85b41, type: 3}
-      m_description: "\u52A0\u70ED\u7528\u7684\u4E00\u6B21\u6027\u77F3\u7070\u5C0F\u5305\uFF0C\u4E0E\u6C34\u63A5\u89E6\u5373\u53EF\u91CA\u653E\u5927\u91CF\u70ED\u91CF\uFF0C\u4EE5\u9694\u6C34\u52A0\u70ED\u98DF\u7269\u3002"
-      m_load: 10
     - m_name: "\u5851\u6599\u74F6"
-      m_thumbnail: {fileID: 21300000, guid: 381a78f4452bb428aafe1c96957bf1e6, type: 3}
-      m_description: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u53EF\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
+      m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
+      m_description: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u6BD4\u5982\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
       m_load: 12
-    - m_name: Test10
-      m_thumbnail: {fileID: 21300000, guid: 1b266c51c37b7483c8fc8d8bee9f188c, type: 3}
-      m_description: I am test 10
-      m_load: 15
+      m_useEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8366252284044902400
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 30

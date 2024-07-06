@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using CharacterProperties;
+using Core;
 
 public enum BackpackStatus{
-    Normal, 
+    Normal,
     SlowDown, // move and complete events slower
-    BurnHealth, // still act slowly, and start to burn health 
+    BurnHealth, // still act slowly, and start to burn health
     Dead, // burn the entire health bar
 }
 
@@ -18,7 +19,7 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
             this[obj.name].AddObject(1);
             return;
         }
-         
+
         this[obj.name] = new ObjectSlot(obj);
     }
 
@@ -35,7 +36,9 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
     public int GetLoad(){
         int load = 0;
         foreach(var kvp in this){
-            load += kvp.Value.obj.load;
+            for(int i = 0; i < kvp.Value.count; i++){
+                load += kvp.Value.obj.load;
+            }
         }
         return load;
     }
@@ -57,7 +60,7 @@ public class ObjectDicts{
     public ObjectDicts(List<ObjectSnapshot> initObjs, ObjectPool allObjs){
         for(int i = 0; i < initObjs.Count; i++){
             for(int j = 0; j < initObjs[i].count; j++){
-                var obj = allObjs.Get(initObjs[i].name) as Object;
+                Object obj = allObjs.Get(initObjs[i].name);
                 this.Add(obj);
             }
         }
@@ -82,9 +85,35 @@ public class ObjectDicts{
         currLoad += items.GetLoad();
         return currLoad;
     }
-    #endregion 
 
-    #region Add
+    public Object GetObject(string name){
+        Object result = null;
+        if(tools.ContainsKey(name)) result = tools[name].obj;
+        else if(clothes.ContainsKey(name)) result = clothes[name].obj;
+        else if(consumables.ContainsKey(name)) result = consumables[name].obj;
+        else if(items.ContainsKey(name)) result = items[name].obj;
+        return result;
+    }
+
+    public int GetCount(string name){
+        int count = 0;
+        if(tools.ContainsKey(name)) count = tools[name].count;
+        else if(clothes.ContainsKey(name)) count = clothes[name].count;
+        else if(consumables.ContainsKey(name)) count = consumables[name].count;
+        else if(items.ContainsKey(name)) count = items[name].count;
+        return count;
+    }
+
+    public ObjectCategory GetCategory(string name){
+        ObjectCategory result = ObjectCategory.Items;
+        if(tools.ContainsKey(name)) result = ObjectCategory.Tools;
+        else if(clothes.ContainsKey(name)) result = ObjectCategory.Clothes;
+        else if(consumables.ContainsKey(name)) result = ObjectCategory.Consumables;
+        return result;
+    }
+    #endregion
+
+    #region Set
     public void Add(Object obj){
         if(obj is Tool tool) tools.Add(tool);
         else if(obj is Clothes clothes1) clothes.Add(clothes1);
@@ -95,11 +124,8 @@ public class ObjectDicts{
             return;
         }
     }
-    #endregion
 
-    #region Remove
     public void Remove(Object obj){
-        // TODO: check if objList has the obj, if not, refuse the operation
         if(obj is Tool tool) tools.Remove(tool);
         else if(obj is Clothes clothes1) clothes.Remove(clothes1);
         else if(obj is Consumable consumable) consumables.Remove(consumable);
@@ -107,7 +133,7 @@ public class ObjectDicts{
         else {
             Debug.LogError("Current object is unknown type");
             return;
-        } 
+        }
     }
     #endregion
 }
@@ -118,6 +144,9 @@ public class Backpack{
     private int m_maxLoad = 10;
     private int m_currLoad = 0;
     private BackpackStatus m_status = BackpackStatus.Normal;
+    private TimeEffect m_timeEffect;
+    private int m_speedEffect = 1;
+    private int m_hpEffect = 1;
 
     public int maxLoad { get { return m_maxLoad;}}
     public int currLoad { get { return m_currLoad;}}
@@ -154,25 +183,60 @@ public class Backpack{
     }
 
     private void CalculateStatus(){
-        if(m_currLoad < m_maxLoad) 
-            m_status = BackpackStatus.Normal;
-        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD)) 
-            m_status = BackpackStatus.SlowDown;
+        BackpackStatus newStatus;
+        
+        if(m_currLoad < m_maxLoad)
+            newStatus = BackpackStatus.Normal;
+        else if(m_currLoad <= m_maxLoad * (1 + Constants.SLOW_DOWN_THRESHOLD))
+            newStatus = BackpackStatus.SlowDown;
         else if(m_currLoad <= m_maxLoad * (1 + Constants.BURN_HELATH_THRESHOLD))
-            m_status = BackpackStatus.BurnHealth;
+            newStatus = BackpackStatus.BurnHealth;
         else
-            m_status = BackpackStatus.Dead;
+            newStatus = BackpackStatus.Dead;
+        
+        if(m_status != newStatus) BackpackEffect(newStatus);
+        m_status = newStatus;
+    }
+
+    private void BackpackEffect(BackpackStatus status){
+        if(m_status == BackpackStatus.SlowDown) 
+            GameManager.Instance.GetCharacter().ChangeSkillOtherModifier(SkillType.Speed, -1 * m_speedEffect);
+        else if(m_status == BackpackStatus.BurnHealth && m_timeEffect != null)
+            GameManager.Instance.GetTimeStat().RemoveTimeEffect(m_timeEffect);
+        
+        switch(status){
+            case BackpackStatus.SlowDown:
+                GameManager.Instance.GetCharacter().ChangeSkillOtherModifier(SkillType.Speed, m_speedEffect);
+                Debug.LogWarning("Slow down " + m_speedEffect);
+                break;
+            case BackpackStatus.BurnHealth:
+                m_timeEffect = GameManager.Instance.GetTimeStat().
+                    AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
+                    GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
+                    Debug.LogWarning("Burn health " + m_hpEffect);
+                });
+                break;
+            case BackpackStatus.Dead:
+                GameManager.Instance.GetCharacter().SetHP(0);
+                break;
+        }
     }
 
     public ObjectDicts GetObjects(){
         return m_objects;
     }
 
+    public Object GetObject(string name){
+        return m_objects.GetObject(name);
+    }
+
     // TODO: Write functions to allow others register and unregister add & remove events
     // three subscribers: status, load, ui refresh
 
     public void AddObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
         m_objects.Add(obj);
         AddCurrLoad(obj.load);
         CalculateStatus();
@@ -181,12 +245,56 @@ public class Backpack{
     }
 
     public void RemoveObject(string name){
-        if(m_objectPool.Get(name) is not Object obj) return;
-        m_objects.Remove(obj); 
-        // TODO: if remove operation is refused, revert the entire operation
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
+        m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
         CalculateStatus();
         BackpackUI.Instance.DisplayStatus();
         BackpackUI.Instance.UpdateCurrCategory(obj);
+    }
+
+    public void ClickObject(string name){
+        Object obj = m_objectPool.Get(name);
+        if(obj == null) return;
+
+        ObjectCategory category = m_objects.GetCategory(name);
+        string inkName = "object";
+        if(category == ObjectCategory.Consumables){
+            inkName = ((Consumable)obj).category.ToString().ToLower();
+        }
+        DialogueUI.Instance.DisplayClickObject(name, inkName);
+
+        // obj.Use();
+    }
+
+    public bool ObjectModification(List<(string, string, int)> components){
+        string obj = "";
+        string sign = "";
+        int count = 0;
+
+        foreach(var pair in components){
+            obj = pair.Item1;
+            sign = pair.Item2;
+            count = pair.Item3;
+            if(sign == "-" && m_objects.GetCount(obj) < count){
+                Debug.LogWarning("No " + count + " " + obj + " in the backpack, the operatation is refused!");
+                return false;
+            }
+        }
+
+        foreach(var pair in components){
+            obj = pair.Item1;
+            sign = pair.Item2;
+            count = pair.Item3;
+            for(int i = 0; i < count; i++){
+                if(sign == "+") this.AddObject(obj);
+                else if(sign == "-") this.RemoveObject(obj);
+                else Debug.LogWarning("Sign " + sign + " is not recognized!");
+            }
+        }
+
+        return true;
     }
 }

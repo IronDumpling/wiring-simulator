@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CharacterProperties;
+using Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -47,6 +48,8 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
         character.RegisterSkillEvent(SkillType.Speed, SetSkillUI);
         character.RegisterSkillEvent(SkillType.Mind, SetSkillUI);
         character.RegisterSkillEvent(SkillType.Strength, SetSkillUI);
+        
+        GameManager.Instance.RegisterTimeEvent(SetTime);
         // SetCoreUI(CoreType.HP, 30, 100);
         // SetCoreUI(CoreType.SAN, 70, 100);
         //
@@ -84,5 +87,10 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
     {
         var ui = m_skillUI[type];
         ui.text = modifier >= 0 ? $"{plainVal}(+{modifier})" : $"{plainVal}({modifier})";
+    }
+
+    private void SetTime(int time, string timeStr)
+    {
+        // TODO
     }
 }

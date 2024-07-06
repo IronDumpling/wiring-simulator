@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using Core;
+
 public enum CheckLevel{
     trivial,
     easy,

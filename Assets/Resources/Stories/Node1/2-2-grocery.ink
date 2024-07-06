@@ -294,7 +294,7 @@ INCLUDE ../0-global.ink
     
         我没走过线。但要说安全，建议去人多的队伍。#speaker:老板
         也就收费高些、协调麻烦些，但花钱消灾，懂吧？
-        他得意地挥了挥手里的烟。#speaker:
+        他得意地挥了挥手里的烟。#speaker: #Hunger:+2
     
     
     -{translator_you_employ == 0:

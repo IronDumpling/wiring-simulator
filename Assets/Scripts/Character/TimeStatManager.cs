@@ -44,7 +44,7 @@ public class TimeStatManager
 
     public void Update(int newTime)
     {
-        Debug.Assert(newTime >= m_lastRecordedTime, "Time Can rewind!");
+        Debug.Assert(newTime >= m_lastRecordedTime, "Time Can't rewind!");
         if (newTime == m_lastRecordedTime) return;
         
         var deltaTime = newTime - m_lastRecordedTime;
