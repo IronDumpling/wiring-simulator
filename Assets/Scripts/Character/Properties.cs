@@ -331,7 +331,18 @@ namespace CharacterProperties
         public string name => Constants.TIME;
         public PropertyCategory category => PropertyCategory.Time;
 
-        public int currentTime { get; set; }
+        public UnityEvent<int, string> timeOnChanged = new UnityEvent<int, string>();
+        
+        private int m_time;
+        public int currentTime
+        {
+            get => m_time;
+            set
+            {
+                m_time = value;
+                timeOnChanged.Invoke(m_time, ToString());
+            }
+        }
 
 
         public Time()
