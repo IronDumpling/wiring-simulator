@@ -16,6 +16,7 @@ public abstract class Object{
     [SerializeField] private Sprite m_thumbnail;
     [SerializeField] private string m_description = "";
     [SerializeField] private int m_load = 0;
+    [SerializeReference]
     protected List<Effects.ObjectEffect> m_useEffects = new();
     public string name { get { return m_name; } }
     public Sprite thumbnail { get { return m_thumbnail; } }

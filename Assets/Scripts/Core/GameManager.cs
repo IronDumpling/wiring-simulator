@@ -1,5 +1,6 @@
 ﻿using CharacterProperties;
 using UnityEngine;
+using UnityEngine.Events;
 using Time = CharacterProperties.Time;
 
 
@@ -70,6 +71,16 @@ namespace Core
 
         public string GetTimeString(){
             return m_time.ToString();
+        }
+
+        public void RegisterTimeEvent(UnityAction<int, string> act)
+        {
+            m_time.timeOnChanged.AddListener(act);
+        }
+        
+        public void UnRegisterTimeEvent(UnityAction<int, string> act)
+        {
+            m_time.timeOnChanged.RemoveListener(act);
         }
         #endregion
     }
