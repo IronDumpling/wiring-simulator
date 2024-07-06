@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +22,7 @@ namespace Core
         public override void Enter(GameState last)
         {
             _instance = this;
-            SceneManager.LoadScene("map-test");
+            SceneManager.LoadScene("dialogue-test");
             
         }
 
@@ -30,15 +31,32 @@ namespace Core
             _instance = null;
         }
 
-        // Update is called once per frame
         public override void Update()
         {
-        
+            var state = m_gameStateMachine.current;
+
+            if (state != null)
+            {
+                m_gameStateMachine.isLocked = true;
+                state.Update();
+                m_gameStateMachine.isLocked = false;
+            }
         }
 
         public override void LateUpdate()
         {
-            
+            var state = m_gameStateMachine.current;
+            if (state != null)
+            {
+                m_gameStateMachine.isLocked = true;
+                state.LateUpdate();
+                m_gameStateMachine.isLocked = false;
+            }
+        }
+
+        public void NotifySceneFinished()
+        {
+            m_gameStateMachine.next = new NodeState();
         }
     }
 }
