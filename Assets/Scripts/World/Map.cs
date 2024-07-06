@@ -9,6 +9,4 @@ public class Map{
         m_nodes = mapSetUp.nodes;
         m_paths = mapSetUp.paths;
     }
-
-    
 }
