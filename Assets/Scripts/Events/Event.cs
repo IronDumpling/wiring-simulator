@@ -16,8 +16,17 @@ public class Event{
     [SerializeReference] private List<ObjectEffect> m_effects = new();
     [SerializeField] private EventTrigger m_trigger = EventTrigger.Passive;
 
-    public TextAsset ink { get { return m_ink; } }
-    public List<ObjectEffect> effects { get { return m_effects;}}
-    public EventTrigger trigger { get { return m_trigger;}}
+    public TextAsset ink => m_ink;
+    public List<ObjectEffect> effects => m_effects;
+    public EventTrigger trigger => m_trigger;
 
+    
+    
+    public void NotifyFinished()
+    {
+        foreach (var effect in m_effects)
+        {
+            effect.Trigger();
+        }
+    }
 }

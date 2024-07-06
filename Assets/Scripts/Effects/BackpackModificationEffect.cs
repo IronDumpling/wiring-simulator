@@ -18,7 +18,7 @@ namespace Effects
             m_count = count;
         }
         
-        public override void OnTrigger()
+        protected override void OnTrigger()
         {
             if (m_count > 0)
             {
