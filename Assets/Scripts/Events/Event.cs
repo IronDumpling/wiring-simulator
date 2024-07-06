@@ -10,10 +10,11 @@ public enum EventTrigger{
     Passive,
 }
 
+[Serializable]
 public class Event{
-    private TextAsset m_ink;
-    private List<ObjectEffect> m_effects = new();
-    private EventTrigger m_trigger = EventTrigger.Passive;
+    [SerializeField] private TextAsset m_ink;
+    [SerializeReference] private List<ObjectEffect> m_effects = new();
+    [SerializeField] private EventTrigger m_trigger = EventTrigger.Passive;
 
     public TextAsset ink { get { return m_ink; } }
     public List<ObjectEffect> effects { get { return m_effects;}}

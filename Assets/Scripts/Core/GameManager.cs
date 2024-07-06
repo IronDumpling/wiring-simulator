@@ -3,18 +3,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using Time = CharacterProperties.Time;
 
-
 namespace Core
 {
     public class GameManager: MonoSingleton<GameManager>{
         [Header("Initial Data")]
         [SerializeField] private CharacterSetUp m_characterSetUp;
+        [SerializeField] private MapSetUp m_mapSetUp;
         [SerializeField] private ObjectPoolSO m_objectPool;
     
         private Character m_character;
         private Backpack m_backpack;
         private TimeStatManager m_timeStateManager;
         private Time m_time;
+        private Map m_map;
 
         protected override void Init(){
             if(m_characterSetUp == null){
@@ -31,6 +32,7 @@ namespace Core
             m_character = new Character(m_characterSetUp);
             m_backpack = new Backpack(m_characterSetUp, m_objectPool);
             m_timeStateManager = new TimeStatManager(m_character, m_characterSetUp);
+            m_map = new Map(m_mapSetUp);
             m_character.RegisterDynamicTimeEffect(m_timeStateManager);
             m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);
         }

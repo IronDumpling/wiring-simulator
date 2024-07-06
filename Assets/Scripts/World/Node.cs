@@ -10,10 +10,11 @@ public enum NodeStatus{
     Left,
 }
 
+[Serializable]
 public class Node{
-    private NodeStatus m_status = NodeStatus.NotDiscovered;
-    private List<Path> m_paths = new();
-    private List<Event> m_events = new();
+    [SerializeField] private NodeStatus m_status = NodeStatus.NotDiscovered;
+    [SerializeReference] private List<Path> m_paths = new();
+    [SerializeReference] private List<Event> m_events = new();
 
     public Node(NodeStatus status, List<Path> paths, List<Event> events){
         m_status = status;
