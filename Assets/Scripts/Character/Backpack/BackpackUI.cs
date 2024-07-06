@@ -198,6 +198,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
             count.text = objSlot.count.ToString();
 
             VisualElement thumbnail = slot.Q<VisualElement>(name: "thumbnail");
+            if(thumbnail != null)
             thumbnail.style.backgroundImage = new StyleBackground(objSlot.obj.thumbnail?.texture);
             m_slots.Add(slot);
         }
