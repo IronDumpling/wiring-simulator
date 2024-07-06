@@ -36,6 +36,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     [Header("Dialogue")]
     private Story m_currStory;
+    private Event m_currEvent;
+    
     private Coroutine m_displayLine;
     private string m_displaySpeakerName = "";
     private DialogueVar m_dialogueVars;
@@ -84,6 +86,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #endregion
     
     #region Dialogues
+    /// <summary>
+    /// Will GO to private, don't use!
+    /// </summary>
+    /// <param name="inkJSON"></param>
     public void BeginDialogue(TextAsset inkJSON){
         m_currStory = new Story(inkJSON.text);
 
@@ -98,6 +104,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         DisplaySpacer();
         OpenExpandPanel();
         ContinueStory();
+    }
+    
+    public void BeginDialogue(Event evt)
+    {
+        m_currEvent = evt;
+        BeginDialogue(evt.ink);
     }
     
     private void ContinueStory(){
@@ -136,6 +148,9 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_objName = "";
 
         CloseExpandPanel();
+        
+        m_currEvent?.NotifyFinished();
+        m_currEvent = null;
     }
     #endregion
 
