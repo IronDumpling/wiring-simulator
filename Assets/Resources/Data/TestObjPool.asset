@@ -16,14 +16,14 @@ MonoBehaviour:
     tools: []
     clothes: []
     consumables:
-    - m_name: object1
-      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
-      m_description: I like eat dumpling
-      m_load: 10
+    - m_name: Jack
+      m_thumbnail: {fileID: 0}
+      m_description: haha
+      m_load: 3
       m_category: 0
       m_effectParam: 0
     items:
-    - m_name: item2
-      m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
-      m_description: hehhee
-      m_load: 20
+    - m_name: Pantsu
+      m_thumbnail: {fileID: 0}
+      m_description: heheh
+      m_load: 60
