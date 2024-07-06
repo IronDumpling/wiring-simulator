@@ -173,7 +173,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_canGoToNextLine = true;
     }
 
-    private VisualElement DisplayTextArea(string content){
+    public VisualElement DisplayTextArea(string content){
         VisualElement textLine = m_textArea.Instantiate();
         Label label = textLine.Q<Label>();
         label.text = content;
@@ -286,12 +286,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_objName = objName;
         m_title.text = objName;
         m_currStory.variablesState["name"] = objName;
-    }
-    
-    public void DisplayObjectModification(List<ObjectSnapshot> components){
-        bool isAccepted = GameManager.Instance.GetBackpack().ObjectModification(components);
-        if(isAccepted) DisplayTextArea("[操作成功]");
-        else DisplayTextArea("[无法进行此操作]");
     }
 
     #endregion
@@ -553,7 +547,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             if(sign == "+") components.Add(new ObjectSnapshot(obj, count));
             else components.Add(new ObjectSnapshot(obj, -1 * count));
         }
-        DisplayObjectModification(components);
+        
+        GameManager.Instance.GetBackpack().ObjectModification(components);
     }
     #endregion
 }

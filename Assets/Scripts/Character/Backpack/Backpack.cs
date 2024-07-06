@@ -267,7 +267,7 @@ public class Backpack{
         DialogueUI.Instance.DisplayClickObject(name, inkName);
     }
 
-    public bool ObjectModification(List<ObjectSnapshot> components){
+    public void ObjectModification(List<ObjectSnapshot> components){
         string obj = "";
         int count = 0;
 
@@ -275,11 +275,11 @@ public class Backpack{
             obj = pair.name;
             count = pair.count;
             if(count < 0 && m_objects.GetCount(obj) < -1 * count){
-                Debug.LogWarning("No " + count + " " + obj + " in the backpack, the operatation is refused!");
-                return false;
+                DialogueUI.Instance.DisplayTextArea("【无法进行此操作】" + obj + "不足" + -1 * count + "个");
+                return;
             }
         }
-
+        
         foreach(ObjectSnapshot pair in components){
             obj = pair.name;
             count = pair.count;
@@ -287,19 +287,18 @@ public class Backpack{
                 if(count >= 0) this.AddObject(obj);
                 else this.RemoveObject(obj);
             }
+            DialogueUI.Instance.DisplayTextArea("【操作成功】" + pair.SummaryString());
         }
-
-        return true;
     }
 
-    public bool ObjectModification(ObjectSnapshot component){
-        return ObjectModification(new List<ObjectSnapshot>(){
+    public void ObjectModification(ObjectSnapshot component){
+        ObjectModification(new List<ObjectSnapshot>(){
             component
         });
     }
 
-    public bool ObjectModification(string name, int count){
-        return ObjectModification(new List<ObjectSnapshot>(){
+    public void ObjectModification(string name, int count){
+        ObjectModification(new List<ObjectSnapshot>(){
             new(name, count)
         });
     }
