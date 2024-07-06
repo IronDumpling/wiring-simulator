@@ -288,6 +288,12 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_currStory.variablesState["name"] = objName;
     }
     
+    public void DisplayObjectModification(List<ObjectSnapshot> components){
+        bool isAccepted = GameManager.Instance.GetBackpack().ObjectModification(components);
+        if(isAccepted) DisplayTextArea("[操作成功]");
+        else DisplayTextArea("[无法进行此操作]");
+    }
+
     #endregion
     
     #region Logics
@@ -547,10 +553,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             if(sign == "+") components.Add(new ObjectSnapshot(obj, count));
             else components.Add(new ObjectSnapshot(obj, -1 * count));
         }
-
-        bool isAccepted = GameManager.Instance.GetBackpack().ObjectModification(components);
-        if(isAccepted) DisplayTextArea("[操作成功]");
-        else DisplayTextArea("[无法进行此操作]");
+        DisplayObjectModification(components);
     }
     #endregion
 }

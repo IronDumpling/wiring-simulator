@@ -210,11 +210,11 @@ public class Backpack{
                 Debug.LogWarning("Slow down " + m_speedEffect);
                 break;
             case BackpackStatus.BurnHealth:
-                m_timeEffect = GameManager.Instance.GetTimeStat().
-                    AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
-                    GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
-                    Debug.LogWarning("Burn health " + m_hpEffect);
-                });
+                // m_timeEffect = GameManager.Instance.GetTimeStat().
+                    // AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
+                    // GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
+                    // Debug.LogWarning("Burn health " + m_hpEffect);
+                // });
                 break;
             case BackpackStatus.Dead:
                 GameManager.Instance.GetCharacter().SetHP(0);

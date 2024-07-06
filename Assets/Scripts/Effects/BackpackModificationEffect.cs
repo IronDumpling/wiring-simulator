@@ -14,7 +14,7 @@ namespace Effects
         }
 
         protected override void OnTrigger(){
-            GameManager.Instance.GetBackpack().ObjectModification(m_modifications);
+            DialogueUI.Instance.DisplayObjectModification(m_modifications);
         }
 
         public override string EffectDescription(){
