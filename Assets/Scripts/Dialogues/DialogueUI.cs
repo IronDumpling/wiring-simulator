@@ -209,7 +209,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button1.text = "1.-" + currChoices[0].text;
         button1.clicked += () => {
             MakeChoice(currChoices[0], choices);
-            Debug.Log("Use");
             GameManager.Instance.GetBackpack().GetObject(m_objName).Use();
         };
 
