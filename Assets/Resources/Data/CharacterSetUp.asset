@@ -62,7 +62,13 @@ MonoBehaviour:
   - end: 100
     effect: 3
   initialObjects:
-  - m_name: "\u888B\u88C5\u6CE1\u9762"
-    m_count: 4
-  - m_name: "\u5851\u6599\u74F6"
-    m_count: 2
+  - m_name: "\u9762\u5305"
+    m_count: 5
+  - m_name: "\u963F\u83AB\u897F\u6797"
+    m_count: 1
+  - m_name: "\u74F6\u88C5\u6C34"
+    m_count: 5
+  - m_name: "\u7B80\u6613\u7761\u888B"
+    m_count: 1
+  - m_name: "\u77F3\u7070\u5305"
+    m_count: 5

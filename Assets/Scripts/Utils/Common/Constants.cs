@@ -11,7 +11,7 @@ public static class Constants{
     // Backpack
     public const float SLOW_DOWN_THRESHOLD = 0.3f;
     public const float BURN_HELATH_THRESHOLD = 0.5f;
-    public const int STRENGTH_TO_LOAD = 100;
+    public const int STRENGTH_TO_LOAD = 30;
 
     // Time
     public const string DAY = "d";
