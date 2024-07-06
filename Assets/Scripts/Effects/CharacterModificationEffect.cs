@@ -33,7 +33,7 @@ namespace Effects{
             m_modifications = modifications;
         }
         
-        public override void OnTrigger(){
+        protected override void OnTrigger(){
             foreach(CharacterModification pair in m_modifications){
                 CharacterValueType type = pair.type;
                 int delta = pair.delta;
@@ -42,6 +42,15 @@ namespace Effects{
                 else
                     GameManager.Instance.GetCharacter().DecreaseVal(type.ToString(), -1 * delta);
             }
+        }
+
+        public override string EffectDescription(){
+            string result = "";
+            foreach(CharacterModification pair in m_modifications){
+                if(pair.delta > 0) result += "+";
+                result += pair.delta + " " + pair.type.ToString() + "\n";
+            }
+            return result;
         }
 
         public static CharacterModificationEffect CreateEffect(List<CharacterModification> modifications){

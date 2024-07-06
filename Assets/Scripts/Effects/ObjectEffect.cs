@@ -8,6 +8,7 @@
             OnTrigger();
         }
 
-        public abstract void OnTrigger();
+        protected abstract void OnTrigger();
+        public abstract string EffectDescription();
     }
 }

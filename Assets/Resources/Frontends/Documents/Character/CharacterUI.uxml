@@ -9,7 +9,7 @@
                 <ui:Label tabindex="-1" text="SAN" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SANLabel" style="height: 31px; width: 56px;" />
                 <ui:ProgressBar value="33.9" title="55/100" name="SANProgressBar" style="width: 132px; height: 22px;" />
             </ui:VisualElement>
-            <ui:VisualElement style="flex-grow: 1; width: 100%; height: 90%;" />
+            <ui:VisualElement name="time" style="flex-grow: 1; width: 100%; height: 90%;" />
         </ui:VisualElement>
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; width: 33%; height: 100%; top: auto; align-items: stretch; align-self: auto; opacity: 1; justify-content: flex-start; flex-wrap: wrap; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; width: 100%; height: 5%;">

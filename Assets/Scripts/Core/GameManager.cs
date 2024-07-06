@@ -30,9 +30,12 @@ namespace Core
             }
 
             m_time = new Time(m_characterSetUp.startingYear);
+            
             m_character = new Character(m_characterSetUp);
-            m_backpack = new Backpack(m_characterSetUp, m_objectPool);
             m_timeStateManager = new TimeStatManager(m_character, m_characterSetUp);
+            
+            m_backpack = new Backpack(m_characterSetUp, m_objectPool);
+            
             m_map = new Map(m_mapSetUp);
             m_character.RegisterDynamicTimeEffect(m_timeStateManager);
             m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);

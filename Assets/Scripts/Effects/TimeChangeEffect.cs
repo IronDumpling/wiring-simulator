@@ -14,12 +14,17 @@ namespace Effects
             m_deltaTime = deltaTime;
         }
         
-        public override void OnTrigger()
+        protected override void OnTrigger()
         {
             if (m_deltaTime > 0) GameManager.Instance.IncreaseTime(m_deltaTime);
             else GameManager.Instance.DecreaseTime(m_deltaTime);
             
             Debug.Log($"Time Effect: Change {m_deltaTime}");
+        }
+
+        public override string EffectDescription()
+        {
+            return "+" + m_deltaTime + "min\n";
         }
 
         public static TimeChangeEffect CreateEffect(int deltaTime)
