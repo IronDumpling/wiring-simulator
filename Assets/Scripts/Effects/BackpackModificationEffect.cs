@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 namespace Effects
@@ -6,34 +7,33 @@ namespace Effects
     [System.Serializable]
     public class BackpackModificationEffect: ObjectEffect
     {
-        [SerializeField]
-        private string m_name;
-        
-        [SerializeField]
-        private int m_count;
+        [SerializeField] private List<ObjectSnapshot> m_modifications;
 
-        private BackpackModificationEffect(string name, int count)
-        {
-            m_name = name;
-            m_count = count;
+        private BackpackModificationEffect(List<ObjectSnapshot> modifications){
+            m_modifications = modifications;
         }
         
-        public override void OnTrigger()
-        {
-            if (m_count > 0)
-            {
-                for (int i = 0; i < m_count; i++) GameManager.Instance.GetBackpack().AddObject(m_name);
+        public override void OnTrigger(){
+            foreach(ObjectSnapshot pair in m_modifications){
+                string name = pair.name;
+                int count = pair.count;
+                if (count > 0)
+                    for (int i = 0; i < count; i++) GameManager.Instance.GetBackpack().AddObject(name);
+                else
+                    for (int i = 0; i > count; i--) GameManager.Instance.GetBackpack().RemoveObject(name);
             }
-            else
-            {
-                for (int i = 0; i > m_count; i--) GameManager.Instance.GetBackpack().RemoveObject(m_name);
-            }
-            
         }
 
-        public static BackpackModificationEffect CreateEffect(string name, int count)
-        {
-            return new BackpackModificationEffect(name, count);
+        public static BackpackModificationEffect CreateEffect(List<ObjectSnapshot> modifications){
+            return new BackpackModificationEffect(modifications);
+        }
+
+        public static BackpackModificationEffect CreateEffect(string name, int count){
+            ObjectSnapshot modification = new ObjectSnapshot(name, count);
+            List<ObjectSnapshot> modifications = new(){
+                modification
+            };
+            return new BackpackModificationEffect(modifications);
         }
     }
 }
