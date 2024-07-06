@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DialogueTriggers : MonoBehaviour{
+public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     [Header("UI")]
     [SerializeField] private UIDocument doc;
     private VisualElement root;
@@ -12,19 +12,26 @@ public class DialogueTriggers : MonoBehaviour{
     private VisualTreeAsset m_button;
 
     [Header("Stories")]
-    [SerializeField] private List<TextAsset> texts;
+    private List<TextAsset> m_texts;
 
     void Awake(){
         m_button = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton");
     }
-    
-    void Start(){
+
+    public void DisplayNode(List<TextAsset> events){
+        m_texts = events;
+        root.style.display = DisplayStyle.Flex;
         InitButtons();
         DisplayButtons();
     }
 
+    public void UnDisplayNode(){
+        root = doc.rootVisualElement;
+        root.style.display = DisplayStyle.None;
+    }
+
     void InitButtons(){
-        foreach(TextAsset txt in texts){
+        foreach(TextAsset txt in m_texts){
             Button button = m_button.Instantiate().Q<Button>();
             Length width = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
             button.style.width = new StyleLength(width);

@@ -1,11 +1,13 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using Core;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
 using DG.Tweening;
+
+using Core;
 
 public class BackpackUI : MonoSingleton<BackpackUI>{
     [Header("UI")]
