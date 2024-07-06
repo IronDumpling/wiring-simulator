@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace Effects
 {
+    [System.Serializable]
     public class TimeChangeEffect: ObjectEffect
-    {
+    {   
+        [SerializeField]
         private int m_deltaTime;
-
+    
         private TimeChangeEffect(int deltaTime)
         {
             m_deltaTime = deltaTime;

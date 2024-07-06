@@ -1,5 +1,6 @@
 ﻿namespace Effects
 {   
+    [System.Serializable]
     public abstract class ObjectEffect
     {
         public void Trigger()

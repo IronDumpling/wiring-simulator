@@ -1,9 +1,15 @@
-﻿namespace Effects
+﻿using Core;
+using UnityEngine;
+
+namespace Effects
 {
+    [System.Serializable]
     public class BackpackModificationEffect: ObjectEffect
     {
+        [SerializeField]
         private string m_name;
-
+        
+        [SerializeField]
         private int m_count;
 
         private BackpackModificationEffect(string name, int count)
