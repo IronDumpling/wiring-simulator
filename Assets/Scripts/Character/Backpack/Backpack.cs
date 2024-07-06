@@ -36,7 +36,9 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
     public int GetLoad(){
         int load = 0;
         foreach(var kvp in this){
-            load += kvp.Value.obj.load;
+            for(int i = 0; i < kvp.Value.count; i++){
+                load += kvp.Value.obj.load;
+            }
         }
         return load;
     }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -215,7 +214,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button2.text = "2.-" + currChoices[1].text;
         button2.clicked += () => {
             MakeChoice(currChoices[1], choices);
-            Debug.Log("Remove");
             GameManager.Instance.GetBackpack().RemoveObject(m_objName);
         };
         
@@ -223,7 +221,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button3.text = "3.-" + currChoices[2].text;
         button3.clicked += () => {
             MakeChoice(currChoices[2], choices);
-            Debug.Log("Do nothing");
         };   
     }
 
