@@ -27,7 +27,7 @@ public class ObjectDict : Dictionary<string, ObjectSlot>{
         if(base.ContainsKey(obj.name)){
             this[obj.name].RemoveObject(1);
             if(this[obj.name].count <= 0)
-                this.Remove(obj.name);
+                base.Remove(obj.name);
         }else{
             Debug.LogWarning("Can't be removed, " + obj.name + " doesn't exist in backpack!");
         }
@@ -115,6 +115,7 @@ public class ObjectDicts{
 
     #region Set
     public void Add(Object obj){
+        
         if(obj is Tool tool) tools.Add(tool);
         else if(obj is Clothes clothes1) clothes.Add(clothes1);
         else if(obj is Consumable consumable) consumables.Add(consumable);
@@ -210,11 +211,11 @@ public class Backpack{
                 Debug.LogWarning("Slow down " + m_speedEffect);
                 break;
             case BackpackStatus.BurnHealth:
-                // m_timeEffect = GameManager.Instance.GetTimeStat().
-                    // AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
-                    // GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
-                    // Debug.LogWarning("Burn health " + m_hpEffect);
-                // });
+                m_timeEffect = GameManager.Instance.GetTimeStat().
+                    AddTimeEffect(-1, Constants.TIME_UNIT, (int t) => {
+                    GameManager.Instance.GetCharacter().DecreaseHP(m_hpEffect);
+                    Debug.LogWarning("Burn health " + m_hpEffect);
+                });
                 break;
             case BackpackStatus.Dead:
                 GameManager.Instance.GetCharacter().SetHP(0);
@@ -247,7 +248,7 @@ public class Backpack{
     private void RemoveObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
-
+        
         m_objects.Remove(obj);
         RemoveCurrLoad(obj.load);
         CalculateStatus();
@@ -279,14 +280,17 @@ public class Backpack{
                 return;
             }
         }
-        
+
         foreach(ObjectSnapshot pair in components){
             obj = pair.name;
             count = pair.count;
-            for(int i = 0; i < count; i++){
-                if(count >= 0) this.AddObject(obj);
-                else this.RemoveObject(obj);
-            }
+            if(count >= 0) 
+                for(int i = 0; i < count; i++)
+                    this.AddObject(obj);
+            else
+                for(int i = count; i < 0; i++)
+                    this.RemoveObject(obj);
+                
             DialogueUI.Instance.DisplayTextArea("【操作成功】" + pair.SummaryString());
         }
     }

@@ -51,6 +51,6 @@ public class ObjectSlot{
 
     public void RemoveObject(int num){
         m_count -= num;
-        if(m_count < 0) m_count = 0; 
+        if(m_count < 0) m_count = 0;
     }
 }
