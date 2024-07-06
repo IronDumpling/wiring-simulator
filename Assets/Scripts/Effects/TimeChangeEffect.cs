@@ -18,8 +18,6 @@ namespace Effects
         {
             if (m_deltaTime > 0) GameManager.Instance.IncreaseTime(m_deltaTime);
             else GameManager.Instance.DecreaseTime(m_deltaTime);
-            
-            Debug.Log($"Time Effect: Change {m_deltaTime}");
         }
 
         public override string EffectDescription()

@@ -995,7 +995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifications:
   - m_type: 2
-    m_delta: 15
+    m_delta: 10
 --- !u!114 &1614446798
 MonoBehaviour:
   m_ObjectHideFlags: 0

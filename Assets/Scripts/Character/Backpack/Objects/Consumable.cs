@@ -18,16 +18,29 @@ public class Consumable : Object{
     public static Consumable Init(ConsumableCategory category, List<Effects.ObjectEffect> newEffects, 
         string newName, Sprite newThumbnail, string newDescription, int newLoad)
     {
-        var newConsumable = new Consumable();
-        newConsumable.m_category = category;
+        var newConsumable = new Consumable{
+            m_category = category
+        };
+
+        bool hasBEffect = false;
+        foreach (ObjectEffect eft in newEffects){
+            if (eft is BackpackModificationEffect bEft){
+                bEft.AddEffect(newName, -1);
+                hasBEffect = true;
+                break;
+            }
+        }
+
+        if(!hasBEffect)
+            newEffects.Add(BackpackModificationEffect.CreateEffect(newName, -1));
         
         ((Object) newConsumable).Init(newName, newThumbnail, newDescription, newLoad, newEffects);
+
         return newConsumable;
     }
 
     protected override void OnUse()
     {
-        var removeEffect = BackpackModificationEffect.CreateEffect(this.name, -1);
-        removeEffect.Trigger();
+
     }
 }

@@ -96,6 +96,7 @@ namespace Core
         public void RegisterTimeEvent(UnityAction<int, string> act)
         {
             m_time.timeOnChanged.AddListener(act);
+            m_time.timeOnChanged.Invoke(m_time.currentTime, m_time.ToString());
         }
         
         public void UnRegisterTimeEvent(UnityAction<int, string> act)

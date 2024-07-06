@@ -17,6 +17,14 @@ namespace Effects
             GameManager.Instance.GetBackpack().ObjectModification(m_modifications);
         }
 
+        public void AddEffect(string name, int count){
+            m_modifications.Add(new ObjectSnapshot(name, count));
+        }
+
+        public List<ObjectSnapshot> GetEffects(){
+            return m_modifications;
+        }
+
         public override string EffectDescription(){
             string result = "";
             foreach(ObjectSnapshot pair in m_modifications){
