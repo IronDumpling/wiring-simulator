@@ -110,7 +110,14 @@ namespace CharacterProperties
             RegisterDynamicSkillEvent(DynamicType.Thirst, SkillType.Speed);
             RegisterDynamicSkillEvent(DynamicType.Illness, SkillType.Speed);
             #endregion
-
+            
+            #region OtherSkillModifier
+            m_otherSkillModifier.Add(SkillType.Intelligent, 0);
+            m_otherSkillModifier.Add(SkillType.Strength, 0);
+            m_otherSkillModifier.Add(SkillType.Mind, 0);
+            m_otherSkillModifier.Add(SkillType.Speed, 0);
+            #endregion
+            
             m_globalSideEffect = new List<SideEffectBlock>(setup.globalSkillSideEffect);
             m_globalSideEffect.Sort();
 
