@@ -9,10 +9,9 @@ namespace Core
 
         public override void Enter(SubState last)
         {
-            Debug.Log("Hello");
+
             GameOverUI.Instance.gameObject.SetActive(true);
             
-            Debug.Log(GameOverUI.Instance.gameObject.activeSelf);
             // To Do: Set Map to false
         }
 

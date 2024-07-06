@@ -4,6 +4,7 @@ namespace Core
 {
     public class NodeState: SubState
     {
+        private Node m_currentNode;
         
         private StateMachine<ActionState> m_actionState = new StateMachine<ActionState>();
 
@@ -11,7 +12,11 @@ namespace Core
 
         public ActionState nextAction
         {
-            set => m_actionState.next = value;
+            set
+            {
+                m_actionState.next = value;
+                value.SetParent(this);
+            }
         }
 
         public override SubStateType type => SubStateType.NodeState;
@@ -20,10 +25,11 @@ namespace Core
         {
             DialogueUI.Instance.gameObject.SetActive(true);
             BackpackUI.Instance.gameObject.SetActive(true);
-            CharacterPropertiesUI.Instance.gameObject.SetActive(true);
             DialogueTriggers.Instance.gameObject.SetActive(true);
-            GameOverUI.Instance.gameObject.SetActive(false);
             
+            CharacterPropertiesUI.Instance.gameObject.SetActive(true);
+            GameOverUI.Instance.gameObject.SetActive(false);
+
             
         }
 
