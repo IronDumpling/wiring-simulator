@@ -12,14 +12,17 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     private VisualTreeAsset m_button;
 
     [Header("Stories")]
-    private List<TextAsset> m_texts;
+    private List<TextAsset> m_texts = new();
 
     void Awake(){
         m_button = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton");
     }
 
-    public void DisplayNode(List<TextAsset> events){
-        m_texts = events;
+    public void DisplayNode(List<Event> events){
+        m_texts.Clear();
+        foreach(Event evt in events){
+            m_texts.Add(evt.ink);
+        }
         root.style.display = DisplayStyle.Flex;
         InitButtons();
         DisplayButtons();

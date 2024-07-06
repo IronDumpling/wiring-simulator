@@ -21,7 +21,7 @@ namespace Core
         public override void Enter(GameState last)
         {
             _instance = this;
-            SceneManager.LoadScene("map-test");
+            SceneManager.LoadScene(Constants.LEVEL1);
             
         }
 

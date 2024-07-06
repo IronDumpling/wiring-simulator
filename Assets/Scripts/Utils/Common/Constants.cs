@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 
 public static class Constants{
+    // scene
+    public const string LEVEL1 = "dialogue-test";
+    
     // dialogue
     public const string CONTINUE = "继续";
     public const string LEAVE = "离开";

@@ -91,6 +91,6 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
 
     private void SetTime(int time, string timeStr)
     {
-        // To DO;
+        // TODO
     }
 }

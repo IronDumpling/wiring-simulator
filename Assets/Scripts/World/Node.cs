@@ -3,20 +3,25 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class Node{
-    private bool m_isDiscovered = false;
-    private bool m_isUnLocked = false;
-    private List<Path> m_paths = new();
-    private List<TextAsset> m_events = new();
+public enum NodeStatus{
+    NotDiscovered,
+    Discovered,
+    Arrived,
+    Left,
+}
 
-    public Node(bool isDiscovered, bool isUnLocked, List<Path> paths, List<TextAsset> events){
-        m_isDiscovered = isDiscovered;
-        m_isUnLocked = isUnLocked;
+public class Node{
+    private NodeStatus m_status = NodeStatus.NotDiscovered;
+    private List<Path> m_paths = new();
+    private List<Event> m_events = new();
+
+    public Node(NodeStatus status, List<Path> paths, List<Event> events){
+        m_status = status;
         m_paths = paths;
         m_events = events;
     }
 
-    public Node(List<Path> paths, List<TextAsset> events){
+    public Node(List<Path> paths, List<Event> events){
         m_paths = paths;
         m_events = events;
     }
