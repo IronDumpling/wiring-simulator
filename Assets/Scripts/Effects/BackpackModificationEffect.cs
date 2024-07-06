@@ -1,6 +1,4 @@
-﻿using Core;
-
-namespace Effects
+﻿namespace Effects
 {
     public class BackpackModificationEffect: ObjectEffect
     {
