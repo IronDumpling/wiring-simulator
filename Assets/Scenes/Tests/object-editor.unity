@@ -279,10 +279,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1945262744}
-  - {fileID: 1227101178}
   - {fileID: 1285555444}
   - {fileID: 1733693011}
+  - {fileID: 1227101178}
+  - {fileID: 1945262744}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2086915364
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a932d7569fc2b048abcabd427af2fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPoolSO: {fileID: 11400000, guid: 60dc4fafad7b65a46b59e80d296417d3, type: 2}
+  objectPoolSO: {fileID: 11400000, guid: 06ee53fe398e14cb3920bf96c1b8ecbb, type: 2}
 --- !u!1001 &164953872654086739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -311,12 +311,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1338428317198349520, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
+      propertyPath: thumbnail
+      value: 
+      objectReference: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
+    - target: {fileID: 1338428317198349520, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
       propertyPath: objectName
-      value: Jack
+      value: "\u888B\u88C5\u6CE1\u9762"
       objectReference: {fileID: 0}
     - target: {fileID: 1338428317198349520, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
       propertyPath: description
-      value: haha
+      value: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\uFF0C\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u7684\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\uFF0C\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 5466924677181838725, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
       propertyPath: m_LocalPosition.x
@@ -368,9 +372,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6878410160986066915, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 164953872654086743}
-    - targetCorrespondingSourceObject: {fileID: 6878410160986066915, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 164953872654086742}
   m_SourcePrefab: {fileID: 100100000, guid: 0f09a42d723a80a4fb85cc5605d9e551, type: 3}
 --- !u!4 &164953872654086740 stripped
@@ -395,21 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2caf714f15140b429ce8de3a349f5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeModification: 40
---- !u!114 &164953872654086743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 164953872654086741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1d3d62ddabc4449baa2fc01d99bd38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectName: Pantsu
-  modification: 1
+  timeModification: 30
 --- !u!1001 &7490350016840322556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,15 +451,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637886143859071397, guid: 48b5026b6a82f914a95c28bc74995f25, type: 3}
       propertyPath: load
-      value: 60
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8637886143859071397, guid: 48b5026b6a82f914a95c28bc74995f25, type: 3}
+      propertyPath: thumbnail
+      value: 
+      objectReference: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
+    - target: {fileID: 8637886143859071397, guid: 48b5026b6a82f914a95c28bc74995f25, type: 3}
       propertyPath: objectName
-      value: Pantsu
+      value: "\u5851\u6599\u74F6"
       objectReference: {fileID: 0}
     - target: {fileID: 8637886143859071397, guid: 48b5026b6a82f914a95c28bc74995f25, type: 3}
       propertyPath: description
-      value: heheh
+      value: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u6BD4\u5982\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

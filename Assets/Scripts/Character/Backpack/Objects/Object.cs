@@ -16,7 +16,7 @@ public abstract class Object{
     [SerializeField] private Sprite m_thumbnail;
     [SerializeField] private string m_description = "";
     [SerializeField] private int m_load = 0;
-    protected List<Effects.ObjectEffect> m_useEffects;
+    protected List<Effects.ObjectEffect> m_useEffects = new();
     public string name { get { return m_name; } }
     public Sprite thumbnail { get { return m_thumbnail; } }
     public string description { get { return m_description; } }
@@ -40,6 +40,7 @@ public abstract class Object{
     {
         return m_useEffects;
     }
+
     public void Use()
     {
         foreach (var effect in m_useEffects)

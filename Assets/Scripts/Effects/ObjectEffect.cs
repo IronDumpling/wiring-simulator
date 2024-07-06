@@ -1,7 +1,5 @@
-﻿using Unity.VisualScripting;
-
-namespace Effects
-{
+﻿namespace Effects
+{   
     public abstract class ObjectEffect
     {
         public void Trigger()

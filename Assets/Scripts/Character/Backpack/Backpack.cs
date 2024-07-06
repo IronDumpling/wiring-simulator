@@ -57,7 +57,7 @@ public class ObjectDicts{
     public ObjectDicts(List<ObjectSnapshot> initObjs, ObjectPool allObjs){
         for(int i = 0; i < initObjs.Count; i++){
             for(int j = 0; j < initObjs[i].count; j++){
-                var obj = allObjs.Get(initObjs[i].name) as Object;
+                Object obj = allObjs.Get(initObjs[i].name);
                 this.Add(obj);
             }
         }
@@ -190,8 +190,8 @@ public class Backpack{
             newStatus = BackpackStatus.BurnHealth;
         else
             newStatus = BackpackStatus.Dead;
-            
-        if(m_status != newStatus) BackpackEffect(status);
+        
+        if(m_status != newStatus) BackpackEffect(newStatus);
         m_status = newStatus;
     }
 
