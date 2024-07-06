@@ -9,5 +9,6 @@
         }
 
         public abstract void OnTrigger();
+        public abstract string EffectDescription();
     }
 }

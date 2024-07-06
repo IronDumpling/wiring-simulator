@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using Effects;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,12 +16,13 @@ public abstract class Object{
     [SerializeField] private Sprite m_thumbnail;
     [SerializeField] private string m_description = "";
     [SerializeField] private int m_load = 0;
-    [SerializeReference]
-    protected List<Effects.ObjectEffect> m_useEffects = new();
+    [SerializeReference] protected List<Effects.ObjectEffect> m_useEffects = new();
+    private string m_effect = "";
     public string name { get { return m_name; } }
     public Sprite thumbnail { get { return m_thumbnail; } }
     public string description { get { return m_description; } }
     public int load { get { return m_load;}}
+    public string effect { get { return m_effect;}}
 
     public void Init(string newName, Sprite newThumbnail, string newDescription, int newLoad, List<Effects.ObjectEffect> newEffects)
     {
@@ -30,6 +31,9 @@ public abstract class Object{
         m_description = newDescription;
         m_load = newLoad;
         m_useEffects = new List<Effects.ObjectEffect>(newEffects);
+        foreach(Effects.ObjectEffect eft in m_useEffects){
+            m_effect += eft.EffectDescription();
+        }
     }
     
     
@@ -52,7 +56,5 @@ public abstract class Object{
         OnUse();
     }
 
-    protected virtual void OnUse()
-    {
-    }
+    protected virtual void OnUse(){}
 }
