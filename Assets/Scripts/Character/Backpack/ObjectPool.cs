@@ -14,10 +14,6 @@ public class ObjectPool{
     public Object Get(string name){
         Object obj = null;
 
-        foreach(Consumable con in consumables){
-            Debug.LogWarning("Length in pool " + con.name + " " + con.GetEffects().Count);
-        }
-
         obj = tools.FirstOrDefault(tool => tool.name == name);
         if(obj != null) return obj;
         obj = clothes.FirstOrDefault(cloth => cloth.name == name);

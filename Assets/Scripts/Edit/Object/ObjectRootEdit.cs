@@ -31,9 +31,6 @@ namespace Edit.Object
             
             UnityEditor.EditorUtility.SetDirty(objectPoolSO);
             
-            foreach(Consumable con in objectPoolSO.objects.consumables){
-                Debug.LogWarning("Length in root " + con.name + " " + con.GetEffects().Count);
-            }
             Debug.Log("Save Asset");
         }
     }

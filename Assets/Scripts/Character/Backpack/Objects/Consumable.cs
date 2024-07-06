@@ -28,7 +28,6 @@ public class Consumable : Object{
     protected override void OnUse()
     {
         var removeEffect = BackpackModificationEffect.CreateEffect(this.name, -1);
-        
         removeEffect.Trigger();
     }
 }
