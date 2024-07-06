@@ -50,7 +50,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_image = m_root.Q<VisualElement>(name: "image");
         m_name = m_root.Q<Label>(name: "name");
         m_effect = m_root.Q<Label>(name: "effect");
-        m_description = m_root.Q<Label>(name: "description-content");
+        m_description = m_root.Q<Label>(name: "description");
         
         m_categories = m_root.Q<VisualElement>(name: "categories");
         m_slots = m_root.Q<ScrollView>(name: "slots");
@@ -133,7 +133,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_card.style.visibility = Visibility.Visible;
         m_image.style.backgroundImage = new StyleBackground(obj.thumbnail.texture);
         m_name.text = obj.name;
-        // m_effect.text = ;
+        m_effect.text = obj.effect;
         m_description.text = obj.description;
     }
     #endregion

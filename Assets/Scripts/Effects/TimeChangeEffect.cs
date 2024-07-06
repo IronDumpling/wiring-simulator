@@ -22,6 +22,11 @@ namespace Effects
             Debug.Log($"Time Effect: Change {m_deltaTime}");
         }
 
+        public override string EffectDescription()
+        {
+            return "+" + m_deltaTime + "min\n";
+        }
+
         public static TimeChangeEffect CreateEffect(int deltaTime)
         {
             return new TimeChangeEffect(deltaTime);

@@ -24,6 +24,15 @@ namespace Effects
             }
         }
 
+        public override string EffectDescription(){
+            string result = "";
+            foreach(ObjectSnapshot pair in m_modifications){
+                if(pair.count > 0) result += "+";
+                result += pair.count + " " + pair.name + "\n";
+            }
+            return result;
+        }
+
         public static BackpackModificationEffect CreateEffect(List<ObjectSnapshot> modifications){
             return new BackpackModificationEffect(modifications);
         }

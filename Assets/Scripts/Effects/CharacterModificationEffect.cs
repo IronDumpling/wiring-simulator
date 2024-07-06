@@ -44,6 +44,15 @@ namespace Effects{
             }
         }
 
+        public override string EffectDescription(){
+            string result = "";
+            foreach(CharacterModification pair in m_modifications){
+                if(pair.delta > 0) result += "+";
+                result += pair.delta + " " + pair.type.ToString() + "\n";
+            }
+            return result;
+        }
+
         public static CharacterModificationEffect CreateEffect(List<CharacterModification> modifications){
             return new CharacterModificationEffect(modifications);
         }
