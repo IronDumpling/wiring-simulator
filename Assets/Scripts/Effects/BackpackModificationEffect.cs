@@ -12,8 +12,8 @@ namespace Effects
         private BackpackModificationEffect(List<ObjectSnapshot> modifications){
             m_modifications = modifications;
         }
-        
-        public override void OnTrigger(){
+
+        protected override void OnTrigger(){
             foreach(ObjectSnapshot pair in m_modifications){
                 string name = pair.name;
                 int count = pair.count;

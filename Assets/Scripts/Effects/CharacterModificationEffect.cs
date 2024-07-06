@@ -33,7 +33,7 @@ namespace Effects{
             m_modifications = modifications;
         }
         
-        public override void OnTrigger(){
+        protected override void OnTrigger(){
             foreach(CharacterModification pair in m_modifications){
                 CharacterValueType type = pair.type;
                 int delta = pair.delta;

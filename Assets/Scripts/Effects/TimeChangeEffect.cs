@@ -14,7 +14,7 @@ namespace Effects
             m_deltaTime = deltaTime;
         }
         
-        public override void OnTrigger()
+        protected override void OnTrigger()
         {
             if (m_deltaTime > 0) GameManager.Instance.IncreaseTime(m_deltaTime);
             else GameManager.Instance.DecreaseTime(m_deltaTime);
