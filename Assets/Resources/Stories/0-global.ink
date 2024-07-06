@@ -77,6 +77,9 @@ VAR meet_shen_2 = false
 VAR know_the_sleep_skill_1 = false
 VAR know_the_rob = false
 
+//Node 0 的初始参数
+
+VAR hit_point_1 = 0
 
 
 

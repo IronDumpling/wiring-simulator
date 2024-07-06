@@ -19,6 +19,13 @@ public class ObjectSnapshot{
         m_name = name;
         m_count = count;
     }
+
+    public string SummaryString(){
+        string result = "";
+        if(m_count > 0) result += "+";
+        result += m_count + "*" + m_name;
+        return result;
+    }
 }
 
 public class ObjectSlot{
@@ -44,6 +51,6 @@ public class ObjectSlot{
 
     public void RemoveObject(int num){
         m_count -= num;
-        if(m_count < 0) m_count = 0; 
+        if(m_count < 0) m_count = 0;
     }
 }
