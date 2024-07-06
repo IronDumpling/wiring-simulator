@@ -30,6 +30,7 @@ public abstract class Object{
         m_thumbnail = newThumbnail;
         m_description = newDescription;
         m_load = newLoad;
+        
         m_useEffects = new List<Effects.ObjectEffect>(newEffects);
         foreach(Effects.ObjectEffect eft in m_useEffects){
             m_effect += eft.EffectDescription();
