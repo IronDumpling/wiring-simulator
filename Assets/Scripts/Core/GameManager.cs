@@ -1,4 +1,5 @@
-﻿using CharacterProperties;
+﻿using System;
+using CharacterProperties;
 using UnityEngine;
 using UnityEngine.Events;
 using Time = CharacterProperties.Time;
@@ -35,10 +36,24 @@ namespace Core
             m_map = new Map(m_mapSetUp);
             m_character.RegisterDynamicTimeEffect(m_timeStateManager);
             m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);
+            
+            
+        }
+
+        private void Start()
+        {
+            WorldState.instance.NotifySceneFinished();
         }
 
         private void Update(){
             m_timeStateManager.Update(GetTime());
+            
+            // Change that to a event
+            if (WorldState.instance.currentState.type != SubStateType.GameOverState &&
+                (GetCharacter().GetHP() <= 0 || GetCharacter().GetSAN() <= 0))
+            {
+                WorldState.instance.nextState = new GameOverState();
+            }
         }
 
         public Character GetCharacter(){

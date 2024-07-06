@@ -20,9 +20,19 @@ MonoBehaviour:
       m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
       m_description: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\uFF0C\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u7684\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\uFF0C\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
       m_load: 3
+      m_useEffects:
+      - rid: 8366252284044902400
       m_category: 0
     items:
     - m_name: "\u5851\u6599\u74F6"
       m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
       m_description: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u6BD4\u5982\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
       m_load: 12
+      m_useEffects: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8366252284044902400
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 30
