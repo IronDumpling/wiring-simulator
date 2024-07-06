@@ -11,7 +11,7 @@ namespace Edit.Object
         public Consumable CreateConsumable()
         {
             var effects = CreateEffects();
-            return Consumable.Init(category, effects, name, thumbnail, description, load);
+            return Consumable.Init(category, effects, objectName, thumbnail, description, load);
         }
     }
 }

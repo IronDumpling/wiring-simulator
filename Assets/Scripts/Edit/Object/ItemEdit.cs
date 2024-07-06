@@ -10,7 +10,7 @@ namespace Edit.Object
         public Item CreateItem()
         {
             var effects = CreateEffects();
-            return Item.Init(category, effects, name, thumbnail, description, load);
+            return Item.Init(category, effects, objectName, thumbnail, description, load);
         }
     }
 }
