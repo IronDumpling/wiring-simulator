@@ -14,14 +14,7 @@ namespace Effects
         }
 
         protected override void OnTrigger(){
-            foreach(ObjectSnapshot pair in m_modifications){
-                string name = pair.name;
-                int count = pair.count;
-                if (count > 0)
-                    for (int i = 0; i < count; i++) GameManager.Instance.GetBackpack().AddObject(name);
-                else
-                    for (int i = 0; i > count; i--) GameManager.Instance.GetBackpack().RemoveObject(name);
-            }
+            GameManager.Instance.GetBackpack().ObjectModification(m_modifications);
         }
 
         public override string EffectDescription(){

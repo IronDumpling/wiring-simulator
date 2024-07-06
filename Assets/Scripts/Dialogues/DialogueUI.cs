@@ -216,7 +216,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         button2.text = "2.-" + currChoices[1].text;
         button2.clicked += () => {
             MakeChoice(currChoices[1], choices);
-            GameManager.Instance.GetBackpack().RemoveObject(m_objName);
+            GameManager.Instance.GetBackpack().ObjectModification(m_objName, -1);
         };
         
         Button button3 = choices[2].Q<Button>();
@@ -516,7 +516,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         string[] subStrings = value.Split(new char[] { '+', '-' }, 
                                         StringSplitOptions.RemoveEmptyEntries);
         
-        List<(string, string, int)> components = new();
+        List<ObjectSnapshot> components = new();
         foreach(string subString in subStrings){
             string sign = "+";
             if (value.IndexOf(subString) > 0){
@@ -529,7 +529,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             int count = 1;
             if(tokens.Length > 1 && int.TryParse(tokens[1], out count)){}
 
-            components.Add((obj, sign, count));
+            if(sign == "+") components.Add(new ObjectSnapshot(obj, count));
+            else components.Add(new ObjectSnapshot(obj, -1 * count));
         }
 
         bool isAccepted = GameManager.Instance.GetBackpack().ObjectModification(components);

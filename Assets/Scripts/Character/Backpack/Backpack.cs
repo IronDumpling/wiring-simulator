@@ -233,7 +233,7 @@ public class Backpack{
     // TODO: Write functions to allow others register and unregister add & remove events
     // three subscribers: status, load, ui refresh
 
-    public void AddObject(string name){
+    private void AddObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
 
@@ -244,7 +244,7 @@ public class Backpack{
         BackpackUI.Instance.UpdateCurrCategory(obj);
     }
 
-    public void RemoveObject(string name){
+    private void RemoveObject(string name){
         Object obj = m_objectPool.Get(name);
         if(obj == null) return;
 
@@ -265,36 +265,42 @@ public class Backpack{
             inkName = ((Consumable)obj).category.ToString().ToLower();
         }
         DialogueUI.Instance.DisplayClickObject(name, inkName);
-
-        // obj.Use();
     }
 
-    public bool ObjectModification(List<(string, string, int)> components){
+    public bool ObjectModification(List<ObjectSnapshot> components){
         string obj = "";
-        string sign = "";
         int count = 0;
 
-        foreach(var pair in components){
-            obj = pair.Item1;
-            sign = pair.Item2;
-            count = pair.Item3;
-            if(sign == "-" && m_objects.GetCount(obj) < count){
+        foreach(ObjectSnapshot pair in components){
+            obj = pair.name;
+            count = pair.count;
+            if(count < 0 && m_objects.GetCount(obj) < -1 * count){
                 Debug.LogWarning("No " + count + " " + obj + " in the backpack, the operatation is refused!");
                 return false;
             }
         }
 
-        foreach(var pair in components){
-            obj = pair.Item1;
-            sign = pair.Item2;
-            count = pair.Item3;
+        foreach(ObjectSnapshot pair in components){
+            obj = pair.name;
+            count = pair.count;
             for(int i = 0; i < count; i++){
-                if(sign == "+") this.AddObject(obj);
-                else if(sign == "-") this.RemoveObject(obj);
-                else Debug.LogWarning("Sign " + sign + " is not recognized!");
+                if(count >= 0) this.AddObject(obj);
+                else this.RemoveObject(obj);
             }
         }
 
         return true;
+    }
+
+    public bool ObjectModification(ObjectSnapshot component){
+        return ObjectModification(new List<ObjectSnapshot>(){
+            component
+        });
+    }
+
+    public bool ObjectModification(string name, int count){
+        return ObjectModification(new List<ObjectSnapshot>(){
+            new(name, count)
+        });
     }
 }
