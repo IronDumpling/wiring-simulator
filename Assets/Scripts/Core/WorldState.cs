@@ -13,17 +13,17 @@ namespace Core
         private StateMachine<SubState> m_gameStateMachine = new StateMachine<SubState>();
 
         public SubState currentState => m_gameStateMachine.current;
-        
+
         public SubState nextState
         {
             set => m_gameStateMachine.next = value;
         }
-        
+
         public override void Enter(GameState last)
         {
             _instance = this;
-            SceneManager.LoadScene("dialogue-test");
-            
+            SceneManager.LoadScene(Constants.LEVEL1);
+
         }
 
         public override void Exit()

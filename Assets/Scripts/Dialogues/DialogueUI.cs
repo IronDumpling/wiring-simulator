@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
 using Ink.Runtime;
 using DG.Tweening;
+
+using Core;
 
 public class DialogueUI : MonoSingleton<DialogueUI>{
     [Header("UI")]
