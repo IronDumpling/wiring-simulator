@@ -29,8 +29,6 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
         InitDepartureButton();
         DisplayButtons();
     }
-    
-    
 
     public void OpenPanel(){
         root.style.display = DisplayStyle.Flex;
