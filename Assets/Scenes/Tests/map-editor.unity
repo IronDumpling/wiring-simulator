@@ -1273,7 +1273,7 @@ PrefabInstance:
     - target: {fileID: 2916243009414504075, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: ink
       value: 
-      objectReference: {fileID: 4900000, guid: 808907ad3357349d6b1a70fe2052e5d1, type: 3}
+      objectReference: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
     - target: {fileID: 3862626615023558952, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: m_Name
       value: Node 0

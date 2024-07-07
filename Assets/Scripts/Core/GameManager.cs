@@ -162,8 +162,8 @@ namespace Core
 
             if (cur.type == SubStateType.NodeState)
             {
-                // To DO
-
+                var nodeState = cur as NodeState;
+                nodeState.nextAction = new MapSelectionState(m_map.currNodeIdx);    
             }
         }
 
