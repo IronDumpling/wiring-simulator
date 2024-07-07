@@ -24,6 +24,11 @@ namespace Core
             }
         }
 
+        public PathState(int idx)
+        {
+            m_pathIdx = idx;
+        }
+
         public override void Enter(SubState last)
         {
             Debug.Log("Enter Path State");
