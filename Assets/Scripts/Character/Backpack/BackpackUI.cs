@@ -1,11 +1,8 @@
 using System;
 using System.Reflection;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UIElements;
-
-using DG.Tweening;
 
 using Core;
 
@@ -68,7 +65,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         DisplayOneCategory(ObjectCategory.Tools);
         DisplayLoad();
         DisplayStatus();
-        OpenPanel();
+        OpenPanel(); // TODO ClosePanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
     }

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="panel" style="flex-grow: 1; flex-direction: row; background-image: resource(&apos;Arts/Images/Tests/cover&apos;);">
+        <ui:VisualElement name="menu" style="flex-grow: 1; width: 30%; font-size: 50px; color: rgb(255, 255, 255); justify-content: center; background-color: rgba(128, 128, 128, 0.59);">
+            <ui:Button text="新游戏" parse-escape-sequences="true" display-tooltip-when-elided="true" name="newGame" style="background-color: rgba(204, 204, 204, 0); white-space: normal; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+            <ui:Button text="退出" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit" style="background-color: rgba(188, 188, 188, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="spacer" style="flex-grow: 1; width: 70%;">
+            <ui:VisualElement name="spacer" style="flex-grow: 1; height: 80%;" />
+            <ui:Label tabindex="-1" text="偷渡模拟器" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title" enable-rich-text="false" style="height: 20%; -unity-font-style: bold; font-size: 100px; color: rgb(214, 242, 248); align-items: center; align-self: center;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

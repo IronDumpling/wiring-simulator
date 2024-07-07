@@ -33,7 +33,7 @@ namespace Core
             DialogueTriggers.Instance.gameObject.SetActive(true);
             
             CharacterPropertiesUI.Instance.gameObject.SetActive(true);
-            GameOverUI.Instance.gameObject.SetActive(false);
+            GameOverUI.Instance.ClosePanel();
 
             var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
             node.GetActiveEvents();

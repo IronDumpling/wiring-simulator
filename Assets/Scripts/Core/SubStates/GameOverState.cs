@@ -9,21 +9,18 @@ namespace Core
 
         public override void Enter(SubState last)
         {
-
-            GameOverUI.Instance.gameObject.SetActive(true);
-            
+            GameOverUI.Instance.OpenPanel();
             // To Do: Set Map to false
         }
 
         public override void Exit()
         {
-            
-            GameOverUI.Instance.gameObject.SetActive(false);
+            GameOverUI.Instance.ClosePanel();
         }
 
         public override void Update()
         {
-            Debug.Log("world");
+            
         }
 
         public override void LateUpdate()
