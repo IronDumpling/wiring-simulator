@@ -51,10 +51,7 @@ public class Node{
     public void OpenNode(){
         DialogueTriggers.Instance.DisplayEvents(m_events);
     }
-
-    public void CloseNode(){
-        DialogueTriggers.Instance.ClosePanel();
-    }
+    
 
     public static Node CreateNode(NodeStatus status,  Event startingEvent, List<Event> evts)
     {

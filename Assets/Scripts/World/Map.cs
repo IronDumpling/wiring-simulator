@@ -23,7 +23,10 @@ public class Map{
     public MapLocationStatus status => m_status;
 
     private int m_entryIdx;
-    
+
+    public int currNodeIdx => m_currentNodeIdx;
+
+    public int currPathIdx => m_currentPathIdx;
     public Node currNode
     {
         get

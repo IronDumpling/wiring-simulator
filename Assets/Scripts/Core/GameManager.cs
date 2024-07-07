@@ -2,6 +2,7 @@
 using CharacterProperties;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.XR.Haptics;
 using Time = CharacterProperties.Time;
 
 namespace Core
@@ -19,7 +20,6 @@ namespace Core
         private Map m_map;
         
         
-
         protected override void Init(){
             if(m_characterSetUp == null){
                 Debug.LogError("No Character Set Up File");
@@ -47,10 +47,11 @@ namespace Core
 
         private void Start()
         {
-            WorldState.instance.NotifySceneFinished();
+            WorldState.instance.NotifySceneFinished(m_map.currNodeIdx);
         }
 
         private void Update(){
+
             m_timeStateManager.Update(GetTime());
             
             // Change that to a event
@@ -111,12 +112,12 @@ namespace Core
 
         #region StateMachine
 
-        public void ChangeToNodeState()
+        public void ChangeToNodeState(int nodeIdx)
         {
-            
+            WorldState.instance.nextState = new NodeState(nodeIdx);
         }
 
-        public void ChangeToPathState()
+        public void ChangeToPathState(int pathIdx)
         {
             
         }
@@ -126,10 +127,20 @@ namespace Core
             WorldState.instance.nextState = new GameOverState();
         }
 
-        public void ChangeToDialogueState()
+        public void ChangeToDialogueState(Event evt)
         {
             var cur = WorldState.instance.currentState;
-            
+
+            if (cur.type == SubStateType.NodeState)
+            {
+                var nodeState = (NodeState)cur;
+                nodeState.nextAction = new DialogueState(evt);
+                
+            }else if (cur.type == SubStateType.PathState)
+            {
+                var pathState = (PathState)cur;
+                pathState.nextAction = new DialogueState(evt);
+            }
             
         }
 

@@ -65,7 +65,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void Start(){   
-        OpenPanel();
+        // OpenPanel();
         // BeginDialogue(m_defaultInk);
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));

@@ -54,9 +54,10 @@ namespace Core
             }
         }
 
-        public void NotifySceneFinished()
+        public void NotifySceneFinished(int nodeIdx)
         {
-            // m_gameStateMachine.next = new NodeState();
+            //m_gameStateMachine.next = new NodeState(nodeIdx);
+            GameManager.Instance.ChangeToNodeState(nodeIdx);
         }
     }
 }

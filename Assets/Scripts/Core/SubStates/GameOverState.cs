@@ -9,13 +9,13 @@ namespace Core
 
         public override void Enter(SubState last)
         {
-            GameOverUI.Instance.OpenPanel();
+            GameOverUI.Instance.DisplayPanel();
             // To Do: Set Map to false
         }
 
         public override void Exit()
         {
-            GameOverUI.Instance.ClosePanel();
+            GameOverUI.Instance.HidePanel();
         }
 
         public override void Update()

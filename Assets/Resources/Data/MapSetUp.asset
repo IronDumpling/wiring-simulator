@@ -15,19 +15,20 @@ MonoBehaviour:
   nodes:
   - m_status: 1
     m_paths: 00000000
-    m_events: []
+    m_events:
+    - rid: 8366252321113636864
     m_startingEvent:
       m_ink: {fileID: 4900000, guid: 808907ad3357349d6b1a70fe2052e5d1, type: 3}
       m_effects:
-      - rid: 75769718282911759
+      - rid: 8366252321113636865
       m_trigger: 1
   - m_status: 0
     m_paths: 01000000
     m_events:
-    - rid: 75769718282911760
-    - rid: 75769718282911761
-    - rid: 75769718282911762
-    - rid: 75769718282911763
+    - rid: 8366252321113636866
+    - rid: 8366252321113636867
+    - rid: 8366252321113636868
+    - rid: 8366252321113636869
     m_startingEvent:
       m_ink: {fileID: 4900000, guid: 3a664b1fcf83b4a8e8bc2d908c6998e0, type: 3}
       m_effects: []
@@ -45,64 +46,71 @@ MonoBehaviour:
     m_endNode: 1
     m_distance: 100
     m_events:
-    - rid: 75769718282911764
-    - rid: 75769718282911765
+    - rid: 8366252321113636870
+    - rid: 8366252321113636871
   - m_status: 1
     m_startNode: 1
     m_endNode: 2
     m_distance: 100
     m_events:
-    - rid: 75769718282911766
-    - rid: 75769718282911767
+    - rid: 8366252321113636872
+    - rid: 8366252321113636873
   entryNodeIdx: 0
   references:
     version: 2
     RefIds:
-    - rid: 75769718282911759
+    - rid: 8366252321113636864
+      type: {class: Event, ns: , asm: Assembly-CSharp}
+      data:
+        m_ink: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
+        m_effects:
+        - rid: 8366252321113636874
+        m_trigger: 1
+    - rid: 8366252321113636865
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 30
-    - rid: 75769718282911760
+    - rid: 8366252321113636866
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 176f521691c374ee29f0f7f952a82fbf, type: 3}
         m_effects:
-        - rid: 75769718282911768
+        - rid: 8366252321113636875
         m_trigger: 1
-    - rid: 75769718282911761
+    - rid: 8366252321113636867
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: d742a885deed347bc8a3901ace6a3f21, type: 3}
         m_effects:
-        - rid: 75769718282911769
+        - rid: 8366252321113636876
         m_trigger: 1
-    - rid: 75769718282911762
+    - rid: 8366252321113636868
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: c0fcbcc8b0a114382abd008352ad2d7b, type: 3}
         m_effects:
-        - rid: 75769718282911770
+        - rid: 8366252321113636877
         m_trigger: 1
-    - rid: 75769718282911763
+    - rid: 8366252321113636869
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 871b696b824ed4f0a8e22ea052cfd71c, type: 3}
         m_effects:
-        - rid: 75769718282911771
+        - rid: 8366252321113636878
         m_trigger: 1
-    - rid: 75769718282911764
+    - rid: 8366252321113636870
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 57dd0eb35c42a4549ad369b24b3a1539, type: 3}
         m_effects:
-        - rid: 75769718282911772
+        - rid: 8366252321113636879
         m_trigger: 1
         m_path: 0
         m_triggerDistance: 44
         m_diceCount: 6
         m_diceMaxFace: 2
         m_level: 0
-    - rid: 75769718282911765
+    - rid: 8366252321113636871
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 27d9188302e8c41559db7c541d381439, type: 3}
@@ -113,57 +121,61 @@ MonoBehaviour:
         m_diceCount: 5
         m_diceMaxFace: 5
         m_level: 0
-    - rid: 75769718282911766
+    - rid: 8366252321113636872
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 99f1203d028244932a4bcd441534ec20, type: 3}
         m_effects:
-        - rid: 75769718282911773
+        - rid: 8366252321113636880
         m_trigger: 1
         m_path: 0
         m_triggerDistance: 44
         m_diceCount: 2
         m_diceMaxFace: 6
         m_level: 2
-    - rid: 75769718282911767
+    - rid: 8366252321113636873
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: d593215d45e3349d983ac156d81b4f9d, type: 3}
         m_effects:
-        - rid: 75769718282911774
+        - rid: 8366252321113636881
         m_trigger: 1
         m_path: 0
         m_triggerDistance: 44
         m_diceCount: 2
         m_diceMaxFace: 6
         m_level: 2
-    - rid: 75769718282911768
+    - rid: 8366252321113636874
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 60
-    - rid: 75769718282911769
+    - rid: 8366252321113636875
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 60
+    - rid: 8366252321113636876
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 120
-    - rid: 75769718282911770
+    - rid: 8366252321113636877
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 120
-    - rid: 75769718282911771
+    - rid: 8366252321113636878
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 240
-    - rid: 75769718282911772
+    - rid: 8366252321113636879
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 30
-    - rid: 75769718282911773
+    - rid: 8366252321113636880
       type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_modifications:
         - m_type: 0
           m_delta: 10
-    - rid: 75769718282911774
+    - rid: 8366252321113636881
       type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_modifications:

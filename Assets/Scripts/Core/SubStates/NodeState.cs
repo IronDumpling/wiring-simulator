@@ -28,23 +28,29 @@ namespace Core
         
         public override void Enter(SubState last)
         {
-            DialogueUI.Instance.gameObject.SetActive(true);
-            BackpackUI.Instance.gameObject.SetActive(true);
-            DialogueTriggers.Instance.gameObject.SetActive(true);
             
-            CharacterPropertiesUI.Instance.gameObject.SetActive(true);
-            GameOverUI.Instance.ClosePanel();
-
-            var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
-            node.GetActiveEvents();
+            DialogueUI.Instance.DisplayPanel();
+            DialogueUI.Instance.ClosePanel();
+            
+            BackpackUI.Instance.DisplayPanel();
+            BackpackUI.Instance.ClosePanel();
+            
+            GameOverUI.Instance.HidePanel();
+            
+            
+            CharacterPropertiesUI.Instance.DisplayPanel();
+            
+            GameManager.Instance.GetMap().GetNode(m_nodeIdx).OpenNode();
+            // var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
+            // node.GetActiveEvents();
         }
 
         public override void Exit()
         {
-            DialogueUI.Instance.gameObject.SetActive(false);
-            BackpackUI.Instance.gameObject.SetActive(false);
-            CharacterPropertiesUI.Instance.gameObject.SetActive(false);
-            DialogueTriggers.Instance.gameObject.SetActive(false);
+            // DialogueUI.Instance.gameObject.SetActive(false);
+            // BackpackUI.Instance.gameObject.SetActive(false);
+            // CharacterPropertiesUI.Instance.gameObject.SetActive(false);
+            // DialogueTriggers.Instance.gameObject.SetActive(false);
         }
 
         public override void Update()
