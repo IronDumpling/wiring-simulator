@@ -19,8 +19,6 @@
             m_event.RegisterOnFinishEvent(NotifyFinished);
         }
         
-        
-
         private void NotifyFinished()
         {
             m_event.UnregisterOnFinishEvent(NotifyFinished);
