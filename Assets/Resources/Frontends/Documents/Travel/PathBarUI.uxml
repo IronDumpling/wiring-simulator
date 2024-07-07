@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="panel" style="flex-grow: 1; flex-direction: row; align-self: flex-start; align-items: flex-start; height: 20%; width: 50%;">
+        <ui:VisualElement name="content" style="flex-grow: 1; flex-direction: row; height: auto; width: 10%; align-self: center;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="pause" />
+            <ui:Label tabindex="-1" text="20%" parse-escape-sequences="true" display-tooltip-when-elided="true" name="progress" style="font-size: 30px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="bar" style="flex-grow: 1; height: auto; flex-direction: row; width: 90%; align-self: center;" />
+    </ui:VisualElement>
+</ui:UXML>

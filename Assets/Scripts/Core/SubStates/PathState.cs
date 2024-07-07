@@ -22,10 +22,6 @@
         public override void Exit()
         {
             if (currentAction!= null) currentAction.Exit();
-            // DialogueUI.Instance.gameObject.SetActive(false);
-            // BackpackUI.Instance.gameObject.SetActive(false);
-            // CharacterPropertiesUI.Instance.gameObject.SetActive(false);
-            // DialogueTriggers.Instance.gameObject.SetActive(false);
         }
     }
 }

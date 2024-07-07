@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Events;
+
 using UnityEngine;
+
+using Events;
 
 public enum PathStatus{
     NotDiscovered,
@@ -28,6 +30,7 @@ public class Path{
     
     public Path()
     {
+
     }
 
     public Path(PathStatus status, int sNode, int eNode, int dist){

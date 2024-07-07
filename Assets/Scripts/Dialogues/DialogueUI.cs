@@ -44,7 +44,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     [Header("Dialogue Content")]
     [SerializeField] private TextAsset m_globalnk;
-    // [SerializeField] private TextAsset m_defaultInk;
     
     #region Life Cycles
     private void Awake(){
@@ -64,9 +63,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_dialogueVars = new DialogueVar(m_globalnk);
     }
     
-    private void Start(){   
-        // OpenPanel();
-        // BeginDialogue(m_defaultInk);
+    private void Start(){
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
         m_body.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
