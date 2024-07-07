@@ -24,22 +24,39 @@ public class PathUI : MonoSingleton<PathUI>{
         m_bar =  m_root.Q<VisualElement>(name: "bar");
     }
 
-    public void DisplayBar(List<PathEvent> events){
+    private void DisplayBar(List<PathEvent> events, int distance){
         foreach(PathEvent e in events){
+            VisualElement beforeSection = new();
+            float rate = (float)e.triggerDistance / (float)distance * 100;
+            Length width = new Length(rate, LengthUnit.Percent);
+            beforeSection.style.width = new StyleLength(width);
+            beforeSection.style.backgroundColor = Color.white;
 
+            Label eventSection = new();
+            width = new Length(1, LengthUnit.Percent);
+            beforeSection.style.width = new StyleLength(width);
+            beforeSection.style.backgroundColor = Color.red;
+            eventSection.text = rate + "%";
+
+            m_bar.Add(beforeSection);
+            m_bar.Add(eventSection);
         }
     }
 
-    public void DisplayProgress(int rate){
-        
+    private void DisplayProgress(){
+
+    }
+
+    public void OpenPanel(Path path){
+        DisplayBar(path.events, path.distance);
+        // DisplayProgress();
     }
 
     public void DisplayPanel(){
         m_root.style.display = DisplayStyle.Flex;
     }
+
     public void HidePanel(){
         m_root.style.display = DisplayStyle.None;
     }
-
-    
 }

@@ -41,17 +41,13 @@ namespace Core
 
         public bool SetParentNext(ActionState newState)
         {
-            if (m_parent.type == SubStateType.NodeState)
-            {
+            if (m_parent.type == SubStateType.NodeState){
                 ((NodeState)m_parent).nextAction = newState;
                 return true;
-            }else if (m_parent.type == SubStateType.PathState)
-            {
+            }else if (m_parent.type == SubStateType.PathState){
                 Debug.LogError("Finish This!!!");
                 return false;
-            }
-            else
-            {
+            }else{
                 return false;
             }
         }

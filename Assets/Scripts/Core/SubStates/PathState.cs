@@ -8,8 +8,6 @@ namespace Core
         
         private int m_pathIdx;
         
-        
-        
         private StateMachine<ActionState> m_actionState = new StateMachine<ActionState>();
 
         public ActionState currentAction => m_actionState.current;
@@ -31,15 +29,25 @@ namespace Core
         public override void Enter(SubState last)
         {
             Debug.Log("Enter Path State");
-
             var path = GameManager.Instance.GetMap().GetPath(m_pathIdx);
+
+            DialogueUI.Instance.HidePanel();
+            DialogueTriggers.Instance.HidePanel();
+
+            PathUI.Instance.DisplayPanel();
+            PathUI.Instance.OpenPanel(path);
+
+            BackpackUI.Instance.DisplayPanel();
+            BackpackUI.Instance.ClosePanel();
+
+            
         }
 
         public override void Exit()
         {
+            Debug.Log("Exit Path State");
             if(currentAction!= null) currentAction.Exit();
             GameManager.Instance.GetMap().ArriveAtDestination();
-            Debug.Log("Exit Path State");
         }
         
         public override void Update()
