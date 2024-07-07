@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
+using UnityEngine.Events;
 
 namespace Core
 {
@@ -16,7 +17,7 @@ namespace Core
         public MapSelectionState(int nodeIdx)
         {
             m_nodeIdx = nodeIdx;
-            
+
             GameObject[] allGO = Resources.FindObjectsOfTypeAll<GameObject>();
             GameObject nodeParent = null;
             GameObject pathParent = null;
@@ -24,7 +25,7 @@ namespace Core
                 if(go.name == "Node") nodeParent = go;
                 else if(go.name == "Path") pathParent = go;
             }
-            
+
             if(nodeParent == null || pathParent == null){
                 Debug.LogError("Not found Node or Path game object in the scene");
             }
@@ -32,10 +33,12 @@ namespace Core
             foreach(Transform child in nodeParent.transform){
                 m_nodes.Add(child.gameObject);
             }
+            Debug.Log("number of nodes " + m_nodes.Count);
 
             foreach(Transform child in pathParent.transform){
                 m_paths.Add(child.gameObject);
             }
+            Debug.Log("number of paths " + m_paths.Count);
         }
 
         public override void Enter(ActionState last)
@@ -45,51 +48,34 @@ namespace Core
             GameOverUI.Instance.HidePanel();
             DialogueTriggers.Instance.HidePanel();
 
-            foreach(Transform child in m_nodes[m_nodeIdx].transform){
-                if(child.name != "Canvas") continue;
-                foreach(Transform child2 in child.transform){
-                    if(child2.name != "Button") continue;
-                    Button button = child2.GetComponent<Button>();
-                    button.onClick.AddListener(OnCurrentNodePressed);
-                }
-            }
-
-            List<int> possiblePathIndexs = GameManager.Instance.GetMap().GetAllPossiblePath(m_nodeIdx);
-            List<GameObject> possiblePaths = m_paths.Where((element, index) => possiblePathIndexs.Contains(index)).ToList();
-
-            int idx = 0;
-            foreach(GameObject possiblePath in possiblePaths){
-                foreach(Transform child in possiblePath.transform){
-                    if(child.name != "Canvas") continue;
-                    foreach(Transform child2 in child.transform){
-                        if(child2.name != "Button") continue;
-                        Button button = child2.GetComponent<Button>();
-                        button.onClick.AddListener(() =>{
-                            OnPathPressed(possiblePathIndexs[idx]);
-                        });
-                    }
-                }
-                idx++;
-            }
+            MouseClick.Instance.onClick.AddListener(OnCurrentNodePressed);
+            MouseClick.Instance.onClick.AddListener(OnPathPressed);
         }
 
         public override void Exit()
         {
-            // clear all call back
-            // remove all listener
+            MouseClick.Instance.onClick.RemoveAllListeners();
         }
 
-        private void OnCurrentNodePressed()
+        private void OnCurrentNodePressed(GameObject obj)
         {
-            GameManager.Instance.ChangeToNormalState();
+            if(obj.transform.parent != null && obj.transform.parent.name == m_nodes[m_nodeIdx].name)
+                GameManager.Instance.ChangeToNormalState();
         }
 
-        private void OnPathPressed(int pathIdx)
+        private void OnPathPressed(GameObject obj)
         {
-            // enter Path state
-            GameManager.Instance.GetMap().ChoosePath(pathIdx);
-            
-            GameManager.Instance.ChangeToPathState(pathIdx);
+            List<int> possiblePathIndexs = GameManager.Instance.GetMap().GetAllPossiblePath(m_nodeIdx);
+            List<GameObject> possiblePaths = m_paths.Where(
+                (element, index) => possiblePathIndexs.Contains(index)
+            ).ToList();
+
+            int idx = 0;
+            foreach(GameObject possiblePath in possiblePaths){
+                if(obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
+                    GameManager.Instance.ChangeToPathState(possiblePathIndexs[idx]);
+                idx++;
+            }
         }
     }
 }
