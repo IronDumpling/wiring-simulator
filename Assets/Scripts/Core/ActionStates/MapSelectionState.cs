@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 
 namespace Core
 {
@@ -40,7 +43,7 @@ namespace Core
             BackpackUI.Instance.HidePanel();
             DialogueUI.Instance.HidePanel();
             GameOverUI.Instance.HidePanel();
-            DialogueTriggers.Instance.ClosePanel();
+            DialogueTriggers.Instance.HidePanel();
 
             foreach(Transform child in m_nodes[m_nodeIdx].transform){
                 if(child.name != "Canvas") continue;
@@ -51,11 +54,23 @@ namespace Core
                 }
             }
 
-            // Find all possible path
-            
-            // Register Possible Path call back
-            
-            //() => OnPathPressed(pathIdx)
+            List<int> possiblePathIndexs = GameManager.Instance.GetMap().GetAllPossiblePath(m_nodeIdx);
+            List<GameObject> possiblePaths = m_paths.Where((element, index) => possiblePathIndexs.Contains(index)).ToList();
+
+            int idx = 0;
+            foreach(GameObject possiblePath in possiblePaths){
+                foreach(Transform child in possiblePath.transform){
+                    if(child.name != "Canvas") continue;
+                    foreach(Transform child2 in child.transform){
+                        if(child2.name != "Button") continue;
+                        Button button = child2.GetComponent<Button>();
+                        button.onClick.AddListener(() =>{
+                            OnPathPressed(possiblePathIndexs[idx]);
+                        });
+                    }
+                }
+                idx++;
+            }
         }
 
         public override void Exit()

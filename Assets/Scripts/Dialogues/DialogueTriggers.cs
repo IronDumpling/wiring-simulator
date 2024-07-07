@@ -75,8 +75,6 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
             };
             buttons.Add(button);
         }
-        
-        
     }
 
     private void InitDepartureButton()
