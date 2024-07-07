@@ -34,12 +34,45 @@ INCLUDE ../0-global.ink
   }
     
     +[看看食品架。]#speaker:
-    ->position_shop_1
+    
+    上面只摆了三类东西：面包，瓶装水，还有你再熟悉不过的红色包装泡面。
+        
+        ++[买一份面包。] #object:-金钱*1+面包*1
+        ++[买一瓶水。] #object:-金钱*2+瓶装水*1
+        ++[买一份泡面。] #object:-金钱*3+袋装泡面*1
+        ++[（后退）]
+    
+    --->position_shop_1
+    
     +[看看药品架。]#speaker:
-    ->position_shop_1
-    +[更换货币种类。]#speaker:
+    
+    那是一个很小的架子。只有一种药物静静躺在上面，横七竖八。
+    
+        ++[买一份阿莫西林。] #object:-金钱*5+阿莫西林*1
+        ++[（后退）]
+    
+    --->position_shop_1
+    
+    +[看看生活用品架。]
+    
+    上面摆满了你已经有的东西：雨伞，背包，睡袋……
+    但第二行的东西显然更上档次，你瞧见几个大号的精致睡袋。
+    
+        ++[买一个高级睡袋。] #object:-金钱*20+高级睡袋*1
+        ++[（后退）]
+    
+    --->position_shop_1
+    
+    +[卖出物品。]
+    
+        ++[卖出塑料水瓶] #object:-塑料瓶*5+金钱*1
+        ++[（后退）]
+        
+    --->position_shop_1    
+    
+    //+[更换货币种类。]#speaker:
     // 汇率讲价
-    ->position_shop_1
+    //->position_shop_1
     +[离开吧。]#speaker:
     你走出这栋破旧的木屋。等候设备充电的人们瞥了你一下，随即又垂下眼眸。你同他们一样疲惫。
         ++[继续]->END
@@ -111,7 +144,7 @@ INCLUDE ../0-global.ink
             - HUGE_SUCCESS:你见那矮个子正站在一名蛇头的边上。周围都是人高马大的家伙……
             }
         
-                ***{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[（跟上去）]->talk_shopkeeper_1  //暂时先这样
+                //***{CHECK == SUCCESS || CHECK == HUGE_SUCCESS}[（跟上去）]->talk_shopkeeper_1  //暂时先这样
                 ***[（回到店里）]->talk_shopkeeper_1
             
             **[（大喊）有小偷！]
