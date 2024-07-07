@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum NodeStatus{
@@ -13,19 +14,29 @@ public enum NodeStatus{
 [Serializable]
 public class Node{
     [SerializeField] private NodeStatus m_status = NodeStatus.NotDiscovered;
-    [SerializeReference] private List<Path> m_paths = new();
+    [SerializeField] private List<int> m_paths = new();
     [SerializeReference] private List<Event> m_events = new();
     [SerializeField] private Event m_startingEvent;
 
     public Event startingEvent => m_startingEvent;
-    
-    public Node(NodeStatus status, List<Path> paths, List<Event> events){
+
+    public void AddPath(int pathIdx)
+    {
+        m_paths.Add(pathIdx);
+    }
+
+    private Node()
+    {
+    }
+
+    public Node(NodeStatus status, List<int> paths, List<Event> events){
         m_status = status;
         m_paths = paths;
         m_events = events;
     }
+    
 
-    public Node(List<Path> paths, List<Event> events){
+    public Node(List<int> paths, List<Event> events){
         m_paths = paths;
         m_events = events;
     }
@@ -36,6 +47,19 @@ public class Node{
 
     public void CloseNode(){
         DialogueTriggers.Instance.UnDisplayNode();
+    }
+
+    public static Node CreateNode(NodeStatus status,  Event startingEvent, List<Event> evts)
+    {
+        var newNode = new Node
+        {
+            m_events = new List<Event>(evts),
+            m_status = status,
+            m_startingEvent = startingEvent
+        };
+
+        return newNode;
+
     }
     
 }
