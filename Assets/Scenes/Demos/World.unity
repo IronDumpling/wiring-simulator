@@ -928,7 +928,7 @@ PrefabInstance:
     - target: {fileID: 8411628283919364619, guid: 817139e68e3f84a3ab7028764a4b094e, type: 3}
       propertyPath: m_defaultInk
       value: 
-      objectReference: {fileID: 4900000, guid: d3ea34b6d63e8034c8d5d32573231c1e, type: 3}
+      objectReference: {fileID: 4900000, guid: 808907ad3357349d6b1a70fe2052e5d1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

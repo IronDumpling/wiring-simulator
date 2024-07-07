@@ -137,7 +137,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private IEnumerator ExitDialogue(){
         yield return new WaitForSeconds(Constants.EXIT_LAG_TIME);
 
-        DisplayTextArea(m_currEvent.EffectDescription());
+        if(m_currEvent != null) DisplayTextArea(m_currEvent.EffectDescription());
 
         m_dialogueVars.StopListening(m_currStory);
         m_dialogueVars.SaveVariables();

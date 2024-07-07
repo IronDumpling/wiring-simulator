@@ -6,7 +6,7 @@ namespace Init
     {
         public override void Enter(GameState last)
         {
-            SceneManager.LoadScene("Init");
+            SceneManager.LoadScene(Constants.MAIN_MENU);
         }
     }
 }
