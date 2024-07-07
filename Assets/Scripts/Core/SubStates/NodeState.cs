@@ -28,7 +28,7 @@ namespace Core
             DialogueTriggers.Instance.gameObject.SetActive(true);
             
             CharacterPropertiesUI.Instance.gameObject.SetActive(true);
-            GameOverUI.Instance.gameObject.SetActive(false);
+            GameOverUI.Instance.ClosePanel();
 
             
         }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public static class Constants{
     // scene
+    public const string MAIN_MENU = "Init";
     public const string LEVEL1 = "dialogue-test";
     
     // dialogue
