@@ -7,8 +7,7 @@ namespace Core
         public override SubStateType type => SubStateType.PathState;
         
         private int m_pathIdx;
-
-        private int m_totalDistance;
+        
         
         
         private StateMachine<ActionState> m_actionState = new StateMachine<ActionState>();
@@ -32,6 +31,8 @@ namespace Core
         public override void Enter(SubState last)
         {
             Debug.Log("Enter Path State");
+
+            var path = GameManager.Instance.GetMap().GetPath(m_pathIdx);
         }
 
         public override void Exit()

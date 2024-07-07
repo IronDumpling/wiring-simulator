@@ -77,6 +77,11 @@ namespace Core
         public TimeStatManager GetTimeStat(){
             return m_timeStateManager;
         }
+
+        public PathManager GetPathManager()
+        {
+            return m_pathManager;
+        }
     
         public Map GetMap() => m_map;
         
