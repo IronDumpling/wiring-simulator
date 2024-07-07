@@ -41,6 +41,14 @@ public class Event{
     {
         m_onEventFinished.RemoveListener(act);
     }
+
+    public string EffectDescription(){
+        string result = "";
+        foreach(ObjectEffect effect in m_effects){
+            result += effect.EffectDescription();
+        }
+        return result;
+    }
     
     public void NotifyFinished()
     {

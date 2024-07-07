@@ -137,6 +137,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private IEnumerator ExitDialogue(){
         yield return new WaitForSeconds(Constants.EXIT_LAG_TIME);
 
+        DisplayTextArea(m_currEvent.EffectDescription());
+
         m_dialogueVars.StopListening(m_currStory);
         m_dialogueVars.SaveVariables();
 
@@ -152,6 +154,16 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_currEvent?.NotifyFinished();
         m_currEvent = null;
     }
+
+    public void ClearDialogue(){
+        m_content.contentContainer.Clear();
+        m_currStory = null;
+        m_currEvent = null;
+        m_isPlaying = false;
+        m_displaySpeakerName = "";
+        m_objName = "";
+    }
+
     #endregion
 
     #region Renders
