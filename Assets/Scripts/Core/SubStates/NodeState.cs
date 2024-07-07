@@ -34,7 +34,7 @@ namespace Core
             
             BackpackUI.Instance.DisplayPanel();
             BackpackUI.Instance.ClosePanel();
-            
+            BackpackUI.Instance.RegisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
             GameOverUI.Instance.HidePanel();
             
             
@@ -51,10 +51,9 @@ namespace Core
         public override void Exit()
         {
             if (currentAction!= null) currentAction.Exit();
-            // DialogueUI.Instance.gameObject.SetActive(false);
-            // BackpackUI.Instance.gameObject.SetActive(false);
-            // CharacterPropertiesUI.Instance.gameObject.SetActive(false);
-            // DialogueTriggers.Instance.gameObject.SetActive(false);
+            
+            BackpackUI.Instance.UnregisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
+            
         }
 
         public override void Update()
@@ -78,6 +77,16 @@ namespace Core
                 state.LateUpdate();
                 m_actionState.isLocked = false;
             }
+        }
+
+        private void OnBackpackOpen()
+        {
+            GameManager.Instance.ChangeToBackpackState();
+        }
+
+        private void OnBackpackClose()
+        {
+            GameManager.Instance.ChangeToNormalState();
         }
     }
 }

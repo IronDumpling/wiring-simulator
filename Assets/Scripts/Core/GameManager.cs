@@ -166,6 +166,17 @@ namespace Core
 
             }
         }
+
+        public void ChangeToBackpackState()
+        {
+            var cur = WorldState.instance.currentState;
+
+            if (cur.type == SubStateType.NodeState)
+            {
+                var nodeState = (NodeState)cur;
+                nodeState.nextAction = new NodeBackpackState();
+            }
+        }
         #endregion
     }
 }

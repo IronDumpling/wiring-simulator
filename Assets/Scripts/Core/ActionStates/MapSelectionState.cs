@@ -27,12 +27,13 @@
 
         private void OnCurrentNodePressed()
         {
-            // go back to Idle State
+            GameManager.Instance.ChangeToNormalState();
         }
 
         private void OnPathPressed(int pathIdx)
         {
             // enter Path state
+            GameManager.Instance.ChangeToPathState(pathIdx);
         }
     }
 }
