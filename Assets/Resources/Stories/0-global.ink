@@ -85,5 +85,9 @@ VAR hit_point_1 = 0
 
 VAR know_the_cheat_1 = false
 
+//Path 2 的初始参数
+
+VAR hold_1 = false
+VAR throw_away = 0
 
 
