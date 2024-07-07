@@ -420,7 +420,7 @@ PrefabInstance:
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: ink
       value: 
-      objectReference: {fileID: 4900000, guid: f11312de59522491d9efe2b96f133cc1, type: 3}
+      objectReference: {fileID: 4900000, guid: 99f1203d028244932a4bcd441534ec20, type: 3}
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: level
       value: 2
@@ -487,7 +487,10 @@ PrefabInstance:
       objectReference: {fileID: 1830543705}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7104881368529983825, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931303610}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5540693871071273411, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       insertIndex: -1
@@ -592,6 +595,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 241218965229174363}
     m_Modifications:
+    - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: ink
+      value: 
+      objectReference: {fileID: 4900000, guid: 27d9188302e8c41559db7c541d381439, type: 3}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: diceCount
       value: 5
@@ -974,6 +981,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad5b63bf24f4bf48a2c47f8aa062de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1931303609
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1105254510}
+    m_Modifications:
+    - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: ink
+      value: 
+      objectReference: {fileID: 4900000, guid: d593215d45e3349d983ac156d81b4f9d, type: 3}
+    - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: diceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: diceMaxFace
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088766709829345306, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      propertyPath: m_Name
+      value: PathEvtEdit (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6088766709829345306, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931303612}
+  m_SourcePrefab: {fileID: 100100000, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+--- !u!4 &1931303610 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+  m_PrefabInstance: {fileID: 1931303609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1931303611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6088766709829345306, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
+  m_PrefabInstance: {fileID: 1931303609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1931303612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931303611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3439471efcd4c54b5fb95806ac80af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifications:
+  - m_type: 0
+    m_delta: 10
 --- !u!1001 &241218965229174362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,6 +1090,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 900455991}
     m_Modifications:
+    - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
+      propertyPath: ink
+      value: 
+      objectReference: {fileID: 4900000, guid: 57dd0eb35c42a4549ad369b24b3a1539, type: 3}
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: diceCount
       value: 6
