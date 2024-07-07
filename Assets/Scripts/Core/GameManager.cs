@@ -3,6 +3,7 @@ using CharacterProperties;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.XR.Haptics;
+using World;
 using Time = CharacterProperties.Time;
 
 namespace Core
@@ -18,6 +19,7 @@ namespace Core
         private TimeStatManager m_timeStateManager;
         private Time m_time;
         private Map m_map;
+        private PathManager m_pathManager;
         
         
         protected override void Init(){
@@ -41,8 +43,9 @@ namespace Core
             m_map = new Map(m_mapSetUp);
             m_character.RegisterDynamicTimeEffect(m_timeStateManager);
             m_character.RegisterDynamicCoreTimeEffect(m_timeStateManager);
-            
-            
+
+            m_pathManager = new PathManager();
+
         }
 
         private void Start()
@@ -51,7 +54,8 @@ namespace Core
         }
 
         private void Update(){
-
+            
+            m_pathManager.Update(UnityEngine.Time.deltaTime);
             m_timeStateManager.Update(GetTime());
             
             // Change that to a event
@@ -114,12 +118,15 @@ namespace Core
 
         public void ChangeToNodeState(int nodeIdx)
         {
+            
             WorldState.instance.nextState = new NodeState(nodeIdx);
+            
         }
 
         public void ChangeToPathState(int pathIdx)
         {
-            
+            m_map.ChoosePath(pathIdx);
+            WorldState.instance.nextState = new PathState(pathIdx);
         }
 
         public void ChangeToGameOverState()

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Core
 {
@@ -53,6 +54,7 @@ namespace Core
             if (currentAction!= null) currentAction.Exit();
             
             BackpackUI.Instance.UnregisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
+            Debug.Log("Exit Node State");
             
         }
 

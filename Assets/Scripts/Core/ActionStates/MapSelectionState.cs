@@ -17,7 +17,7 @@ namespace Core
         public MapSelectionState(int nodeIdx)
         {
             m_nodeIdx = nodeIdx;
-            
+
             GameObject[] allGO = Resources.FindObjectsOfTypeAll<GameObject>();
             GameObject nodeParent = null;
             GameObject pathParent = null;
@@ -25,7 +25,7 @@ namespace Core
                 if(go.name == "Node") nodeParent = go;
                 else if(go.name == "Path") pathParent = go;
             }
-            
+
             if(nodeParent == null || pathParent == null){
                 Debug.LogError("Not found Node or Path game object in the scene");
             }
@@ -58,7 +58,7 @@ namespace Core
         }
 
         private void OnCurrentNodePressed(GameObject obj)
-        {   
+        {
             if(obj.transform.parent != null && obj.transform.parent.name == m_nodes[m_nodeIdx].name)
                 GameManager.Instance.ChangeToNormalState();
         }
@@ -72,8 +72,11 @@ namespace Core
 
             int idx = 0;
             foreach(GameObject possiblePath in possiblePaths){
-                if(obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
+                if (obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
+                {
                     GameManager.Instance.ChangeToPathState(possiblePathIndexs[idx]);
+                }
+                    
                 idx++;
             }
         }

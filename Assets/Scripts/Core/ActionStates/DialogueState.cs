@@ -26,6 +26,7 @@ namespace Core
         {
             m_event.UnregisterOnFinishEvent(NotifyFinished);
             GameManager.Instance.ChangeToNormalState();
+            Debug.Log("Exit Dialogue State");
         }
         
         
