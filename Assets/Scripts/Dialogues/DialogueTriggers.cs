@@ -24,7 +24,7 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     public void DisplayEvents(List<Event> events){
         m_texts.Clear();
         m_events = new List<Event>(events);
-        OpenPanel();
+        DisplayPanel();
         InitEvtButtons();
         InitDepartureButton();
         DisplayButtons();
@@ -32,11 +32,11 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     
     
 
-    public void OpenPanel(){
+    public void DisplayPanel(){
         root.style.display = DisplayStyle.Flex;
     }
 
-    public void ClosePanel(){
+    public void HidePanel(){
         root.style.display = DisplayStyle.None;
     }
 

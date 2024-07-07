@@ -39,14 +39,18 @@ namespace Core
             
             
             CharacterPropertiesUI.Instance.DisplayPanel();
+
+            var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
+            node.OpenNode();
             
-            GameManager.Instance.GetMap().GetNode(m_nodeIdx).OpenNode();
+            GameManager.Instance.ChangeToDialogueState(node.startingEvent);
             // var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
             // node.GetActiveEvents();
         }
 
         public override void Exit()
         {
+            if (currentAction!= null) currentAction.Exit();
             // DialogueUI.Instance.gameObject.SetActive(false);
             // BackpackUI.Instance.gameObject.SetActive(false);
             // CharacterPropertiesUI.Instance.gameObject.SetActive(false);

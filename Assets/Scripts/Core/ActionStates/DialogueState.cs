@@ -1,4 +1,6 @@
-﻿namespace Core
+﻿using UnityEngine;
+
+namespace Core
 {
     public class DialogueState : ActionState
     {
@@ -10,9 +12,10 @@
         }
         public override void Enter(ActionState last)
         {
-            DialogueUI.Instance.gameObject.SetActive(true);
-            DialogueTriggers.Instance.gameObject.SetActive(false);
-            BackpackUI.Instance.gameObject.SetActive(false);
+            Debug.Log("Enter Dialogue State");
+            DialogueUI.Instance.DisplayPanel();
+            BackpackUI.Instance.HidePanel();
+            DialogueTriggers.Instance.HidePanel();
             
             m_event.RegisterOnFinishEvent(NotifyFinished);
             m_event.StartEvent();
@@ -22,7 +25,7 @@
         private void NotifyFinished()
         {
             m_event.UnregisterOnFinishEvent(NotifyFinished);
-            SetParentNext(new IdleState());
+            GameManager.Instance.ChangeToNormalState();
         }
         
         

@@ -12,6 +12,7 @@ VAR correction_test = false
 +[检定测试] ->check_test
 +[物品测试] ->object_test
 +[事件条件测试] ->event_test
++[退出] -> END
 -->END
 
 =normal_test
