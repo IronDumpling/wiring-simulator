@@ -65,7 +65,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void Start(){   
-        OpenExpandPanel();
+        OpenPanel();
         BeginDialogue(m_defaultInk);
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
@@ -102,7 +102,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_content.contentContainer.Clear();
         
         DisplaySpacer();
-        OpenExpandPanel();
+        OpenPanel();
         ContinueStory();
     }
     
@@ -147,7 +147,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
         m_objName = "";
 
-        CloseExpandPanel();
+        ClosePanel();
         
         m_currEvent?.NotifyFinished();
         m_currEvent = null;
@@ -291,7 +291,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #endregion
     
     #region Logics
-    public void CloseExpandPanel(){
+    public void ClosePanel(){
         m_panel.style.width = Constants.PANEL_WIDTH;
         Length width = new Length(Constants.HIDE_POSITION, LengthUnit.Percent);
         m_panel.style.left = new StyleLength(width);
@@ -300,7 +300,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_isPanelExpanded = false;
     }
 
-    public void OpenExpandPanel(){
+    public void OpenPanel(){
         Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
         m_panel.style.width = new StyleLength(width);
         width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
@@ -310,14 +310,21 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_isPanelExpanded = true;
     }
 
+    public void HidePanel(){
+        m_root.style.display = DisplayStyle.None;
+    }
+    public void DisplayPanel(){
+        m_root.style.display = DisplayStyle.Flex;
+    }
+
     public void SetSideBar() {
         m_expandButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
         Length width = new Length(Constants.MARGIN_WIDTH, LengthUnit.Percent);
         m_expandButton.style.width = new StyleLength(width);
         m_root.Q<VisualElement>(name: "SideBar").Add(m_expandButton);
         m_expandButton.clicked += () => {
-            if(m_isPanelExpanded) CloseExpandPanel();
-            else OpenExpandPanel();
+            if(m_isPanelExpanded) ClosePanel();
+            else OpenPanel();
         };
     }
 

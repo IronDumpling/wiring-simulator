@@ -80,7 +80,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     #endregion
 
     #region Panel
-    private void OpenPanel(){
+    public void OpenPanel(){
         m_panel.style.display = DisplayStyle.Flex;
         Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
         m_panel.style.width = new StyleLength(width);
@@ -90,7 +90,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_openButton.style.display = DisplayStyle.None;
     }
 
-    private void ClosePanel(){
+    public void ClosePanel(){
         m_panel.style.display = DisplayStyle.None;
         
         m_openButton.style.display = DisplayStyle.Flex;
@@ -105,6 +105,14 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
         width = new Length(100 - Constants.PANEL_WIDTH - Constants.BUTTON_WIDTH, LengthUnit.Percent);
         m_openButton.style.left = new StyleLength(width);
+    }
+
+    public void HidePanel(){
+        m_root.style.display = DisplayStyle.None;
+    }
+
+    public void DisplayPanel(){
+        m_root.style.display = DisplayStyle.Flex;
     }
 
     private void DisplayButtons(){

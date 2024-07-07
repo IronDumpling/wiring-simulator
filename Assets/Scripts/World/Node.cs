@@ -46,16 +46,14 @@ public class Node{
     
     public List<int> GetAllPath() => new List<int>(m_paths);
     
-    
-
     public List<Event> GetActiveEvents() => m_events;
     
     public void OpenNode(){
-        DialogueTriggers.Instance.DisplayNode(m_events);
+        DialogueTriggers.Instance.DisplayEvents(m_events);
     }
 
     public void CloseNode(){
-        DialogueTriggers.Instance.UnDisplayNode();
+        DialogueTriggers.Instance.ClosePanel();
     }
 
     public static Node CreateNode(NodeStatus status,  Event startingEvent, List<Event> evts)

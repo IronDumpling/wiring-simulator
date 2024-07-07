@@ -56,7 +56,7 @@ namespace Core
 
         public void NotifySceneFinished()
         {
-            m_gameStateMachine.next = new NodeState();
+            // m_gameStateMachine.next = new NodeState();
         }
     }
 }

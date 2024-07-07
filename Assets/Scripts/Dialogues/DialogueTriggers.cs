@@ -15,21 +15,25 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     private List<TextAsset> m_texts = new();
 
     void Awake(){
+        root = doc.rootVisualElement;
         m_button = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton");
     }
 
-    public void DisplayNode(List<Event> events){
+    public void DisplayEvents(List<Event> events){
         m_texts.Clear();
         foreach(Event evt in events){
             m_texts.Add(evt.ink);
         }
-        root.style.display = DisplayStyle.Flex;
+        OpenPanel();
         InitButtons();
         DisplayButtons();
     }
 
-    public void UnDisplayNode(){
-        root = doc.rootVisualElement;
+    public void OpenPanel(){
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void ClosePanel(){
         root.style.display = DisplayStyle.None;
     }
 
