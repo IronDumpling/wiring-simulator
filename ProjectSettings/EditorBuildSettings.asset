@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Demos/Init.unity
     guid: 369504e1a6d51dc469c529e5df0905b1
   - enabled: 1
-    path: Assets/Scenes/Tests/map-test.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Tests/dialogue-test.unity
-    guid: 14f5a0a4e28fe4eaabf0f6d46e624175
+    path: Assets/Scenes/Demos/World.unity
+    guid: ba8759e282c574813835bb927b11b8bc
   m_configObjects: {}
