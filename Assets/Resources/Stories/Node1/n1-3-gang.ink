@@ -79,8 +79,8 @@ INCLUDE ../0-global.ink
     
     ->position_smuggler_1
     
-    +[（雇佣一名翻译）] #time:10min
-    ->employ_translator
+    //+[（雇佣一名翻译）] #time:10min
+    //->employ_translator
     
     
     +[（离开）]
