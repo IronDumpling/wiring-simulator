@@ -23,6 +23,9 @@ public class Path{
 
     public int from => m_startNode;
     public int to => m_endNode;
+    public int distance => m_distance;
+    public PathStatus status => m_status;
+    
     public Path()
     {
     }

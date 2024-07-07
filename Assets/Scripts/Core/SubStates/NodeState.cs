@@ -4,7 +4,7 @@ namespace Core
 {
     public class NodeState: SubState
     {
-        private Node m_currentNode;
+        private int m_nodeIdx;
         
         private StateMachine<ActionState> m_actionState = new StateMachine<ActionState>();
 
@@ -21,6 +21,11 @@ namespace Core
 
         public override SubStateType type => SubStateType.NodeState;
 
+        public NodeState(int nodeIdx)
+        {
+            m_nodeIdx = nodeIdx;
+        }
+        
         public override void Enter(SubState last)
         {
             DialogueUI.Instance.gameObject.SetActive(true);
@@ -30,7 +35,8 @@ namespace Core
             CharacterPropertiesUI.Instance.gameObject.SetActive(true);
             GameOverUI.Instance.gameObject.SetActive(false);
 
-            
+            var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
+            node.GetActiveEvents();
         }
 
         public override void Exit()

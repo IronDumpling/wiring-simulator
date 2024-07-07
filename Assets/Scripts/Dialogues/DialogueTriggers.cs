@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -45,6 +45,16 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
             };
             buttons.Add(button);
         }
+        
+        Button btn = m_button.Instantiate().Q<Button>();
+        Length wid = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
+        btn.style.width = new StyleLength(wid);
+
+        btn.text = "Departure";
+        btn.clicked += () => {
+            GameManager.Instance.ChangeToMapSelectionState();
+        };
+        buttons.Add(btn);
     }
 
     void DisplayButtons(){

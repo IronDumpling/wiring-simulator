@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class Node{
     [SerializeReference] private List<Event> m_events = new();
     [SerializeField] private Event m_startingEvent;
 
-    public Event startingEvent => m_startingEvent;
+    
 
     public void AddPath(int pathIdx)
     {
@@ -41,6 +42,14 @@ public class Node{
         m_events = events;
     }
 
+    public Event startingEvent => m_startingEvent;
+    
+    public List<int> GetAllPath() => new List<int>(m_paths);
+    
+    
+
+    public List<Event> GetActiveEvents() => m_events;
+    
     public void OpenNode(){
         DialogueTriggers.Instance.DisplayNode(m_events);
     }

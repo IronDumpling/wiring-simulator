@@ -2,6 +2,15 @@
 
 namespace Core
 {
+    public enum ActionStateType
+    {
+        DialogueState,
+        IdleState,
+        MapSelectionState,
+        NodeBackPackState,
+        PathBackPackState,
+        WalkingState
+    }
     public class ActionState: IState<ActionState>
     {
         protected SubState m_parent;

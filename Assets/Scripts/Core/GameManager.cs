@@ -17,6 +17,8 @@ namespace Core
         private TimeStatManager m_timeStateManager;
         private Time m_time;
         private Map m_map;
+        
+        
 
         protected override void Init(){
             if(m_characterSetUp == null){
@@ -52,10 +54,10 @@ namespace Core
             m_timeStateManager.Update(GetTime());
             
             // Change that to a event
-            if (WorldState.instance.currentState.type != SubStateType.GameOverState &&
+            if (WorldState.instance.currentState?.type != SubStateType.GameOverState &&
                 (GetCharacter().GetHP() <= 0 || GetCharacter().GetSAN() <= 0))
             {
-                WorldState.instance.nextState = new GameOverState();
+                ChangeToGameOverState();
             }
         }
 
@@ -71,6 +73,8 @@ namespace Core
             return m_timeStateManager;
         }
     
+        public Map GetMap() => m_map;
+        
         #region Time
         public int GetTime(){
             return m_time.currentTime;
@@ -102,6 +106,36 @@ namespace Core
         public void UnRegisterTimeEvent(UnityAction<int, string> act)
         {
             m_time.timeOnChanged.RemoveListener(act);
+        }
+        #endregion
+
+        #region StateMachine
+
+        public void ChangeToNodeState()
+        {
+            
+        }
+
+        public void ChangeToPathState()
+        {
+            
+        }
+
+        public void ChangeToGameOverState()
+        {
+            WorldState.instance.nextState = new GameOverState();
+        }
+
+        public void ChangeToDialogueState()
+        {
+            var cur = WorldState.instance.currentState;
+            
+            
+        }
+
+        public void ChangeToMapSelectionState()
+        {
+            
         }
         #endregion
     }
