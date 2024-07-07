@@ -14,9 +14,9 @@
             DialogueTriggers.Instance.gameObject.SetActive(false);
             BackpackUI.Instance.gameObject.SetActive(false);
             
-            
-            m_event.StartEvent();
             m_event.RegisterOnFinishEvent(NotifyFinished);
+            m_event.StartEvent();
+            
         }
         
         private void NotifyFinished()
