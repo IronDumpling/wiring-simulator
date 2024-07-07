@@ -144,9 +144,27 @@ namespace Core
             
         }
 
+        public void ChangeToNormalState()
+        {
+            var cur = WorldState.instance.currentState;
+
+            if (cur.type == SubStateType.NodeState)
+            {
+                var nodeState = (NodeState)cur;
+                nodeState.nextAction = new IdleState();
+
+            }
+        }
+
         public void ChangeToMapSelectionState()
         {
-            // WorldState.instance.nextState = new MapSelectionState(nodeIdx);
+            var cur = WorldState.instance.currentState;
+
+            if (cur.type == SubStateType.NodeState)
+            {
+                // To DO
+
+            }
         }
         #endregion
     }

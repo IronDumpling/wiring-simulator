@@ -57,18 +57,18 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
-    }
-
-    private void Start(){
+        
+        
         DisplayButtons();
         DisplayCategoryButtons();
         DisplayOneCategory(ObjectCategory.Tools);
         DisplayLoad();
         DisplayStatus();
-        //OpenPanel(); // TODO ClosePanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
+        
     }
+
 
     private void Update(){
 
