@@ -29,8 +29,6 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
         InitDepartureButton();
         DisplayButtons();
     }
-    
-    
 
     public void DisplayPanel(){
         root.style.display = DisplayStyle.Flex;
@@ -77,8 +75,6 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
             };
             buttons.Add(button);
         }
-        
-        
     }
 
     private void InitDepartureButton()
