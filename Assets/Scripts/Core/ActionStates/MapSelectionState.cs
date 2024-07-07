@@ -72,8 +72,11 @@ namespace Core
 
             int idx = 0;
             foreach(GameObject possiblePath in possiblePaths){
-                if(obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
+                if (obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
+                {
                     GameManager.Instance.ChangeToPathState(possiblePathIndexs[idx]);
+                }
+                    
                 idx++;
             }
         }

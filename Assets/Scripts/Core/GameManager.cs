@@ -125,7 +125,8 @@ namespace Core
 
         public void ChangeToPathState(int pathIdx)
         {
-            
+            m_map.ChoosePath(pathIdx);
+            WorldState.instance.nextState = new PathState(pathIdx);
         }
 
         public void ChangeToGameOverState()

@@ -99,6 +99,7 @@ namespace World
         public void RegisterOnDistanceChanged(UnityAction<int, int> callback)
         {
             if (callback != null) m_onDistanceChanged.AddListener(callback);
+            m_onDistanceChanged.Invoke(m_distance, m_accumulatedDistance);
         }
 
         public void UnregisterOnDistanceChanged(UnityAction<int, int> callback)

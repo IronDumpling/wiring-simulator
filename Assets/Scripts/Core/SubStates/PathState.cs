@@ -41,6 +41,7 @@ namespace Core
             // BackpackUI.Instance.gameObject.SetActive(false);
             // CharacterPropertiesUI.Instance.gameObject.SetActive(false);
             // DialogueTriggers.Instance.gameObject.SetActive(false);
+            GameManager.Instance.GetMap().ArriveAtDestination();
             Debug.Log("Exit Path State");
         }
         
