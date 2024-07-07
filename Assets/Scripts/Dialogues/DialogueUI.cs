@@ -44,7 +44,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
 
     [Header("Dialogue Content")]
     [SerializeField] private TextAsset m_globalnk;
-    [SerializeField] private TextAsset m_defaultInk;
+    // [SerializeField] private TextAsset m_defaultInk;
     
     #region Life Cycles
     private void Awake(){
@@ -65,8 +65,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void Start(){   
-        OpenPanel();
-        BeginDialogue(m_defaultInk);
+        // OpenPanel();
+        // BeginDialogue(m_defaultInk);
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
         m_body.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
@@ -419,8 +419,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #region Tags
     private void HandleTags(List<string> tags){
         foreach (string tag in tags) {
-            Debug.Log("Current tag " + tag);
-
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2) {
                 Debug.LogError("Tag could not be appropriately parsed: " + tag);

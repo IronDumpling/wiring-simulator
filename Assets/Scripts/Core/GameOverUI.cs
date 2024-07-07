@@ -21,7 +21,7 @@ namespace Core
             m_root = m_doc.rootVisualElement;
             m_panel = m_root.Q<VisualElement>(name: "panel");
             if(m_backButton == null) DisplayBackButton();
-            ClosePanel();
+            HidePanel();
         }
 
         private void DisplayBackButton(){
@@ -34,11 +34,11 @@ namespace Core
             m_panel.Add(m_backButton);
         }
 
-        public void OpenPanel(){
+        public void DisplayPanel(){
             m_root.style.display = DisplayStyle.Flex;
         }
 
-        public void ClosePanel(){
+        public void HidePanel(){
             m_root.style.display = DisplayStyle.None;
         }
     }

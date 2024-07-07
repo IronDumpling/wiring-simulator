@@ -28,23 +28,32 @@ namespace Core
         
         public override void Enter(SubState last)
         {
-            DialogueUI.Instance.gameObject.SetActive(true);
-            BackpackUI.Instance.gameObject.SetActive(true);
-            DialogueTriggers.Instance.gameObject.SetActive(true);
             
-            CharacterPropertiesUI.Instance.gameObject.SetActive(true);
-            GameOverUI.Instance.ClosePanel();
+            DialogueUI.Instance.DisplayPanel();
+            DialogueUI.Instance.ClosePanel();
+            
+            BackpackUI.Instance.DisplayPanel();
+            BackpackUI.Instance.ClosePanel();
+            BackpackUI.Instance.RegisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
+            GameOverUI.Instance.HidePanel();
+            
+            
+            CharacterPropertiesUI.Instance.DisplayPanel();
 
             var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
-            node.GetActiveEvents();
+            node.OpenNode();
+            
+            GameManager.Instance.ChangeToDialogueState(node.startingEvent);
+            // var node = GameManager.Instance.GetMap().GetNode(m_nodeIdx);
+            // node.GetActiveEvents();
         }
 
         public override void Exit()
         {
-            DialogueUI.Instance.gameObject.SetActive(false);
-            BackpackUI.Instance.gameObject.SetActive(false);
-            CharacterPropertiesUI.Instance.gameObject.SetActive(false);
-            DialogueTriggers.Instance.gameObject.SetActive(false);
+            if (currentAction!= null) currentAction.Exit();
+            
+            BackpackUI.Instance.UnregisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
+            
         }
 
         public override void Update()
@@ -68,6 +77,16 @@ namespace Core
                 state.LateUpdate();
                 m_actionState.isLocked = false;
             }
+        }
+
+        private void OnBackpackOpen()
+        {
+            GameManager.Instance.ChangeToBackpackState();
+        }
+
+        private void OnBackpackClose()
+        {
+            GameManager.Instance.ChangeToNormalState();
         }
     }
 }

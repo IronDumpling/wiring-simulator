@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 using Core;
+using UnityEngine.Events;
 
 public class BackpackUI : MonoSingleton<BackpackUI>{
     [Header("UI")]
@@ -30,6 +31,9 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
     private VisualTreeAsset m_slot;
     private VisualTreeAsset m_category;
 
+    private UnityEvent m_onBackpackOpen = new UnityEvent();
+    private UnityEvent m_onBackpackClose = new UnityEvent();
+    
     [Header("Logic")]
     private ObjectCategory m_currCategory = ObjectCategory.Tools;
 
@@ -57,18 +61,18 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         
         m_slot = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectSlot");
         m_category = Resources.Load<VisualTreeAsset>("Frontends/Documents/Backpack/ObjectCategory");
-    }
-
-    private void Start(){
+        
+        
         DisplayButtons();
         DisplayCategoryButtons();
         DisplayOneCategory(ObjectCategory.Tools);
         DisplayLoad();
         DisplayStatus();
-        OpenPanel(); // TODO ClosePanel();
         m_card.style.visibility = Visibility.Hidden;
         m_openButton.style.display = DisplayStyle.None;
+        
     }
+
 
     private void Update(){
 
@@ -115,6 +119,18 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
         m_root.style.display = DisplayStyle.Flex;
     }
 
+    public void RegisterBackpackCallBack(UnityAction open, UnityAction close)
+    {
+        if (open != null) m_onBackpackOpen.AddListener(open);
+        if (close != null) m_onBackpackClose.AddListener(close);
+    }
+    
+    public void UnregisterBackpackCallBack(UnityAction open, UnityAction close)
+    {
+        if (open != null) m_onBackpackOpen.RemoveListener(open);
+        if (close != null) m_onBackpackClose.RemoveListener(close);
+    }
+    
     private void DisplayButtons(){
         m_openButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
         m_root.Add(m_openButton);
@@ -122,6 +138,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
         m_openButton.clicked += () => {
             OpenPanel();
+            m_onBackpackOpen?.Invoke();
         };
 
         m_closeButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/CloseButton").Instantiate().Q<Button>();
@@ -129,6 +146,7 @@ public class BackpackUI : MonoSingleton<BackpackUI>{
 
         m_closeButton.clicked += () => {
             ClosePanel();
+            m_onBackpackClose?.Invoke();
         };
     }
     #endregion

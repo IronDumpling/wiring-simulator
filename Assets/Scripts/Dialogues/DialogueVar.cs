@@ -43,12 +43,12 @@ public class DialogueVar{
 
     public void StartListening(Story story) {
         // it's important that VariablesToStory is before assigning the listener!
-        VariablesToStory(story);
-        story.variablesState.variableChangedEvent += VariableChanged;
+    //     VariablesToStory(story);
+    //     story.variablesState.variableChangedEvent += VariableChanged;
     }
 
     public void StopListening(Story story) {
-        story.variablesState.variableChangedEvent -= VariableChanged;
+        //story.variablesState.variableChangedEvent -= VariableChanged;
     }
 
     private void VariableChanged(string name, Ink.Runtime.Object value) {

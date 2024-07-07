@@ -86,4 +86,12 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
         hourMin.text = tokens[1];
         yrMonD.text = tokens[0];
     }
+    
+    public void HidePanel(){
+        m_document.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    public void DisplayPanel(){
+        m_document.rootVisualElement.style.display = DisplayStyle.Flex;
+    }
 }
