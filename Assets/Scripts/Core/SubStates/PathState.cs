@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core
 {
@@ -33,6 +34,16 @@ namespace Core
             Debug.Log("Enter Path State");
 
             var path = GameManager.Instance.GetMap().GetPath(m_pathIdx);
+
+            var pathManager = GameManager.Instance.GetPathManager();
+            var evts = path.events;
+            var checkPoints = new List<int>();
+            foreach (var evt in evts)
+            {
+                checkPoints.Add(evt.triggerDistance);
+            }
+
+            //pathManager.InitManager(path.distance, checkPoints,);
         }
 
         public override void Exit()
@@ -42,7 +53,7 @@ namespace Core
             // BackpackUI.Instance.gameObject.SetActive(false);
             // CharacterPropertiesUI.Instance.gameObject.SetActive(false);
             // DialogueTriggers.Instance.gameObject.SetActive(false);
-            GameManager.Instance.GetMap().ArriveAtDestination();
+            
             Debug.Log("Exit Path State");
         }
         
@@ -67,6 +78,17 @@ namespace Core
                 state.LateUpdate();
                 m_actionState.isLocked = false;
             }
+        }
+
+        private void OnArrival()
+        {
+            GameManager.Instance.GetMap().ArriveAtDestination();
+            GameManager.Instance.ChangeToNodeState(GameManager.Instance.GetMap().currNodeIdx);
+        }
+
+        private void OnCheckPoint(int dis)
+        {
+            
         }
     }
 }

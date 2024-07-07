@@ -22,7 +22,7 @@ namespace Events
         [SerializeReference]
         private List<Tuple<SkillType, ModifierType>> m_skillModifier;
 
-        
+        public int triggerDistance => m_triggerDistance;
 
         public void SetPath(int path)
         {

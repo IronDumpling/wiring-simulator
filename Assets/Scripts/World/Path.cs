@@ -25,6 +25,8 @@ public class Path{
     public int to => m_endNode;
     public int distance => m_distance;
     public PathStatus status => m_status;
+
+    public List<PathEvent> events => m_events;
     
     public Path()
     {
