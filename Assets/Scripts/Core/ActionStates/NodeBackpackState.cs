@@ -19,6 +19,7 @@ namespace Core
         {
             DialogueUI.Instance.ClearDialogue();
             DialogueUI.Instance.ClosePanel();
+            Debug.Log("Exit Node Backpack state");
         }
     }
 }

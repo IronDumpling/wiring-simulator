@@ -21,6 +21,10 @@ public static class Constants{
     public const int DAY_TO_HOUR = 24;
     public const int HOUR_TO_MIN = 60;
     public const int TIME_UNIT = 30;
+    
+    //speed
+    public const float MOVE_DURATION_ONE_METER = 48f / 100f;    // how many 30 min need to use to move 1 m
+    public const float GAME_TIME_TO_REAL_TIME = 2;              // how many real time in s passed for 30 min
 
     // UI
     public const float TYPE_SPEED = 0.04f;

@@ -87,6 +87,8 @@ namespace Core
         private void OnPathPressed(int pathIdx)
         {
             // enter Path state
+            GameManager.Instance.GetMap().ChoosePath(pathIdx);
+            
             GameManager.Instance.ChangeToPathState(pathIdx);
         }
     }
