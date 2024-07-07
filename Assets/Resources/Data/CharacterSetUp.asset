@@ -64,8 +64,6 @@ MonoBehaviour:
   initialObjects:
   - m_name: "\u888B\u88C5\u6CE1\u9762"
     m_count: 1
-  - m_name: "\u9762\u5305"
-    m_count: 5
   - m_name: "\u963F\u83AB\u897F\u6797"
     m_count: 1
   - m_name: "\u74F6\u88C5\u6C34"
