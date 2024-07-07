@@ -13,6 +13,7 @@ namespace Core
             BackpackUI.Instance.DisplayPanel();
             
             DialogueTriggers.Instance.HidePanel();
+            PathUI.Instance.HidePanel();
         }
 
         public override void Exit()

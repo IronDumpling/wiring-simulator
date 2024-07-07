@@ -8,9 +8,13 @@ namespace Core
         {
             Debug.Log("Enter Idle State");
             DialogueUI.Instance.DisplayPanel();
+
             BackpackUI.Instance.DisplayPanel();
             BackpackUI.Instance.ClosePanel();
+
             DialogueTriggers.Instance.DisplayPanel();
+            
+            PathUI.Instance.HidePanel();
         }
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Events;
+
 using UnityEngine;
+
+using Events;
 
 public enum PathStatus{
     NotDiscovered,
@@ -27,22 +29,23 @@ public class Path{
     public PathStatus status => m_status;
 
     public List<PathEvent> events => m_events;
-    
+
     public Path()
     {
+
     }
 
     public Path(PathStatus status, int sNode, int eNode, int dist){
         m_status = status;
         m_startNode = sNode;
         m_endNode = eNode;
-        m_distance = dist; 
+        m_distance = dist;
     }
 
     public Path( int sNode, int eNode, int dist){
         m_startNode = sNode;
         m_endNode = eNode;
-        m_distance = dist; 
+        m_distance = dist;
     }
 
     public static Path CreatePath(PathStatus status, int from, int to, int dist, List<PathEvent> evts)

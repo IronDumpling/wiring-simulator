@@ -33,12 +33,10 @@ namespace Core
             foreach(Transform child in nodeParent.transform){
                 m_nodes.Add(child.gameObject);
             }
-            Debug.Log("number of nodes " + m_nodes.Count);
 
             foreach(Transform child in pathParent.transform){
                 m_paths.Add(child.gameObject);
             }
-            Debug.Log("number of paths " + m_paths.Count);
         }
 
         public override void Enter(ActionState last)
@@ -47,6 +45,7 @@ namespace Core
             DialogueUI.Instance.HidePanel();
             GameOverUI.Instance.HidePanel();
             DialogueTriggers.Instance.HidePanel();
+            PathUI.Instance.HidePanel();
 
             MouseClick.Instance.onClick.AddListener(OnCurrentNodePressed);
             MouseClick.Instance.onClick.AddListener(OnPathPressed);
@@ -59,7 +58,8 @@ namespace Core
 
         private void OnCurrentNodePressed(GameObject obj)
         {
-            if(obj.transform.parent != null && obj.transform.parent.name == m_nodes[m_nodeIdx].name)
+            if(obj.transform.parent != null 
+            && obj.transform.parent.name == m_nodes[m_nodeIdx].name)
                 GameManager.Instance.ChangeToNormalState();
         }
 
@@ -72,11 +72,9 @@ namespace Core
 
             int idx = 0;
             foreach(GameObject possiblePath in possiblePaths){
-                if (obj.transform.parent != null && obj.transform.parent.name == possiblePath.name)
-                {
+                if (obj.transform.parent != null 
+                && obj.transform.parent.name == possiblePath.name)
                     GameManager.Instance.ChangeToPathState(possiblePathIndexs[idx]);
-                }
-                    
                 idx++;
             }
         }
