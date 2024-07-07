@@ -81,5 +81,9 @@ VAR know_the_rob = false
 
 VAR hit_point_1 = 0
 
+//Path 1 的初始参数
+
+VAR know_the_cheat_1 = false
+
 
 
