@@ -16,7 +16,6 @@ namespace Core
             DialogueUI.Instance.DisplayPanel();
             BackpackUI.Instance.HidePanel();
             DialogueTriggers.Instance.HidePanel();
-            PathUI.Instance.HidePanel();
             
             m_event.RegisterOnFinishEvent(NotifyFinished);
             m_event.StartEvent();

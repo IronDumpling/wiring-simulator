@@ -42,7 +42,6 @@ namespace Core
             }
             
             pathManager.InitManager(path.distance, checkPoints, OnCheckPoint, OnArrival);
-            pathManager.RegisterOnDistanceChanged(((total, curent) => Debug.Log($"Total {total}, current {curent}")));
             DialogueUI.Instance.HidePanel();
             DialogueTriggers.Instance.HidePanel();
 
