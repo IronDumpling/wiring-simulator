@@ -52,7 +52,7 @@ namespace Core
             BackpackUI.Instance.ClosePanel();
             BackpackUI.Instance.RegisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
             
-            GameWinUI.Instance.HidePanel();
+            //GameWinUI.Instance.HidePanel();
             GameOverUI.Instance.HidePanel();
 
             GameManager.Instance.ChangeToNormalState();

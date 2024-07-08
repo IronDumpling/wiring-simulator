@@ -14,7 +14,7 @@ namespace Core
             BackpackUI.Instance.HidePanel();
 
 
-            GameWinUI.Instance.HidePanel();
+            //GameWinUI.Instance.HidePanel();
             PathUI.Instance.HidePanel();
             
             GameOverUI.Instance.DisplayPanel();
