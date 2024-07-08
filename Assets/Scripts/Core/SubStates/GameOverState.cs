@@ -9,6 +9,14 @@ namespace Core
 
         public override void Enter(SubState last)
         {
+            DialogueUI.Instance.HidePanel();
+
+            BackpackUI.Instance.HidePanel();
+
+
+            GameWinUI.Instance.HidePanel();
+            PathUI.Instance.HidePanel();
+            
             GameOverUI.Instance.DisplayPanel();
             // To Do: Set Map to false
         }

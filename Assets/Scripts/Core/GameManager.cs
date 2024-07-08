@@ -191,6 +191,10 @@ namespace Core
             {
                 var nodeState = (NodeState)cur;
                 nodeState.nextAction = new NodeBackpackState();
+            }else if (cur.type == SubStateType.PathState)
+            {
+                var pathState = (PathState)cur;
+                pathState.nextAction = new PathBackpackState();
             }
         }
         #endregion
