@@ -39,7 +39,6 @@ public class PathUI : MonoSingleton<PathUI>{
             float curRate = (float)e.triggerDistance / (float)distance * 100;
             width = new Length(curRate - rate - EVENT_WIDTH, LengthUnit.Percent);
             beforeSection.style.width = new StyleLength(width);
-            beforeSection.style.backgroundColor = Color.white;
 
             Label eventSection = new();
             width = new Length(EVENT_WIDTH, LengthUnit.Percent);
@@ -55,7 +54,6 @@ public class PathUI : MonoSingleton<PathUI>{
         VisualElement restSection = new();
         width = new Length(100 - rate, LengthUnit.Percent);
         restSection.style.width = new StyleLength(width);
-        restSection.style.backgroundColor = Color.white;
         m_bar.Add(restSection);
     }
 
@@ -64,7 +62,7 @@ public class PathUI : MonoSingleton<PathUI>{
             m_progress.text = "0%";
             return;
         }
-        float rate = (float)curr / (float)total;
+        float rate = (float)curr / (float)total * 100;
         m_progress.text = rate + "%";
     }
 

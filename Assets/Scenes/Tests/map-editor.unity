@@ -319,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: triggerDistance
-      value: 160
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -555,7 +555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: triggerDistance
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6433326451988039288, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: m_Name
@@ -667,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: triggerDistance
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: skillModifier.Array.data[0].skillType
@@ -742,7 +742,7 @@ PrefabInstance:
     - target: {fileID: 2916243009414504075, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: ink
       value: 
-      objectReference: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
+      objectReference: {fileID: 4900000, guid: bbfe07d377ebf4499abe40a7f8a3b615, type: 3}
     - target: {fileID: 3862626615023558952, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: m_Name
       value: Node 2
@@ -1165,7 +1165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: triggerDistance
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5321181426295620117, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1225,7 +1225,7 @@ PrefabInstance:
       objectReference: {fileID: 6526785289359494142}
     - target: {fileID: 8721057433804693017, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: distance
-      value: 200
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1283,7 +1283,7 @@ PrefabInstance:
     - target: {fileID: 2916243009414504075, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: ink
       value: 
-      objectReference: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
+      objectReference: {fileID: 4900000, guid: 808907ad3357349d6b1a70fe2052e5d1, type: 3}
     - target: {fileID: 3862626615023558952, guid: 721d5085c4e5d49478eb8aa57398702e, type: 3}
       propertyPath: m_Name
       value: Node 0
