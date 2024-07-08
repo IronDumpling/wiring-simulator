@@ -138,6 +138,8 @@ namespace World
                 {
                     m_onCheckPoints.Invoke(checkPoint);
                 }
+
+                break;
             }
             if (accumulatedDistance >= distance)
             {
