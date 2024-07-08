@@ -27,8 +27,9 @@ public class Path{
     public int to => m_endNode;
     public int distance => m_distance;
     public PathStatus status => m_status;
+
     public List<PathEvent> events => m_events;
-    
+
     public Path()
     {
 
@@ -38,13 +39,13 @@ public class Path{
         m_status = status;
         m_startNode = sNode;
         m_endNode = eNode;
-        m_distance = dist; 
+        m_distance = dist;
     }
 
     public Path( int sNode, int eNode, int dist){
         m_startNode = sNode;
         m_endNode = eNode;
-        m_distance = dist; 
+        m_distance = dist;
     }
 
     public static Path CreatePath(PathStatus status, int from, int to, int dist, List<PathEvent> evts)

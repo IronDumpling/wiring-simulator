@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Events;
+using UnityEngine;
 
 namespace Core
 {
     public class PathState: SubState
     {
         public override SubStateType type => SubStateType.PathState;
-        
+
         private int m_pathIdx;
-        
+        private List<PathEvent> m_events;
         private StateMachine<ActionState> m_actionState = new StateMachine<ActionState>();
 
         public ActionState currentAction => m_actionState.current;
@@ -30,7 +32,17 @@ namespace Core
         {
             Debug.Log("Enter Path State");
             var path = GameManager.Instance.GetMap().GetPath(m_pathIdx);
-
+            var pathManager = GameManager.Instance.GetPathManager();
+            m_events = path.events;
+            
+            var checkPoints = new List<int>();
+            foreach (var evt in m_events)
+            {
+                checkPoints.Add(evt.triggerDistance);
+            }
+            
+            pathManager.InitManager(path.distance, checkPoints, OnCheckPoint, OnArrival);
+            pathManager.RegisterOnDistanceChanged(((total, curent) => Debug.Log($"Total {total}, current {curent}")));
             DialogueUI.Instance.HidePanel();
             DialogueTriggers.Instance.HidePanel();
 
@@ -40,16 +52,18 @@ namespace Core
             BackpackUI.Instance.DisplayPanel();
             BackpackUI.Instance.ClosePanel();
 
-            
+            GameManager.Instance.ChangeToNormalState();
         }
 
         public override void Exit()
         {
+            if (currentAction!= null) currentAction.Exit();
+
+            PathUI.Instance.HidePanel();
             Debug.Log("Exit Path State");
-            if(currentAction!= null) currentAction.Exit();
             GameManager.Instance.GetMap().ArriveAtDestination();
         }
-        
+
         public override void Update()
         {
             var state = m_actionState.current;
@@ -70,6 +84,24 @@ namespace Core
                 m_actionState.isLocked = true;
                 state.LateUpdate();
                 m_actionState.isLocked = false;
+            }
+        }
+
+        private void OnArrival()
+        {
+            GameManager.Instance.GetMap().ArriveAtDestination();
+            GameManager.Instance.ChangeToNodeState(GameManager.Instance.GetMap().currNodeIdx);
+        }
+
+        private void OnCheckPoint(int dis)
+        {
+            foreach (var evt in m_events)
+            {
+                if (evt.triggerDistance == dis)
+                {
+                    GameManager.Instance.ChangeToDialogueState(evt);
+                    break;
+                }
             }
         }
     }

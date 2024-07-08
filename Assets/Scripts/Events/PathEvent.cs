@@ -18,25 +18,25 @@ namespace Events
         private int m_diceCount;
         [SerializeField] private int m_diceMaxFace;
         [SerializeField] private CheckLevel m_level;
-        
+
         [SerializeReference]
         private List<Tuple<SkillType, ModifierType>> m_skillModifier;
 
-        public int triggerDistance { get { return m_triggerDistance;}}
+        public int triggerDistance => m_triggerDistance;
 
         public void SetPath(int path)
         {
             m_path = path;
-            
+
         }
 
         public bool Check()
         {
             return CheckManager.Instance.DiceCheck(m_diceCount, m_diceMaxFace, m_skillModifier, m_level);
         }
-        
+
         public static PathEvent CreatePathEvent(TextAsset newInk, EventTrigger triggerType, List<ObjectEffect> newEffects,
-                                         int triggerDist, int diceCount, int maxFaces,  CheckLevel level, 
+                                         int triggerDist, int diceCount, int maxFaces,  CheckLevel level,
                                          List<Tuple<SkillType, ModifierType>> modifiers)
         {
             var evt = new PathEvent
@@ -50,8 +50,8 @@ namespace Events
                 m_level = level,
                 m_skillModifier = new List<Tuple<SkillType, ModifierType>>(modifiers)
             };
-            
-            
+
+
             return evt;
         }
     }
