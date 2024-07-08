@@ -50,6 +50,10 @@ namespace Core
 
             BackpackUI.Instance.DisplayPanel();
             BackpackUI.Instance.ClosePanel();
+            BackpackUI.Instance.RegisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
+            
+            GameWinUI.Instance.HidePanel();
+            GameOverUI.Instance.HidePanel();
 
             GameManager.Instance.ChangeToNormalState();
         }
@@ -59,6 +63,7 @@ namespace Core
             if (currentAction!= null) currentAction.Exit();
 
             PathUI.Instance.HidePanel();
+            BackpackUI.Instance.UnregisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
             Debug.Log("Exit Path State");
             GameManager.Instance.GetMap().ArriveAtDestination();
         }
@@ -103,5 +108,17 @@ namespace Core
                 }
             }
         }
+        
+        private void OnBackpackOpen()
+        {
+            Debug.Log("Hello");
+            GameManager.Instance.ChangeToBackpackState();
+        }
+
+        private void OnBackpackClose()
+        {
+            GameManager.Instance.ChangeToNormalState();
+        }
+        
     }
 }

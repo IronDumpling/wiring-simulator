@@ -37,6 +37,7 @@ namespace Core
             BackpackUI.Instance.ClosePanel();
             BackpackUI.Instance.RegisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
             GameOverUI.Instance.HidePanel();
+            GameWinUI.Instance.HidePanel();
             PathUI.Instance.HidePanel();
             
             CharacterPropertiesUI.Instance.DisplayPanel();
