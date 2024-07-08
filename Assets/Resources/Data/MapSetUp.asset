@@ -17,17 +17,17 @@ MonoBehaviour:
     m_paths: 00000000
     m_events: []
     m_startingEvent:
-      m_ink: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
+      m_ink: {fileID: 4900000, guid: 808907ad3357349d6b1a70fe2052e5d1, type: 3}
       m_effects:
-      - rid: 75769718282911972
+      - rid: 75769718282912067
       m_trigger: 1
   - m_status: 0
     m_paths: 01000000
     m_events:
-    - rid: 75769718282911973
-    - rid: 75769718282911974
-    - rid: 75769718282911975
-    - rid: 75769718282911976
+    - rid: 75769718282912068
+    - rid: 75769718282912069
+    - rid: 75769718282912070
+    - rid: 75769718282912071
     m_startingEvent:
       m_ink: {fileID: 4900000, guid: 3a664b1fcf83b4a8e8bc2d908c6998e0, type: 3}
       m_effects: []
@@ -36,146 +36,146 @@ MonoBehaviour:
     m_paths: 
     m_events: []
     m_startingEvent:
-      m_ink: {fileID: 4900000, guid: f04d38b5674b24b8e81a6c0c671e9fa4, type: 3}
+      m_ink: {fileID: 4900000, guid: bbfe07d377ebf4499abe40a7f8a3b615, type: 3}
       m_effects: []
       m_trigger: 1
   paths:
   - m_status: 1
     m_startNode: 0
     m_endNode: 1
-    m_distance: 200
+    m_distance: 50
     m_events:
-    - rid: 75769718282911977
-    - rid: 75769718282911978
-    - rid: 75769718282911979
+    - rid: 75769718282912072
+    - rid: 75769718282912073
+    - rid: 75769718282912074
   - m_status: 1
     m_startNode: 1
     m_endNode: 2
     m_distance: 100
     m_events:
-    - rid: 75769718282911980
-    - rid: 75769718282911981
+    - rid: 75769718282912075
+    - rid: 75769718282912076
   entryNodeIdx: 0
   references:
     version: 2
     RefIds:
-    - rid: 75769718282911972
+    - rid: 75769718282912067
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 30
-    - rid: 75769718282911973
+    - rid: 75769718282912068
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 176f521691c374ee29f0f7f952a82fbf, type: 3}
         m_effects:
-        - rid: 75769718282911982
+        - rid: 75769718282912077
         m_trigger: 1
-    - rid: 75769718282911974
+    - rid: 75769718282912069
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: d742a885deed347bc8a3901ace6a3f21, type: 3}
         m_effects:
-        - rid: 75769718282911983
+        - rid: 75769718282912078
         m_trigger: 1
-    - rid: 75769718282911975
+    - rid: 75769718282912070
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: c0fcbcc8b0a114382abd008352ad2d7b, type: 3}
         m_effects:
-        - rid: 75769718282911984
+        - rid: 75769718282912079
         m_trigger: 1
-    - rid: 75769718282911976
+    - rid: 75769718282912071
       type: {class: Event, ns: , asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 871b696b824ed4f0a8e22ea052cfd71c, type: 3}
         m_effects:
-        - rid: 75769718282911985
+        - rid: 75769718282912080
         m_trigger: 1
-    - rid: 75769718282911977
+    - rid: 75769718282912072
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: c537c1cfa71884c4583e1f81c7cdeef0, type: 3}
         m_effects:
-        - rid: 75769718282911986
+        - rid: 75769718282912081
         m_trigger: 1
         m_path: 0
-        m_triggerDistance: 2
+        m_triggerDistance: 10
         m_diceCount: 6
         m_diceMaxFace: 2
         m_level: 0
-    - rid: 75769718282911978
+    - rid: 75769718282912073
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: 23a32a8a30ce9b24d906afbd4b8647b0, type: 3}
         m_effects: []
         m_trigger: 1
         m_path: 0
-        m_triggerDistance: 80
+        m_triggerDistance: 20
         m_diceCount: 5
         m_diceMaxFace: 5
         m_level: 0
-    - rid: 75769718282911979
+    - rid: 75769718282912074
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: b822de4ac5dc7f94489c25b9bb0c022e, type: 3}
         m_effects: []
         m_trigger: 1
         m_path: 0
-        m_triggerDistance: 160
+        m_triggerDistance: 40
         m_diceCount: 5
         m_diceMaxFace: 5
         m_level: 0
-    - rid: 75769718282911980
+    - rid: 75769718282912075
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: cad4324222c9f05449f17469dd18ec49, type: 3}
         m_effects:
-        - rid: 75769718282911987
+        - rid: 75769718282912082
         m_trigger: 1
         m_path: 0
-        m_triggerDistance: 1
+        m_triggerDistance: 30
         m_diceCount: 2
         m_diceMaxFace: 6
         m_level: 2
-    - rid: 75769718282911981
+    - rid: 75769718282912076
       type: {class: PathEvent, ns: Events, asm: Assembly-CSharp}
       data:
         m_ink: {fileID: 4900000, guid: f560a2c1153c93845815a728044f3265, type: 3}
         m_effects:
-        - rid: 75769718282911988
+        - rid: 75769718282912083
         m_trigger: 1
         m_path: 0
         m_triggerDistance: 60
         m_diceCount: 2
         m_diceMaxFace: 6
         m_level: 2
-    - rid: 75769718282911982
+    - rid: 75769718282912077
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 120
-    - rid: 75769718282911983
+    - rid: 75769718282912078
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 120
-    - rid: 75769718282911984
+    - rid: 75769718282912079
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 120
-    - rid: 75769718282911985
+    - rid: 75769718282912080
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 240
-    - rid: 75769718282911986
+    - rid: 75769718282912081
       type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_deltaTime: 30
-    - rid: 75769718282911987
+    - rid: 75769718282912082
       type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_modifications:
         - m_type: 0
           m_delta: 10
-    - rid: 75769718282911988
+    - rid: 75769718282912083
       type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
       data:
         m_modifications:
