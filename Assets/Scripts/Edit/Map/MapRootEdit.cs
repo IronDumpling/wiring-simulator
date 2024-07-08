@@ -40,8 +40,9 @@ namespace Edit.Map
                 pathIdx++;
 
             }
-            
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(mapSetUp);
+#endif
             Debug.Log("Save Asset");
         }
     }

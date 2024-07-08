@@ -22,8 +22,8 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     }
 
     public void DisplayEvents(List<Event> events){
-        m_texts.Clear();
-        contents.Clear();
+        m_texts?.Clear();
+        buttons?.Clear();
         m_events = new List<Event>(events);
         DisplayPanel();
         InitEvtButtons();

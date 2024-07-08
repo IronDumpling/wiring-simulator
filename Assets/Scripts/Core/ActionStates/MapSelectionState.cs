@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UI;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
-using UnityEngine.Events;
 
 namespace Core
 {

@@ -22,7 +22,7 @@ public class PathUI : MonoSingleton<PathUI>{
         m_root = m_doc.rootVisualElement;
         m_panel = m_root.Q<VisualElement>(name: "panel");
         m_progress = m_root.Q<Label>(name: "progress");
-        m_bar =  m_root.Q<VisualElement>(name: "bar");
+        m_bar = m_root.Q<VisualElement>(name: "bar");
     }
 
     private void Start(){
@@ -30,6 +30,8 @@ public class PathUI : MonoSingleton<PathUI>{
     }
 
     private void DisplayBar(List<PathEvent> events, int distance){
+        m_bar.Clear();
+        
         Length width = new();
         float rate = 0f;
         const int EVENT_WIDTH = 5;

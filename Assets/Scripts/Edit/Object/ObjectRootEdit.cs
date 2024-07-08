@@ -29,8 +29,9 @@ namespace Edit.Object
                 objectPoolSO.objects.items.Add(edit.CreateItem());
             }
             
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(objectPoolSO);
-            
+#endif
             Debug.Log("Save Asset");
         }
     }
