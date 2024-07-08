@@ -54,7 +54,9 @@ namespace Core
             
             //GameWinUI.Instance.HidePanel();
             GameOverUI.Instance.HidePanel();
-
+            
+            CharacterGO.Instance.StartMoving(path.from, path.to);
+            
             GameManager.Instance.ChangeToNormalState();
         }
 
@@ -62,6 +64,7 @@ namespace Core
         {
             if (currentAction!= null) currentAction.Exit();
 
+            CharacterGO.Instance.FinishMoving();
             PathUI.Instance.HidePanel();
             BackpackUI.Instance.UnregisterBackpackCallBack(OnBackpackOpen, OnBackpackClose);
             Debug.Log("Exit Path State");
