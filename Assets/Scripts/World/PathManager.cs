@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CharacterProperties;
 using Core;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.Controls;
 
@@ -69,6 +70,9 @@ namespace World
             
             if (checkpointCallback != null) m_onCheckPoints.AddListener(checkpointCallback);
             if (arrivalCallback != null) m_onArrival.AddListener(arrivalCallback);
+            
+
+            
 
         }
         
@@ -111,10 +115,13 @@ namespace World
         {
             
             int spd = plain + modifier;
+            
 
             float multiplier = (spd - 5) * 0.2f + 1;
 
+            multiplier = Mathf.Max(multiplier, 0.2f);
             timerInterval = Constants.MOVE_DURATION_ONE_METER / multiplier * Constants.GAME_TIME_TO_REAL_TIME;
+
 
         }
 

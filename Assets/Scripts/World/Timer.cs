@@ -81,6 +81,7 @@ namespace World
             while (m_accumulatedTime >= m_triggerInterval)
             {
                 m_callBack.Invoke();
+                m_accumulatedTime -= m_triggerInterval;
             }
         }
 

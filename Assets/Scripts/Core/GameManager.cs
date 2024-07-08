@@ -165,6 +165,10 @@ namespace Core
                 var nodeState = (NodeState)cur;
                 nodeState.nextAction = new IdleState();
 
+            }else if (cur.type == SubStateType.PathState)
+            {
+                var pathState = (PathState)cur;
+                pathState.nextAction = new WalkState();
             }
         }
 
