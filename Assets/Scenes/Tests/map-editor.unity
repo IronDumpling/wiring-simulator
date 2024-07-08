@@ -319,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: triggerDistance
-      value: 80
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 5855656947767362508, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -667,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: triggerDistance
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 236074761994034748, guid: c9dfda1eda4e622428f17637640da02e, type: 3}
       propertyPath: skillModifier.Array.data[0].skillType
@@ -1165,7 +1165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2007882052211302373, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: triggerDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5321181426295620117, guid: 42defc67ab38d9845bf738f30822fabb, type: 3}
       propertyPath: m_LocalPosition.y

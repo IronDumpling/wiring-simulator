@@ -48,8 +48,6 @@ namespace World
             }
         }
         
-
-
         public PathManager()
         {
             m_distanceTimer = Timer.GetTimer(float.MaxValue, MoveForward);
