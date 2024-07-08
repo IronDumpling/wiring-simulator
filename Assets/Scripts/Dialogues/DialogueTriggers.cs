@@ -23,6 +23,7 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
 
     public void DisplayEvents(List<Event> events){
         m_texts.Clear();
+        contents.Clear();
         m_events = new List<Event>(events);
         DisplayPanel();
         InitEvtButtons();
@@ -36,30 +37,6 @@ public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
 
     public void HidePanel(){
         root.style.display = DisplayStyle.None;
-    }
-
-    void InitButtons(){
-        foreach(TextAsset txt in m_texts){
-            Button button = m_button.Instantiate().Q<Button>();
-            Length width = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
-            button.style.width = new StyleLength(width);
-
-            button.text = txt.name;
-            button.clicked += () => {
-                DialogueUI.Instance.BeginDialogue(txt);
-            };
-            buttons.Add(button);
-        }
-        
-        Button btn = m_button.Instantiate().Q<Button>();
-        Length wid = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
-        btn.style.width = new StyleLength(wid);
-
-        btn.text = "Departure";
-        btn.clicked += () => {
-            GameManager.Instance.ChangeToMapSelectionState();
-        };
-        buttons.Add(btn);
     }
 
     private void InitEvtButtons()

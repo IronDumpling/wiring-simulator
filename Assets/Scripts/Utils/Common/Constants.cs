@@ -23,7 +23,7 @@ public static class Constants{
     public const int TIME_UNIT = 10;
     
     //speed
-    public const float MOVE_DURATION_ONE_METER =  144f / 100f;    // how many 30 min need to use to move 1 m
+    public const float MOVE_DURATION_ONE_METER =  72f / 100f;    // how many 30 min need to use to move 1 m
     public const float GAME_TIME_TO_REAL_TIME = 0.5f;              // how many real time in s passed for 30 min
 
     // UI
