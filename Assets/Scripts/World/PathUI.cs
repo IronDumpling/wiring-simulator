@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 using Events;
+using Core;
 
 public class PathUI : MonoSingleton<PathUI>{
     [SerializeField] private UIDocument m_doc;
@@ -24,32 +25,51 @@ public class PathUI : MonoSingleton<PathUI>{
         m_bar =  m_root.Q<VisualElement>(name: "bar");
     }
 
+    private void Start(){
+        GameManager.Instance.GetPathManager().RegisterOnDistanceChanged(DisplayProgress);
+    }
+
     private void DisplayBar(List<PathEvent> events, int distance){
+        Length width = new();
+        float rate = 0f;
+        const int EVENT_WIDTH = 5;
+
         foreach(PathEvent e in events){
             VisualElement beforeSection = new();
-            float rate = (float)e.triggerDistance / (float)distance * 100;
-            Length width = new Length(rate, LengthUnit.Percent);
+            float curRate = (float)e.triggerDistance / (float)distance * 100;
+            width = new Length(curRate - rate - EVENT_WIDTH, LengthUnit.Percent);
             beforeSection.style.width = new StyleLength(width);
             beforeSection.style.backgroundColor = Color.white;
 
             Label eventSection = new();
-            width = new Length(1, LengthUnit.Percent);
-            beforeSection.style.width = new StyleLength(width);
-            beforeSection.style.backgroundColor = Color.red;
-            eventSection.text = rate + "%";
+            width = new Length(EVENT_WIDTH, LengthUnit.Percent);
+            eventSection.style.width = new StyleLength(width);
+            eventSection.style.backgroundColor = Color.red;
+            eventSection.text = curRate + "%";
 
             m_bar.Add(beforeSection);
             m_bar.Add(eventSection);
+            rate = curRate;
         }
+
+        VisualElement restSection = new();
+        width = new Length(100 - rate, LengthUnit.Percent);
+        restSection.style.width = new StyleLength(width);
+        restSection.style.backgroundColor = Color.white;
+        m_bar.Add(restSection);
     }
 
-    private void DisplayProgress(){
-
+    private void DisplayProgress(int total, int curr){
+        if(total == 0){
+            m_progress.text = "0%";
+            return;
+        }
+        float rate = (float)curr / (float)total;
+        m_progress.text = rate + "%";
     }
 
     public void OpenPanel(Path path){
         DisplayBar(path.events, path.distance);
-        // DisplayProgress();
     }
 
     public void DisplayPanel(){
