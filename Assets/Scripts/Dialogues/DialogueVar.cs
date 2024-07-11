@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
-public class DialogueVar
-{
+public class DialogueVar{
     public Dictionary<string, Ink.Runtime.Object> variables { get; private set; }
     private Story globalVariablesStory;
     private const string SAVE_VAR_KEY = "INK_VARIABLES";
@@ -44,12 +43,12 @@ public class DialogueVar
 
     public void StartListening(Story story) {
         // it's important that VariablesToStory is before assigning the listener!
-        VariablesToStory(story);
-        story.variablesState.variableChangedEvent += VariableChanged;
+    //     VariablesToStory(story);
+    //     story.variablesState.variableChangedEvent += VariableChanged;
     }
 
     public void StopListening(Story story) {
-        story.variablesState.variableChangedEvent -= VariableChanged;
+        //story.variablesState.variableChangedEvent -= VariableChanged;
     }
 
     private void VariableChanged(string name, Ink.Runtime.Object value) {

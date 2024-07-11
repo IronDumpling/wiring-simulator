@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-
 
 namespace CharacterProperties
 {
@@ -60,6 +57,8 @@ namespace CharacterProperties
 
         private Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>> m_dynamicSkillEffects = new Dictionary<Tuple<DynamicType, SkillType>, List<SideEffectBlock>>();
 
+        private Dictionary<SkillType, int> m_otherSkillModifier = new Dictionary<SkillType, int>();
+
         private Dictionary<DynamicType, DynamicDropRateBlock> m_dynamicTimeEffects = new Dictionary<DynamicType, DynamicDropRateBlock>();
 
         private Dictionary<Tuple<DynamicType, CoreType>, DynamicCoreTimeEffectBlock> m_dynamicCoreTimeEffects =
@@ -108,7 +107,14 @@ namespace CharacterProperties
             RegisterDynamicSkillEvent(DynamicType.Thirst, SkillType.Speed);
             RegisterDynamicSkillEvent(DynamicType.Illness, SkillType.Speed);
             #endregion
-
+            
+            #region OtherSkillModifier
+            m_otherSkillModifier.Add(SkillType.Intelligent, 0);
+            m_otherSkillModifier.Add(SkillType.Strength, 0);
+            m_otherSkillModifier.Add(SkillType.Mind, 0);
+            m_otherSkillModifier.Add(SkillType.Speed, 0);
+            #endregion
+            
             m_globalSideEffect = new List<SideEffectBlock>(setup.globalSkillSideEffect);
             m_globalSideEffect.Sort();
 
@@ -258,6 +264,18 @@ namespace CharacterProperties
         }
         #endregion
         
+        #region OtherSkillModifier
+        private int GetSkillOtherModifiers(SkillType type)
+        {
+            return m_otherSkillModifier[type];
+        }
+
+        public void ChangeSkillOtherModifier(SkillType type, int delta)
+        {
+            m_otherSkillModifier[type] += delta;
+            m_onSkillChanged[type].Invoke(type, GetPlainSkill(type), GetSkillModifier(type));
+        }
+        #endregion
         #region DynamicCoreTimeRelation
 
         private void AddDynamicCoreTimeRelations(DynamicType dynamicType, CoreType coreType, List<SideEffectBlock> effects, int interval)
@@ -583,7 +601,7 @@ namespace CharacterProperties
 
         public int GetPlainIntelligent() => m_intelligent.current;
 
-        public int GetIntelligentModifier() => GetSkillModifier(SkillType.Intelligent);
+        public int GetIntelligentModifier() => GetSkillModifier(SkillType.Intelligent) + m_otherSkillModifier[SkillType.Intelligent];
 
         public void SetIntelligent(int val)
         {
@@ -609,7 +627,7 @@ namespace CharacterProperties
 
         public int GetPlainMind() => m_mind.current;
 
-        public int GetMindModifier() => GetSkillModifier(SkillType.Mind);
+        public int GetMindModifier() => GetSkillModifier(SkillType.Mind) + m_otherSkillModifier[SkillType.Mind];
 
         public void SetMind(int val)
         {
@@ -635,7 +653,7 @@ namespace CharacterProperties
 
         public int GetPlainStrength() => m_strength.current;
 
-        public int GetStrengthModifier() => GetSkillModifier(SkillType.Strength);
+        public int GetStrengthModifier() => GetSkillModifier(SkillType.Strength) + m_otherSkillModifier[SkillType.Strength];
 
         public void SetStrength(int val)
         {
@@ -661,7 +679,7 @@ namespace CharacterProperties
 
         public int GetPlainSpeed() => m_speed.current;
 
-        public int GetSpeedModifier() => GetSkillModifier(SkillType.Speed);
+        public int GetSpeedModifier() => GetSkillModifier(SkillType.Speed) + m_otherSkillModifier[SkillType.Speed];
         public void SetSpeed(int val)
         {
             m_speed.current = val;

@@ -9,65 +9,224 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c95c7d88a6b284b1b956142827832050, type: 3}
   m_Name: ObjectPool
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolSO
+  m_EditorClassIdentifier: 
   objects:
-    tools:
-    - m_name: Test1
-      m_thumbnail: {fileID: 21300000, guid: f82828253332e4640ae624db55ab8393, type: 3}
-      m_description: I am test 1
-      m_load: 20
-    clothes:
-    - m_name: Test2
-      m_thumbnail: {fileID: 21300000, guid: a12a014483f0546cb87bfa40ad7fdbcd, type: 3}
-      m_description: I am test 2
-      m_load: 5
-    - m_name: Test3
-      m_thumbnail: {fileID: 21300000, guid: 92fd1eb54e94c44908d3838d19188160, type: 3}
-      m_description: I am test 3
-      m_load: 7
+    tools: []
+    clothes: []
     consumables:
     - m_name: "\u888B\u88C5\u6CE1\u9762"
-      m_thumbnail: {fileID: 21300000, guid: 5bca08843f04d4617959939afe6c2f89, type: 3}
-      m_description: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\u3002\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
-      m_load: 2
+      m_thumbnail: {fileID: 21300000, guid: 4cd93da34e91c4616b4b4097497518c0, type: 3}
+      m_description: "\u7EA2\u8272\u888B\u88C5\u6CE1\u9762\uFF0C\u662F\u4F60\u719F\u6089\u7684\u54C1\u724C\uFF0C\u5916\u8C8C\u548C\u5473\u9053\u4E0E\u4F60\u60F3\u8C61\u4E2D\u7684\u5982\u51FA\u4E00\u8F99\uFF0C\u4EFF\u4F5B\u4F60\u4ECE\u672A\u79BB\u5F00\u6545\u4E61\u3002\u53EF\u4EE5\u5E72\u5403\uFF0C\u4F46\u60F3\u8981\u59A5\u5584\u98DF\u7528\uFF0C\u5FC5\u987B\u52A0\u5165\u70ED\u6C34\u3002"
+      m_load: 5
+      m_useEffects:
+      - rid: 8366252330054320128
+      - rid: 8366252330054320129
+      - rid: 8366252330054320130
       m_category: 0
-      m_effectParam: 0
-    - m_name: "\u74F6\u88C5\u6C34"
-      m_thumbnail: {fileID: 21300000, guid: 044ce135f63e94a90addea1571271a53, type: 3}
-      m_description: "\u74F6\u88C5\u7684\u77FF\u6CC9\u6C34\uFF0C\u91CE\u5916\u751F\u5B58\u7684\u91CD\u8981\u7269\u8D44\uFF0C\u74F6\u8EAB\u53EF\u4EE5\u7528\u4F5C\u5236\u9020\u4F17\u591A\u5DE5\u5177\u7684\u539F\u6750\u6599\u3002"
-      m_load: 3
-      m_category: 1
-      m_effectParam: 0
-    - m_name: "\u963F\u83AB\u897F\u6797"
-      m_thumbnail: {fileID: 21300000, guid: 4ef8c0f696b1c486093476df2622c640, type: 3}
-      m_description: "\u6700\u5E38\u7528\u7684\u6297\u751F\u7D20\u836F\u7269\u4E4B\u4E00\uFF0C\u53EF\u4EE5\u6CBB\u7597\u7EC6\u83CC\u5F15\u8D77\u7684\u8BF8\u591A\u75BE\u75C5\uFF0C\u5305\u62EC\u90E8\u5206\u611F\u5192\u4E0E\u708E\u75C7\u3002"
-      m_load: 2
-      m_category: 2
-      m_effectParam: 0
-    - m_name: "\u4EBA\u6C11\u5E01"
-      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
-      m_description: "\u4F60\u539F\u672C\u56FD\u5BB6\u7684\u8D27\u5E01\u3002\u6D41\u901A\u6027\u5DEE\uFF0C\u4F46\u5728\u6C11\u95F4\u975E\u5E38\u65B9\u4FBF\u5151\u6362\u3002\u8BB8\u591A\u5C45\u6C11\u90FD\u5C06\u4F7F\u7528\u4EBA\u6C11\u5E01\u7684\u4EBA\u89C6\u4E3A\u6447\u94B1\u6811\u3002"
-      m_load: 1
-      m_category: 3
-      m_effectParam: 0
     - m_name: "\u901F\u70ED\u7C73\u996D"
-      m_thumbnail: {fileID: 21300000, guid: aab18c3f77ac8426daec0cfe6e769c9c, type: 3}
-      m_description: "\u52A0\u5165\u6E05\u6C34\uFF0C\u5E76\u7528\u77F3\u7070\u5C0F\u5305\u52A0\u70ED\u540E\u5373\u53EF\u98DF\u7528\u7684\u7279\u5236\u7C73\u996D\u3002\u91CF\u4E0D\u7B97\u5927\uFF0C\u4F46\u80FD\u5728\u5F02\u4E61\u5403\u5230\u7C73\u996D\u5DF2\u7ECF\u662F\u4E00\u79CD\u5962\u4F88\u3002"
-      m_load: 1
+      m_thumbnail: {fileID: 21300000, guid: a6c0bcd35722245138828e7774922d34, type: 3}
+      m_description: "\u52A0\u5165\u6E05\u6C34\uFF0C\u5E76\u7528\u77F3\u7070\u5C0F\u5305\u52A0\u70ED\u540E\u5373\u53EF\u98DF\u7528\u7684\u7279\u5236\u7C73\u996D\u3002\u91CF\u4E0D\u7B97\u5927\uFF0C\u6BD4\u8D77\u5F53\u5730\u4EBA\u63D0\u4F9B\u7684\u4E00\u4E9B\u98DF\u7269\u4E5F\u7B97\u4E0D\u4E0A\u5962\u4F88\u3002\u56E0\u4E3A\u81EA\u5E26\u6C34\u5305\uFF0C\u4E0D\u9700\u8981\u989D\u5916\u6DFB\u6C34\u3002"
+      m_load: 5
+      m_useEffects:
+      - rid: 8366252330054320131
+      - rid: 8366252330054320132
+      - rid: 8366252330054320133
       m_category: 0
-      m_effectParam: 0
+    - m_name: "\u9762\u5305"
+      m_thumbnail: {fileID: 21300000, guid: 239e9da1b67504f6e9bb0615c9235b09, type: 3}
+      m_description: "\u5EC9\u4EF7\u888B\u88C5\u7684\u9762\u5305\uFF0C\u5473\u9053\u4E2D\u89C4\u4E2D\u77E9\uFF0C\u5BB9\u6613\u50A8\u5B58\uFF0C\u662F\u679C\u8179\u7684\u6027\u4EF7\u6BD4\u4F18\u9009\u3002"
+      m_load: 3
+      m_useEffects:
+      - rid: 8366252330054320134
+      - rid: 8366252330054320135
+      - rid: 8366252330054320136
+      m_category: 0
+    - m_name: "\u74F6\u88C5\u6C34"
+      m_thumbnail: {fileID: 21300000, guid: 6edb7cc1fd244455090aab547926e971, type: 3}
+      m_description: "\u74F6\u88C5\u7684\u77FF\u6CC9\u6C34\uFF0C\u91CE\u5916\u751F\u5B58\u7684\u91CD\u8981\u7269\u8D44\uFF0C\u74F6\u8EAB\u53EF\u4EE5\u7528\u4F5C\u5236\u9020\u4F17\u591A\u5DE5\u5177\u7684\u539F\u6750\u6599\u3002"
+      m_load: 7
+      m_useEffects:
+      - rid: 8366252330054320137
+      - rid: 8366252330054320138
+      - rid: 8366252330054320139
+      m_category: 1
+    - m_name: "\u963F\u83AB\u897F\u6797"
+      m_thumbnail: {fileID: 21300000, guid: c16d0060cd3da42afa32abe01af767fa, type: 3}
+      m_description: "\u6700\u5E38\u7528\u7684\u6297\u751F\u7D20\u836F\u7269\u4E4B\u4E00\uFF0C\u53EF\u4EE5\u6CBB\u7597\u7531\u7EC6\u83CC\u5F15\u8D77\u7684\u4F17\u591A\u75BE\u75C5\uFF0C\u5305\u62EC\u90E8\u5206\u611F\u5192\u4E0E\u708E\u75C7\u3002"
+      m_load: 1
+      m_useEffects:
+      - rid: 8366252330054320140
+      - rid: 8366252330054320141
+      - rid: 8366252330054320142
+      m_category: 2
+    - m_name: "\u91D1\u94B1"
+      m_thumbnail: {fileID: 21300000, guid: 7172fec79b3c3464abfb9b93408e24af, type: 3}
+      m_description: "\u4F60\u539F\u672C\u56FD\u5BB6\u7684\u8D27\u5E01\uFF0C\u6D41\u901A\u6027\u5DEE\uFF0C\u4F46\u5F53\u5730\u5C45\u6C11\u663E\u7136\u5F88\u4E50\u610F\u6536\u4E0B\u3002\u8BB8\u591A\u4EBA\u90FD\u5C06\u4F7F\u7528\u8FD9\u7C7B\u949E\u7968\u7684\u5077\u6E21\u8005\u89C6\u4E3A\u6447\u94B1\u6811\u3002\u4F60\u4E5F\u5217\u5728\u5176\u4E2D\u3002"
+      m_load: 1
+      m_useEffects:
+      - rid: 8366252330054320143
+      - rid: 8366252330054320144
+      - rid: 8366252330054320145
+      m_category: 3
     items:
-    - m_name: "\u77F3\u7070\u5305"
-      m_thumbnail: {fileID: 21300000, guid: 07b8f729865864a8382029e615a85b41, type: 3}
-      m_description: "\u52A0\u70ED\u7528\u7684\u4E00\u6B21\u6027\u77F3\u7070\u5C0F\u5305\uFF0C\u4E0E\u6C34\u63A5\u89E6\u5373\u53EF\u91CA\u653E\u5927\u91CF\u70ED\u91CF\uFF0C\u4EE5\u9694\u6C34\u52A0\u70ED\u98DF\u7269\u3002"
-      m_load: 10
     - m_name: "\u5851\u6599\u74F6"
-      m_thumbnail: {fileID: 21300000, guid: 381a78f4452bb428aafe1c96957bf1e6, type: 3}
-      m_description: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u53EF\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
-      m_load: 12
-    - m_name: Test10
-      m_thumbnail: {fileID: 21300000, guid: 1b266c51c37b7483c8fc8d8bee9f188c, type: 3}
-      m_description: I am test 10
-      m_load: 15
+      m_thumbnail: {fileID: 21300000, guid: 34e72f2acecd44401bda747b8fe21af7, type: 3}
+      m_description: "\u7A7A\u7684\u5851\u6599\u74F6\u3002\u53EF\u5851\u6027\u6781\u5F3A\uFF0C\u6BD4\u5982\u7528\u4E8E\u5236\u9020\u5DE5\u5177\u3002"
+      m_load: 1
+      m_useEffects: []
+    - m_name: "\u77F3\u7070\u5305"
+      m_thumbnail: {fileID: 21300000, guid: 7fa89b96f689348b0871da738beb34eb, type: 3}
+      m_description: "\u52A0\u70ED\u7528\u7684\u4E00\u6B21\u6027\u77F3\u7070\u5C0F\u5305\uFF0C\u4E0E\u6C34\u63A5\u89E6\u5373\u53EF\u91CA\u653E\u5927\u91CF\u70ED\u91CF\uFF0C\u4EE5\u9694\u6C34\u52A0\u70ED\u98DF\u7269\u3002"
+      m_load: 1
+      m_useEffects: []
+    - m_name: "\u7B80\u6613\u7761\u888B"
+      m_thumbnail: {fileID: 21300000, guid: 88b67f017003344708eacd0f24eefba2, type: 3}
+      m_description: "\u505A\u5DE5\u4E00\u822C\u7684\u9632\u98CE\u7761\u888B\uFF0C\u91C7\u7528\u5C3C\u9F99\u4E0E\u6DA4\u7EB6\u53CC\u5C42\u8BBE\u8BA1\uFF0C\u5185\u91CC\u586B\u5145\u7FBD\u7ED2\u3002\u4F5C\u4E3A\u8FDC\u8DB3\u7684\u9053\u5177\u5DF2\u7ECF\u8DB3\u591F\uFF0C\u4F46\u8FD9\u8D9F\u65C5\u9014\u8FDC\u4E0D\u6B62\u4E8E\u6B64\u3002"
+      m_load: 30
+      m_useEffects:
+      - rid: 8366252330054320146
+      - rid: 8366252330054320147
+    - m_name: "\u9AD8\u7EA7\u7761\u888B"
+      m_thumbnail: {fileID: 21300000, guid: 88b67f017003344708eacd0f24eefba2, type: 3}
+      m_description: "\u6BD4\u4E00\u822C\u7761\u888B\u5BB9\u91CF\u66F4\u5927\u3001\u4E5F\u66F4\u539A\u5B9E\u7684\u9AD8\u7EA7\u4EA7\u54C1\u3002\u4F7F\u7528\u591A\u5C42\u9AD8\u5BC6\u5EA6\u6DA4\u7EB6\uFF0C\u589E\u52A0PU\u9632\u98CE\u3001\u9632\u6C34\u6D82\u5C42\uFF0C\u4EE5\u5E94\u5BF9\u66F4\u591A\u7684\u73AF\u5883\u6311\u6218\u3002"
+      m_load: 40
+      m_useEffects:
+      - rid: 8366252330054320148
+      - rid: 8366252330054320149
+  references:
+    version: 2
+    RefIds:
+    - rid: 8366252330054320128
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 30
+    - rid: 8366252330054320129
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 2
+          m_delta: 20
+        - m_type: 3
+          m_delta: 20
+    - rid: 8366252330054320130
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u77F3\u7070\u5305"
+          m_count: -1
+        - m_name: "\u74F6\u88C5\u6C34"
+          m_count: -1
+        - m_name: "\u5851\u6599\u74F6"
+          m_count: 1
+        - m_name: "\u888B\u88C5\u6CE1\u9762"
+          m_count: -1
+    - rid: 8366252330054320131
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 30
+    - rid: 8366252330054320132
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 2
+          m_delta: 30
+        - m_type: 3
+          m_delta: 10
+    - rid: 8366252330054320133
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u901F\u70ED\u7C73\u996D"
+          m_count: -1
+    - rid: 8366252330054320134
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 2
+          m_delta: 10
+    - rid: 8366252330054320135
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 10
+    - rid: 8366252330054320136
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u9762\u5305"
+          m_count: -1
+    - rid: 8366252330054320137
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 20
+    - rid: 8366252330054320138
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 3
+          m_delta: 25
+    - rid: 8366252330054320139
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u5851\u6599\u74F6"
+          m_count: 1
+        - m_name: "\u74F6\u88C5\u6C34"
+          m_count: -1
+    - rid: 8366252330054320140
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 5
+          m_delta: 20
+    - rid: 8366252330054320141
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 10
+    - rid: 8366252330054320142
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u963F\u83AB\u897F\u6797"
+          m_count: -1
+    - rid: 8366252330054320143
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 6
+          m_delta: -2
+    - rid: 8366252330054320144
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 10
+    - rid: 8366252330054320145
+      type: {class: BackpackModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_name: "\u91D1\u94B1"
+          m_count: -1
+    - rid: 8366252330054320146
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 360
+    - rid: 8366252330054320147
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 4
+          m_delta: 50
+        - m_type: 6
+          m_delta: 50
+    - rid: 8366252330054320148
+      type: {class: TimeChangeEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_deltaTime: 300
+    - rid: 8366252330054320149
+      type: {class: CharacterModificationEffect, ns: Effects, asm: Assembly-CSharp}
+      data:
+        m_modifications:
+        - m_type: 4
+          m_delta: 60
+        - m_type: 6
+          m_delta: 50

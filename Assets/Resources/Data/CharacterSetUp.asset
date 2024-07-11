@@ -20,13 +20,13 @@ MonoBehaviour:
   timeTriggerInterval: 30
   globalCoreSideEffect:
   - end: 10
-    effect: -3
+    effect: -2
   - end: 30
     effect: -1
   - end: 90
     effect: 0
   - end: 100
-    effect: 1
+    effect: 2
   maxHunger: 100
   initialHunger: 50
   hungerDropRate: 3
@@ -62,11 +62,13 @@ MonoBehaviour:
   - end: 100
     effect: 3
   initialObjects:
-  - m_name: Test1
-    m_count: 1
-  - m_name: Test2
-    m_count: 1
   - m_name: "\u888B\u88C5\u6CE1\u9762"
-    m_count: 4
-  - m_name: "\u5851\u6599\u74F6"
-    m_count: 2
+    m_count: 1
+  - m_name: "\u963F\u83AB\u897F\u6797"
+    m_count: 1
+  - m_name: "\u74F6\u88C5\u6C34"
+    m_count: 5
+  - m_name: "\u7B80\u6613\u7761\u888B"
+    m_count: 1
+  - m_name: "\u91D1\u94B1"
+    m_count: 50

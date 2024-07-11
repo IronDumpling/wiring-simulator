@@ -33,6 +33,7 @@ CONST HUGE_SUCCESS = "HugeSuccess"
 
 ~temp ShoreVillageTurn_1 = 0
 ~ShoreVillageTurn_1 ++
+VAR been_village_1 = false
 VAR been_tent_1 = 0
 VAR been_shop_1 = 0
 VAR been_smuggler_1 = 0
@@ -76,6 +77,17 @@ VAR meet_shen_2 = false
 VAR know_the_sleep_skill_1 = false
 VAR know_the_rob = false
 
+//Node 0 的初始参数
 
+VAR hit_point_1 = 0
+
+//Path 1 的初始参数
+
+VAR know_the_cheat_1 = false
+
+//Path 2 的初始参数
+
+VAR hold_1 = false
+VAR throw_away = 0
 
 

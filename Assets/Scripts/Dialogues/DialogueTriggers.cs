@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-
+using Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DialogueTriggers : MonoBehaviour{
+public class DialogueTriggers : MonoSingleton<DialogueTriggers>{
     [Header("UI")]
     [SerializeField] private UIDocument doc;
     private VisualElement root;
@@ -12,29 +12,59 @@ public class DialogueTriggers : MonoBehaviour{
     private VisualTreeAsset m_button;
 
     [Header("Stories")]
-    [SerializeField] private List<TextAsset> texts;
+    private List<TextAsset> m_texts = new();
 
+
+    private List<Event> m_events;
     void Awake(){
+        root = doc.rootVisualElement;
         m_button = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton");
     }
-    
-    void Start(){
-        InitButtons();
+
+    public void DisplayEvents(List<Event> events){
+        m_texts?.Clear();
+        buttons?.Clear();
+        m_events = new List<Event>(events);
+        DisplayPanel();
+        InitEvtButtons();
+        InitDepartureButton();
         DisplayButtons();
     }
 
-    void InitButtons(){
-        foreach(TextAsset txt in texts){
+    public void DisplayPanel(){
+        root.style.display = DisplayStyle.Flex;
+    }
+
+    public void HidePanel(){
+        root.style.display = DisplayStyle.None;
+    }
+
+    private void InitEvtButtons()
+    {
+        foreach(Event evt in m_events){
             Button button = m_button.Instantiate().Q<Button>();
             Length width = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
             button.style.width = new StyleLength(width);
 
-            button.text = txt.name;
+            button.text = evt.name;
             button.clicked += () => {
-                DialogueUI.Instance.BeginDialogue(txt);
+                GameManager.Instance.ChangeToDialogueState(evt);
             };
             buttons.Add(button);
         }
+    }
+
+    private void InitDepartureButton()
+    {
+        Button btn = m_button.Instantiate().Q<Button>();
+        Length wid = new Length(Constants.FULL_WIDTH, LengthUnit.Percent);
+        btn.style.width = new StyleLength(wid);
+
+        btn.text = "Departure";
+        btn.clicked += () => {
+            GameManager.Instance.ChangeToMapSelectionState();
+        };
+        buttons.Add(btn);
     }
 
     void DisplayButtons(){

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace CharacterProperties{
-    [CreateAssetMenu]
+    [CreateAssetMenu(fileName = "New Character Set Up", menuName = "Character Set Up", order = 0)]
     public class CharacterSetUp : ScriptableObject{
         #region Core
         [Header("Core")]

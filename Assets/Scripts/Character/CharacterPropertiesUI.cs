@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CharacterProperties;
+using Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
 {
     private UIDocument m_document;
+    private VisualElement m_timeUI;
     private Dictionary<CoreType, ProgressBar> m_coreUI = new Dictionary<CoreType, ProgressBar>();
     private Dictionary<DynamicType, ProgressBar> m_dynamicUI = new Dictionary<DynamicType, ProgressBar>();
     private Dictionary<SkillType, Label> m_skillUI = new Dictionary<SkillType, Label>();
@@ -28,6 +30,8 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
         m_skillUI.Add(SkillType.Speed, m_document.rootVisualElement.Q("SpeedValue") as Label);
         m_skillUI.Add(SkillType.Mind, m_document.rootVisualElement.Q("MindValue") as Label);
         m_skillUI.Add(SkillType.Strength, m_document.rootVisualElement.Q("StrengthValue") as Label);
+
+        m_timeUI = m_document.rootVisualElement.Q("time");
     }
     
     // Start is called before the first frame update
@@ -47,21 +51,9 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
         character.RegisterSkillEvent(SkillType.Speed, SetSkillUI);
         character.RegisterSkillEvent(SkillType.Mind, SetSkillUI);
         character.RegisterSkillEvent(SkillType.Strength, SetSkillUI);
-        // SetCoreUI(CoreType.HP, 30, 100);
-        // SetCoreUI(CoreType.SAN, 70, 100);
-        //
-        // SetDynamicUI(DynamicType.Hunger, 20, 100);
-        // SetDynamicUI(DynamicType.Thirst, 30, 100);
-        // SetDynamicUI(DynamicType.Mood, 20, 100);
-        // SetDynamicUI(DynamicType.Sleep, 20, 100);
-        // SetDynamicUI(DynamicType.Illness, 20, 100);
-        //
-        // SetSkillUI(SkillType.Intelligent, 0, 3);
-        // SetSkillUI(SkillType.Speed, 2, -3);
-        // SetSkillUI(SkillType.Mind, 10, 0);
-        // SetSkillUI(SkillType.Strength, 7, -3);
+        
+        GameManager.Instance.RegisterTimeEvent(SetTime);
     }
-    
 
     private void SetCoreUI(CoreType type, int current, int max)
     {
@@ -70,7 +62,6 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
         ui.title = $"{current}/{max}";
         ui.value = current;
     }
-    
     
     private void SetDynamicUI(DynamicType type, int current, int max)
     {
@@ -84,5 +75,23 @@ public class CharacterPropertiesUI : MonoSingleton<CharacterPropertiesUI>
     {
         var ui = m_skillUI[type];
         ui.text = modifier >= 0 ? $"{plainVal}(+{modifier})" : $"{plainVal}({modifier})";
+    }
+
+    private void SetTime(int time, string timeStr)
+    {
+        Label hourMin = m_timeUI.Q<Label>("hour-min");
+        Label yrMonD =  m_timeUI.Q<Label>("yr-mon-d");
+        string[] tokens = timeStr.Split(" ");
+
+        hourMin.text = tokens[1];
+        yrMonD.text = tokens[0];
+    }
+    
+    public void HidePanel(){
+        m_document.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    public void DisplayPanel(){
+        m_document.rootVisualElement.style.display = DisplayStyle.Flex;
     }
 }

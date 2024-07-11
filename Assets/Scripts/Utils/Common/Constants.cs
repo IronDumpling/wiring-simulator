@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 
 public static class Constants{
+    // scene
+    public const string MAIN_MENU = "Init";
+    public const string LEVEL1 = "World";
+    
     // dialogue
     public const string CONTINUE = "继续";
     public const string LEAVE = "离开";
@@ -8,7 +12,7 @@ public static class Constants{
     // Backpack
     public const float SLOW_DOWN_THRESHOLD = 0.3f;
     public const float BURN_HELATH_THRESHOLD = 0.5f;
-    public const int STRENGTH_TO_LOAD = 100;
+    public const int STRENGTH_TO_LOAD = 30;
 
     // Time
     public const string DAY = "d";
@@ -16,6 +20,11 @@ public static class Constants{
     public const string MIN = "min";
     public const int DAY_TO_HOUR = 24;
     public const int HOUR_TO_MIN = 60;
+    public const int TIME_UNIT = 10;
+    
+    //speed
+    public const float MOVE_DURATION_ONE_METER =  72f / 100f;    // how many 30 min need to use to move 1 m
+    public const float GAME_TIME_TO_REAL_TIME = 0.5f;              // how many real time in s passed for 30 min
 
     // UI
     public const float TYPE_SPEED = 0.04f;

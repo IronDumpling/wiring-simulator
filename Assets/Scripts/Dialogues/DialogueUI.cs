@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 using Ink.Runtime;
 using DG.Tweening;
 
+using Core;
+
 public class DialogueUI : MonoSingleton<DialogueUI>{
     [Header("UI")]
     [SerializeField] private UIDocument m_doc;
@@ -30,24 +32,24 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     private bool m_isPlaying = false;
     private bool m_canGoToNextLine = false;
     private bool m_isMouseOverElement = false;
+    private string m_objName = "";
 
     [Header("Dialogue")]
     private Story m_currStory;
+    private Event m_currEvent;
+    
     private Coroutine m_displayLine;
     private string m_displaySpeakerName = "";
     private DialogueVar m_dialogueVars;
 
     [Header("Dialogue Content")]
     [SerializeField] private TextAsset m_globalnk;
-    [SerializeField] private TextAsset m_defaultInk;
     
     #region Life Cycles
     private void Awake(){
         m_root = m_doc.rootVisualElement;
-
         m_panel = m_root.Q<VisualElement>(name: "Panel");
         m_body = m_root.Q<VisualElement>(name: "Body");
-
         m_title = m_root.Q<Label>(name: "Title");
 
         SetSideBar();
@@ -57,12 +59,11 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_sectionButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/FakeChoice");
         m_textArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/TextArea");
         m_imgArea = Resources.Load<VisualTreeAsset>("Frontends/Documents/Dialogue/ImgArea");
+
         m_dialogueVars = new DialogueVar(m_globalnk);
     }
     
-    private void Start(){   
-        OpenExpandPanel();
-        BeginDialogue(m_defaultInk);
+    private void Start(){
         // Assuming you have already obtained a reference to your specific VisualElement
         m_body.RegisterCallback<MouseEnterEvent>(evt => MouseEntered(evt));
         m_body.RegisterCallback<MouseLeaveEvent>(evt => MouseLeft(evt));
@@ -82,6 +83,10 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #endregion
     
     #region Dialogues
+    /// <summary>
+    /// Will GO to private, don't use!
+    /// </summary>
+    /// <param name="inkJSON"></param>
     public void BeginDialogue(TextAsset inkJSON){
         m_currStory = new Story(inkJSON.text);
 
@@ -92,9 +97,16 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_title.text = "???";
         m_displaySpeakerName = "???";
         m_content.contentContainer.Clear();
+        
         DisplaySpacer();
-        OpenExpandPanel();
+        OpenPanel();
         ContinueStory();
+    }
+    
+    public void BeginDialogue(Event evt)
+    {
+        m_currEvent = evt;
+        BeginDialogue(evt.ink);
     }
     
     private void ContinueStory(){
@@ -116,28 +128,44 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         if(m_displayLine != null) StopCoroutine(m_displayLine); 
         m_displayLine = StartCoroutine(DisplayLine(m_currStory.currentText));
 
-        MoveSpacerToEnd();
         ScrollToBottom();
     }
     
     private IEnumerator ExitDialogue(){
         yield return new WaitForSeconds(Constants.EXIT_LAG_TIME);
 
+        if(m_currEvent != null) DisplayTextArea(m_currEvent.EffectDescription());
+
         m_dialogueVars.StopListening(m_currStory);
         m_dialogueVars.SaveVariables();
 
         m_isPlaying = false;
         m_displaySpeakerName = "";
-        CloseExpandPanel();
+
+        m_currStory = null;
+
+        m_objName = "";
+
+        ClosePanel();
+        
+        m_currEvent?.NotifyFinished();
+        m_currEvent = null;
     }
+
+    public void ClearDialogue(){
+        m_content.contentContainer.Clear();
+        m_currStory = null;
+        m_currEvent = null;
+        m_isPlaying = false;
+        m_displaySpeakerName = "";
+        m_objName = "";
+    }
+
     #endregion
 
     #region Renders
     private IEnumerator DisplayLine(string line){
-        VisualElement textLine = m_textArea.Instantiate();
-        Label label = textLine.Q<Label>();
-        label.text = m_displaySpeakerName + "-";
-        m_content.Add(textLine);
+        Label label = DisplayTextArea(m_displaySpeakerName + "-").Q<Label>();
         m_canGoToNextLine = false;
         foreach (char letter in line.ToCharArray()){
             if (IsUserInput()) {
@@ -147,8 +175,19 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             label.text += letter;
             yield return new WaitForSeconds(Constants.TYPE_SPEED);
         }
-        DisplayChoices();
+        
+        if(m_objName == "") DisplayChoices();
+        else DisplayObjChoices();
+
         m_canGoToNextLine = true;
+    }
+
+    public VisualElement DisplayTextArea(string content){
+        VisualElement textLine = m_textArea.Instantiate();
+        Label label = textLine.Q<Label>();
+        label.text = content;
+        m_content.Add(textLine);
+        return textLine;
     }
     
     private void DisplayChoices(){
@@ -177,6 +216,38 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             };
             index++;
         }
+    }
+
+    private void DisplayObjChoices(){
+        List<Choice> currChoices = m_currStory.currentChoices;
+        List<VisualElement> choices = new();
+        foreach(Choice chc in currChoices) {   
+            VisualElement choiceElement = choice.Instantiate();
+            choices.Add(choiceElement);
+            m_content.Add(choiceElement);
+        }
+
+        if(currChoices.Count < 3) return;
+
+        Button button1 = choices[0].Q<Button>();
+        button1.text = "1.-" + currChoices[0].text;
+        button1.clicked += () => {
+            MakeChoice(currChoices[0], choices);
+            GameManager.Instance.GetBackpack().GetObject(m_objName).Use();
+        };
+
+        Button button2 = choices[1].Q<Button>();
+        button2.text = "2.-" + currChoices[1].text;
+        button2.clicked += () => {
+            MakeChoice(currChoices[1], choices);
+            GameManager.Instance.GetBackpack().ObjectModification(m_objName, -1);
+        };
+        
+        Button button3 = choices[2].Q<Button>();
+        button3.text = "3.-" + currChoices[2].text;
+        button3.clicked += () => {
+            MakeChoice(currChoices[2], choices);
+        };   
     }
 
     private void DisplaySectionButton(Choice chc){
@@ -217,10 +288,19 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_spacer.style.height = Constants.SPACER_HEIGHT;
         m_content.Add(m_spacer);
     }
+    
+    public void DisplayClickObject(string objName, string inkName){
+        TextAsset objInkJson = Resources.Load<TextAsset>("Stories/Backpack/" + inkName);
+        this.BeginDialogue(objInkJson);
+        m_objName = objName;
+        m_title.text = objName;
+        m_currStory.variablesState["name"] = objName;
+    }
+
     #endregion
     
     #region Logics
-    public void CloseExpandPanel(){
+    public void ClosePanel(){
         m_panel.style.width = Constants.PANEL_WIDTH;
         Length width = new Length(Constants.HIDE_POSITION, LengthUnit.Percent);
         m_panel.style.left = new StyleLength(width);
@@ -229,7 +309,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_isPanelExpanded = false;
     }
 
-    public void OpenExpandPanel(){
+    public void OpenPanel(){
         Length width = new Length(Constants.PANEL_WIDTH, LengthUnit.Percent);
         m_panel.style.width = new StyleLength(width);
         width = new Length(100 - Constants.PANEL_WIDTH, LengthUnit.Percent);
@@ -239,14 +319,21 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_isPanelExpanded = true;
     }
 
+    public void HidePanel(){
+        m_root.style.display = DisplayStyle.None;
+    }
+    public void DisplayPanel(){
+        m_root.style.display = DisplayStyle.Flex;
+    }
+
     public void SetSideBar() {
         m_expandButton = Resources.Load<VisualTreeAsset>("Frontends/Documents/Common/OpenButton").Instantiate().Q<Button>();
         Length width = new Length(Constants.MARGIN_WIDTH, LengthUnit.Percent);
         m_expandButton.style.width = new StyleLength(width);
         m_root.Q<VisualElement>(name: "SideBar").Add(m_expandButton);
         m_expandButton.clicked += () => {
-            if(m_isPanelExpanded) CloseExpandPanel();
-            else OpenExpandPanel();
+            if(m_isPanelExpanded) ClosePanel();
+            else OpenPanel();
         };
     }
 
@@ -255,9 +342,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         foreach(VisualElement choiceEl in choices){
             m_content.Remove(choiceEl);
         }
-        VisualElement textLine = m_textArea.Instantiate();
-        textLine.Q<Label>().text = "你-\"" + choice.text + "\"";
-        m_content.Add(textLine);
+        DisplayTextArea("你-\"" + choice.text + "\"");
         m_currStory.ChooseChoiceIndex(choice.index);
         ContinueStory();
     }
@@ -269,13 +354,13 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         ContinueStory();
     }
     
-    private void MoveSpacerToEnd(){
+    private void ScrollToBottom(){
+        // move spacer to the bottom
         float m_contentHeight = m_content.contentContainer.layout.height;
         float bottomOffset = Mathf.Max(0, m_contentHeight + m_spacer.layout.height/2f);
         m_spacer.style.top = bottomOffset;
-    }
-    
-    private void ScrollToBottom(){
+
+        // scroll to the bottom
         float targetValue = m_scroller.highValue > 0 ? m_scroller.highValue + Constants.SCROLL_OFFSET : 0;
         DOTween.To(()=>m_scroller.value, x=> m_scroller.value = x, targetValue, Constants.EXIT_LAG_TIME);
     }
@@ -331,8 +416,6 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     #region Tags
     private void HandleTags(List<string> tags){
         foreach (string tag in tags) {
-            Debug.Log("Current tag " + tag);
-
             string[] splitTag = tag.Split(':');
             if (splitTag.Length != 2) {
                 Debug.LogError("Tag could not be appropriately parsed: " + tag);
@@ -383,7 +466,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
             return;
         }
 
-        string[] subStrings = tokens[0].Split(new char[] { '+', '-' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] subStrings = tokens[0].Split(new char[] { '+', '-' }, 
+                                            StringSplitOptions.RemoveEmptyEntries);
         string level = tokens[1];
 
         List<(string, string)> components = new List<(string, string)>();
@@ -397,13 +481,8 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         }
 
         CheckResultData result = CheckManager.Instance.MakeCheck(components, level);
-        
-        m_currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // sync
-        
-        VisualElement textLine = m_textArea.Instantiate();
-        Label label = textLine.Q<Label>();
-        label.text = result.PrintResult();
-        m_content.Add(textLine);
+        m_currStory.variablesState[Constants.CHECK] = result.Result.ToString(); // ink var sync
+        DisplayTextArea(result.PrintResult());
     }
 
     private void CharacterModification(string key, string value){
@@ -426,7 +505,7 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
         m_currStory.variablesState[key] = GameManager.Instance.GetCharacter().GetVal(key); // sync
         Debug.Log($"{key} now have value {GameManager.Instance.GetCharacter().GetVal(key)}");
     }
-
+    
     private void TimeModification(string value){
         // format: +1d,1hr,10min
         const int INIT_IDX = 1;
@@ -463,30 +542,27 @@ public class DialogueUI : MonoSingleton<DialogueUI>{
     }
     
     private void ObjectModification(string value){
-        string[] subStrings = value.Split(new char[] { '+', '-' }, StringSplitOptions.RemoveEmptyEntries);
-        List<(string, string)> components = new List<(string, string)>();
+        string[] subStrings = value.Split(new char[] { '+', '-' }, 
+                                        StringSplitOptions.RemoveEmptyEntries);
+        
+        List<ObjectSnapshot> components = new();
         foreach(string subString in subStrings){
             string sign = "+";
             if (value.IndexOf(subString) > 0){
                 char prevChar = value[value.IndexOf(subString) - 1];
                 if (prevChar == '-') sign = "-";
             }
-            components.Add((subString, sign));
-        }
 
-        foreach(var pair in components){
-            string[] tokens = pair.Item1.Split('*');
-            string sign = pair.Item2;
-
+            string[] tokens = subString.Split('*');
             string obj = tokens[0];
             int count = 1;
             if(tokens.Length > 1 && int.TryParse(tokens[1], out count)){}
 
-            for(int i = 0; i < count; i++){
-                if(sign == "+") GameManager.Instance.GetBackpack().AddObject(obj);
-                else if(sign == "-") GameManager.Instance.GetBackpack().RemoveObject(obj);
-            }
+            if(sign == "+") components.Add(new ObjectSnapshot(obj, count));
+            else components.Add(new ObjectSnapshot(obj, -1 * count));
         }
+        
+        GameManager.Instance.GetBackpack().ObjectModification(components);
     }
     #endregion
 }
